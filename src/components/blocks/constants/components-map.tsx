@@ -1,6 +1,5 @@
 import { ReactElement, ReactNode } from "react";
 
-import { Element } from "@craftjs/core";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,6 +14,7 @@ import { NodeCard } from "../card";
 
 export type Components = {
   name: string;
+  grid: number;
   items: {
     name: string;
     props?: {
@@ -38,6 +38,7 @@ export type Components = {
 export const componentsMap: Components[] = [
   {
     name: "Buttons",
+    grid: 2,
     items: [
       {
         name: "Default",
@@ -60,6 +61,7 @@ export const componentsMap: Components[] = [
   },
   {
     name: "Cards",
+    grid: 1,
     items: [
       {
         name: "Default",

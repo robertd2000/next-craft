@@ -33,7 +33,7 @@ export default function Home() {
         }}
         onRender={RenderNode}
       >
-        <div className="flex flex-1 relative overflow-hidden w-full">
+        <div className="flex flex-1 relative overflow-hidden w-full h-full">
           <SideMenu componentsMap={componentsMap} />
           <Viewport>
             <ReactIframe
