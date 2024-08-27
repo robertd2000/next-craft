@@ -25,6 +25,7 @@ export const Canvas = ({ children }: CanvasProps) => {
     const { importString, output } = getOutputCode(query.getNodes());
 
     console.log("printing ", importString, output);
+    console.log("query.getNodes()", query.getNodes());
 
     setOutput(`${importString}\n\n${output}`);
   };
@@ -47,9 +48,9 @@ export const Canvas = ({ children }: CanvasProps) => {
       <div className={`${canvasWidth} flex flex-col h-full border rounded-sm`}>
         <div className="flex justify-between items-center p-4 w-full bg-gray-200">
           <div className="flex gap-3">
-            <div className="h-3 w-3 rounded-full bg-red-400"></div>
+            {/* <div className="h-3 w-3 rounded-full bg-red-400"></div>
             <div className="h-3 w-3 rounded-full bg-yellow-400"></div>
-            <div className="h-3 w-3 rounded-full bg-green-400"></div>
+            <div className="h-3 w-3 rounded-full bg-green-400"></div> */}
           </div>
           <div className="flex gap-2">
             <Drawer
