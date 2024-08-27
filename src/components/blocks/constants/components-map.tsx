@@ -65,9 +65,9 @@ export const componentsMap: Components[] = [
     grid: 2,
     items: [
       {
-        name: "Text",
-        demo: "Text",
-        node: <NodeText tagName="p" text="Text" />,
+        name: "Paragraph",
+        demo: "Paragraph",
+        node: <NodeText tagName="p" text="Paragraph" />,
       },
       {
         name: "Title",
