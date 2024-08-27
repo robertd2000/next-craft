@@ -12,6 +12,7 @@ import {
 import { NodeButton } from "../button/ui/NodeButton";
 import { NodeCard } from "../card";
 import { NodeText } from "../text";
+import { DivBlock, NodeDiv } from "../div";
 
 export type Components = {
   name: string;
@@ -38,9 +39,14 @@ export type Components = {
 
 export const componentsMap: Components[] = [
   {
-    name: "Buttons",
+    name: "Basic",
     grid: 2,
     items: [
+      {
+        name: "Div",
+        demo: <DivBlock className="text-center	align-middle">div</DivBlock>,
+        node: <NodeDiv />,
+      },
       {
         name: "Default",
         demo: <Button>Default</Button>,
