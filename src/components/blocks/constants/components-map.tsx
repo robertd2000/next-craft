@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { NodeButton } from "../button/ui/NodeButton";
 import { NodeCard } from "../card";
+import { NodeText } from "../text";
 
 export type Components = {
   name: string;
@@ -56,6 +57,22 @@ export const componentsMap: Components[] = [
         props: { variant: "destructive", children: "Destructive" },
         demo: <Button variant={"destructive"}>Destructive</Button>,
         node: <NodeButton variant={"destructive"}>Destructive</NodeButton>,
+      },
+    ],
+  },
+  {
+    name: "Text",
+    grid: 2,
+    items: [
+      {
+        name: "Paragraph",
+        demo: "Paragraph",
+        node: <NodeText tagName="p" text="Paragraph" />,
+      },
+      {
+        name: "Title",
+        demo: <h2>Title</h2>,
+        node: <NodeText tagName="h2" text="Title" />,
       },
     ],
   },
