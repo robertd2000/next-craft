@@ -4,6 +4,8 @@ import { Components } from "@/components/blocks/constants/components-map";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CopyPlus, Layers3 } from "lucide-react";
 import { Blocks } from "./tabs";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Layers } from "@craftjs/layers";
 
 export interface SideMenuProps {
   componentsMap: Components[];
@@ -13,10 +15,10 @@ export const SideMenu = ({ componentsMap }: SideMenuProps) => {
   return (
     <Tabs
       defaultValue="layers"
-      className="w-[300px] grid grid-cols-6 gap-4"
+      className="w-[400px] grid grid-cols-8 border border-zink-100"
       orientation="vertical"
     >
-      <TabsList className="flex flex-col h-full col-span-2 justify-start">
+      <TabsList className="flex flex-col h-full w-full col-span-2 justify-start pt-[0.5rem]">
         <TabsTrigger value="layers">
           <Layers3 />
         </TabsTrigger>
@@ -24,12 +26,14 @@ export const SideMenu = ({ componentsMap }: SideMenuProps) => {
           <CopyPlus />
         </TabsTrigger>
       </TabsList>
-      <div className="col-span-4">
-        <TabsContent value="layers"></TabsContent>
+      <ScrollArea className="col-span-6">
+        <TabsContent value="layers">
+          <Layers expandRootOnLoad={true} />
+        </TabsContent>
         <TabsContent value="components">
           <Blocks componentsMap={componentsMap} />
         </TabsContent>
-      </div>
+      </ScrollArea>
     </Tabs>
   );
 };

@@ -1,14 +1,4 @@
-import React, { ReactElement, ReactNode } from "react";
-
-import {
-  NavigationMenuLink,
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuTrigger,
-  NavigationMenuContent,
-  NavigationMenuViewport,
-} from "@/components/ui/vertical-navigation-menu";
+import React from "react";
 import { useEditor } from "@craftjs/core";
 import { cn } from "@/lib/utils";
 import { Components } from "@/components/blocks/constants/components-map";
@@ -26,13 +16,13 @@ export function Blocks({ componentsMap }: BlocksProps) {
   const { connectors } = useEditor();
 
   return (
-    <Accordion type="multiple" className="w-full">
+    <Accordion type="multiple" className="w-full p-1">
       {componentsMap.map((menuItem, index) => {
         return (
           <AccordionItem value={menuItem.name}>
             <AccordionTrigger>{menuItem.name}</AccordionTrigger>
             <AccordionContent
-              className={`grid w-full grid-cols-${menuItem.grid}`}
+              className={`grid w-full grid-cols-${menuItem.grid} flex flex-wrap`}
             >
               {menuItem.items.map((component, index) => (
                 <ListItem
@@ -53,42 +43,6 @@ export function Blocks({ componentsMap }: BlocksProps) {
         );
       })}
     </Accordion>
-  );
-
-  return (
-    <NavigationMenu
-      orientation="vertical"
-      className="justify-start items-start border-r"
-    >
-      <NavigationMenuList className="flex-col w-36">
-        {componentsMap.map((menuItem, index) => (
-          <NavigationMenuItem key={index} className="p-2">
-            <NavigationMenuTrigger className="flex justify-between w-full">
-              {menuItem.name}
-            </NavigationMenuTrigger>
-            <NavigationMenuContent className="w-full">
-              <ul className="w-full">
-                {menuItem.items.map((component, index) => (
-                  <ListItem
-                    key={index}
-                    ref={(ref) => {
-                      if (ref) {
-                        connectors.create(ref, component.node, {
-                          onCreate(nodeTree) {},
-                        });
-                      }
-                    }}
-                  >
-                    {component.demo ? component.demo : component.name}
-                  </ListItem>
-                ))}
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-        ))}
-      </NavigationMenuList>
-      <NavigationMenuViewport className="w-48 left-1 border-r shadow-none" />
-    </NavigationMenu>
   );
 }
 
