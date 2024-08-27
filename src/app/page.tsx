@@ -1,14 +1,15 @@
 "use client";
 
 import {
+  NodeButton,
   NodeCard,
   NodeCardContent,
   NodeCardDescription,
   NodeCardFooter,
   NodeCardHeader,
   NodeCardTitle,
+  NodeText,
 } from "@/components/blocks";
-import { NodeButton } from "@/components/blocks/button/ui/NodeButton";
 import { componentsMap } from "@/components/blocks/constants/components-map";
 import { Canvas } from "@/components/canvas/ui/Canvas";
 import { ReactIframe } from "@/components/react-iframe";
@@ -30,6 +31,7 @@ export default function Home() {
           NodeCardDescription,
           NodeCardTitle,
           NodeCardFooter,
+          NodeText,
         }}
         onRender={RenderNode}
       >

@@ -22,7 +22,7 @@ export function Blocks({ componentsMap }: BlocksProps) {
           <AccordionItem value={menuItem.name}>
             <AccordionTrigger>{menuItem.name}</AccordionTrigger>
             <AccordionContent
-              className={`grid w-full grid-cols-${menuItem.grid} flex flex-wrap`}
+              className={`grid w-full grid-cols-${menuItem.grid} `}
             >
               {menuItem.items.map((component, index) => (
                 <ListItem
