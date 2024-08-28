@@ -24,9 +24,6 @@ export const Canvas = ({ children }: CanvasProps) => {
   const generateCode = () => {
     const { importString, output } = getOutputCode(query.getNodes());
 
-    console.log("printing ", importString, output);
-    console.log("query.getNodes()", query.getNodes());
-
     setOutput(`${importString}\n\n${output}`);
   };
 

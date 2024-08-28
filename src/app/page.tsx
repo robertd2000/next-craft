@@ -45,7 +45,7 @@ export default function Home() {
               className="p-4 w-full h-full page-container"
             >
               <Frame>
-                <Element is={Canvas} id="ROOT" canvas>
+                <Element is={Canvas} id="ROOT" canvas data-cy="root-container">
                   <NodeButton>Button 1</NodeButton>
                   <NodeButton>Button 2</NodeButton>
                   <NodeButton>Button 3</NodeButton>

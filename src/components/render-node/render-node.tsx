@@ -3,7 +3,7 @@
 import { useNode, useEditor, ROOT_NODE } from "@craftjs/core";
 import { Move, ArrowUp, Delete } from "lucide-react";
 import React, { useCallback, useEffect, useRef } from "react";
-import ReactDOM from "react-dom";
+import ReactDOM, { createPortal } from "react-dom";
 import { Button } from "../ui/button";
 
 export const RenderNode = ({ render }: { render: React.ReactNode }) => {
@@ -18,21 +18,19 @@ export const RenderNode = ({ render }: { render: React.ReactNode }) => {
     name,
     moveable,
     deletable,
-    connectors: { drag },
+    connectors: { drag: dragRef },
     parent,
   } = useNode((node) => ({
     isHover: node.events.hovered,
-    dom: node.dom,
+    dom: node.dom as HTMLElement,
     name: node.data.custom.displayName || node.data.displayName,
     moveable: query.node(node.id).isDraggable(),
     deletable: query.node(node.id).isDeletable(),
-    parent: node.data.parent,
-    props: node.data.props,
+    parent: node.data.parent as string,
+    props: node.data.props as Record<string, unknown>,
   }));
 
-  console.log("isHover", isHover);
-
-  const currentRef = useRef<HTMLDivElement | null>();
+  const currentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (dom) {
@@ -45,9 +43,10 @@ export const RenderNode = ({ render }: { render: React.ReactNode }) => {
     const { top, left, bottom } = dom
       ? dom.getBoundingClientRect()
       : { top: 0, left: 0, bottom: 0 };
+
     return {
-      top: `${top > 0 ? top : bottom}px`,
-      left: `${left}px`,
+      top: `${top > 0 ? top + 35 : bottom}px`,
+      left: `${left + 350}px`,
     };
   }, []);
 
@@ -55,9 +54,11 @@ export const RenderNode = ({ render }: { render: React.ReactNode }) => {
     const { current: currentDOM } = currentRef;
 
     if (!currentDOM) return;
-    const { top, left } = getPos(dom as HTMLElement);
-    currentDOM.style.top = top;
-    currentDOM.style.left = left;
+    if (dom) {
+      const { top, left } = getPos(dom);
+      currentDOM.style.top = top;
+      currentDOM.style.left = left;
+    }
   }, [dom, getPos]);
 
   useEffect(() => {
@@ -72,26 +73,13 @@ export const RenderNode = ({ render }: { render: React.ReactNode }) => {
     };
   }, [scroll]);
 
-  // useEffect(() => {
-  //   if (dom && id !== "ROOT") {
-  //     if (isHover) {
-  //       // If either active or hover, add corresponding classes
-
-  //       dom.classList.toggle("component-hover", isHover);
-  //     } else {
-  //       // If neither active nor hover, remove both classes
-  //       dom.classList.remove("component-hover");
-  //     }
-  //   }
-  // }, [dom, isHover]);
-
   return (
     <>
       {isHover || isActive
-        ? ReactDOM.createPortal(
+        ? createPortal(
             <div
               ref={currentRef}
-              className="px-2 py-2 text-white bg-primary fixed flex items-center h-2"
+              className="px-2 py-2 text-white bg-primary bg-blue-700 fixed flex items-center h-[30px] mt-[-50px] text-xs"
               style={{
                 left: getPos(dom as HTMLElement).left,
                 top: getPos(dom as HTMLElement).top,
@@ -100,22 +88,23 @@ export const RenderNode = ({ render }: { render: React.ReactNode }) => {
             >
               <h2 className="flex-1 mr-4">{name}</h2>
               {moveable ? (
-                <Button className="mr-2 cursor-move" ref={drag}>
-                  <Move />
-                </Button>
+                // @ts-ignore
+                <div className="mr-2 cursor-move h-4 w-4" ref={dragRef}>
+                  <Move className="h-4 w-4" />
+                </div>
               ) : null}
               {id !== ROOT_NODE && (
-                <Button
-                  className="mr-2 cursor-pointer"
+                <div
+                  className="mr-2 cursor-pointer h-4 w-4"
                   onClick={() => {
-                    actions.selectNode(parent || "");
+                    actions.selectNode(parent);
                   }}
                 >
                   <ArrowUp />
-                </Button>
+                </div>
               )}
               {deletable ? (
-                <Button
+                <div
                   className="cursor-pointer"
                   onMouseDown={(e: React.MouseEvent) => {
                     e.stopPropagation();
@@ -123,10 +112,10 @@ export const RenderNode = ({ render }: { render: React.ReactNode }) => {
                   }}
                 >
                   <Delete />
-                </Button>
+                </div>
               ) : null}
             </div>,
-            document.querySelector(".page-container") as Element
+            document.body
           )
         : null}
       {render}
