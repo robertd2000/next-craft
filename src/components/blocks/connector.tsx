@@ -76,8 +76,6 @@ export const withNode = <T extends {}>(
     }
   );
 
-  console.log("Component.displayName ", Component.displayName);
-
   WithNode.displayName = `WithNode(${Component.displayName})`;
 
   const importPathMapKey = Component.displayName?.toLowerCase();
