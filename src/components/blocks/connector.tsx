@@ -4,8 +4,10 @@ import { useEditor, useNode } from "@craftjs/core";
 
 const BUTTON_PATH = "@/components/button";
 const CARD_PATH = "@/components/card";
+const DIV_PATH = "@/components/div";
 
 const importPathMap: { [key: string]: string } = {
+  divblock: DIV_PATH,
   button: BUTTON_PATH,
   card: CARD_PATH,
   cardheader: CARD_PATH,
@@ -73,8 +75,6 @@ export const withNode = <T extends {}>(
       );
     }
   );
-
-  console.log("Component.displayName ", Component.displayName);
 
   WithNode.displayName = `WithNode(${Component.displayName})`;
 

@@ -30,5 +30,6 @@ export function NodeText({ text, tagName, ...props }: TextProps) {
 }
 
 NodeText.craft = {
+  ...NodeText.craft,
   displayName: "Text",
 };
