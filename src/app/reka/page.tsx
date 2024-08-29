@@ -114,21 +114,11 @@ reka.createFrame({
   },
 });
 
-reka.createFrame({
-  id: "Primary button",
-  component: {
-    name: "Button",
-    props: {
-      text: t.literal({ value: "Primary button" }),
-    },
-  },
-});
-
 export default function RekaPage() {
   return (
     <RekaProvider reka={reka}>
       <div className="flex h-screen">
-        <div className="w-3/6 h-full border-r-2">
+        <div className="w-2/6 h-full border-r-2">
           <Editor />
         </div>
         <div className="flex-1">
