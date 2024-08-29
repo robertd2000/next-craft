@@ -18,10 +18,42 @@ import { RenderNode } from "@/components/render-node/render-node";
 import { SideMenu } from "@/components/side-menu";
 import { Viewport } from "@/components/viewport";
 import { Editor, Frame, Element } from "@craftjs/core";
+import { spawn } from "child_process";
+import { useState } from "react";
 
 export default function Home() {
+  const [loading, setLoading] = useState(false);
+
+  const exportSite = async () => {
+    setLoading(true);
+    const response = await fetch("/api/export", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        pageData: yourPageData, // данные текущей страницы
+      }),
+    });
+
+    if (response.ok) {
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(new Blob([blob]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "exportedSite.zip");
+      document.body.appendChild(link);
+      link.click();
+      link?.parentNode?.removeChild(link);
+    } else {
+      console.error("Ошибка экспорта");
+    }
+    setLoading(false);
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between ">
+      <button onClick={exportSite}>Export</button>
       <Editor
         resolver={{
           NodeButton,
