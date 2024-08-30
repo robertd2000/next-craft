@@ -13,13 +13,18 @@ export async function POST(request: NextRequest) {
     const { serializedNodes, styles } = await request.json();
 
     // Create a temporary directory for the build
-    const buildDir = path.join(process.cwd(), "temp-build");
+    const buildDir = path.join(process.cwd(), "temp");
     await fsPromises.mkdir(buildDir, { recursive: true });
 
     // Create necessary files for the build
     await createBuildFiles(buildDir, serializedNodes, styles);
 
+    // Install dependencies
+    console.log("Installing dependencies...");
+    await execAsync("npm install", { cwd: buildDir });
+
     // Run the build command
+    console.log("Building the project...");
     const buildCommand =
       process.platform === "win32"
         ? "set NODE_ENV=production && npm run build"
@@ -34,7 +39,7 @@ export async function POST(request: NextRequest) {
     const zipFilePath = await zipBuildOutput(buildDir);
 
     // Clean up the temporary directory
-    await fsPromises.rm(buildDir, { recursive: true, force: true });
+    // await fsPromises.rm(buildDir, { recursive: true, force: true });
 
     // Return the zip file
     const fileContent = await fsPromises.readFile(zipFilePath);
@@ -72,9 +77,9 @@ async function createBuildFiles(
           build: "next build",
         },
         dependencies: {
-          next: "latest",
-          react: "latest",
-          "react-dom": "latest",
+          next: "13.4.19",
+          react: "18.2.0",
+          "react-dom": "18.2.0",
         },
       },
       null,
@@ -151,9 +156,11 @@ function generateCraftContent(serializedNodes: any) {
   for (const nodeId in serializedNodes) {
     const node = serializedNodes[nodeId];
     if (node.type === "Text") {
-      content += `<p style={{fontSize: '${node.props.fontSize}px'}}>${node.props.text}</p>`;
+      content += `<p style={{fontSize: '${
+        node.props.fontSize
+      }px'}}>{${JSON.stringify(node.props.text)}}</p>`;
     } else if (node.type === "Container") {
-      content += `<div style={{padding: '${node.props.padding}px', background: '${node.props.background}'}>`;
+      content += `<div style={{padding: '${node.props.padding}px', background: '${node.props.background}'}}>`;
       if (node.nodes) {
         for (const childId of node.nodes) {
           content += generateCraftContent({
