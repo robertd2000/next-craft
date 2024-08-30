@@ -5,7 +5,6 @@ import { parseStructure } from "../../../lib/parse";
 
 export const Viewport = ({ children }: { children: React.ReactNode }) => {
   const { query } = useEditor((state) => ({
-    selectedNodeId: state.events.selected,
     query: state.nodes,
   }));
 
@@ -15,8 +14,8 @@ export const Viewport = ({ children }: { children: React.ReactNode }) => {
         <DrawerTrigger asChild>
           <Button variant="outline">Open Drawer</Button>
         </DrawerTrigger>
-        <DrawerContent>
-          <div>{parseStructure(query?.getSerializedNodes())}</div>
+        <DrawerContent className="w-full h-[80%] p-2 m-2">
+          <div>{parseStructure(query.getSerializedNodes())}</div>
         </DrawerContent>
       </Drawer>
 

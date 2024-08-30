@@ -7,6 +7,7 @@ import {
   CardFooter,
 } from "../components/ui/card";
 import { Button } from "../components/ui/button";
+import { Text } from "../components/blocks/text";
 import React from "react";
 import { SerializedNodes } from "@craftjs/core";
 
@@ -18,6 +19,7 @@ const componentMap = {
   CardContent,
   CardFooter,
   Button,
+  Text,
   // Добавляйте сюда другие компоненты по мере необходимости
 };
 
