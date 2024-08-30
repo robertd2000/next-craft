@@ -4,12 +4,24 @@ import ContentEditable from "react-contenteditable";
 
 interface TextProps extends HTMLAttributes<HTMLParagraphElement> {
   tagName: string;
-  text: string;
+  children: string;
 }
-export function NodeText({ text, tagName, ...props }: TextProps) {
+
+export function Text({ children, tagName, ...props }: TextProps) {
+  return (
+    <ContentEditable
+      tagName={tagName}
+      html={children}
+      disabled={true}
+      onChange={() => {}}
+      {...props}
+    />
+  );
+}
+export function NodeText({ children, tagName, ...props }: TextProps) {
   const {
     connectors: { connect },
-    setProp,
+    actions: { setProp },
   } = useNode();
   const { enabled } = useEditor((state) => ({
     enabled: state.options.enabled,
@@ -19,10 +31,12 @@ export function NodeText({ text, tagName, ...props }: TextProps) {
     <ContentEditable
       innerRef={connect}
       tagName={tagName}
-      html={text} // innerHTML of the editable div
+      html={children}
       disabled={!enabled}
       onChange={(e) => {
-        setProp((prop) => (prop.text = e.target.value), 500);
+        setProp((prop: TextProps) => {
+          prop.children = e.target.value;
+        }, 500);
       }}
       {...props}
     />
