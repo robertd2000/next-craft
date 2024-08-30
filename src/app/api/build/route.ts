@@ -1,196 +1,191 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import * as fs from "fs/promises";
-
+import { NextRequest, NextResponse } from "next/server";
+import { exec } from "child_process";
+import { promisify } from "util";
+import fs from "fs";
+import fsPromises from "fs/promises";
 import path from "path";
-import { exec, execSync } from "child_process";
 import archiver from "archiver";
 
-type ResponseData = any;
+const execAsync = promisify(exec);
 
-export const GET = async (req: Request, res: NextApiResponse<ResponseData>) => {
-  return res.status(200).json({ error: "Ошибка сборки" });
-};
+export async function POST(request: NextRequest) {
+  try {
+    const { serializedNodes, styles } = await request.json();
 
-export const POST = async (
-  req: Request,
-  res: NextApiResponse<ResponseData>
-) => {
-  // res.status(200).send(await fs.readFile(zipPath));
-  //   if (req.method === "POST") {
-  const body = await req.json();
-  const { componentCode, componentName } = body;
+    // Create a temporary directory for the build
+    const buildDir = path.join(process.cwd(), "temp");
+    await fsPromises.mkdir(buildDir, { recursive: true });
 
-  console.log("componentName", componentName);
+    // Create necessary files for the build
+    await createBuildFiles(buildDir, serializedNodes, styles);
 
-  if (!componentName) {
-    return new Response("Build error", { status: 400 });
+    // Install dependencies
+    console.log("Installing dependencies...");
+    await execAsync("npm install", { cwd: buildDir });
+
+    // Run the build command
+    console.log("Building the project...");
+    const buildCommand =
+      process.platform === "win32"
+        ? "set NODE_ENV=production && npm run build"
+        : "NODE_ENV=production npm run build";
+
+    const { stdout, stderr } = await execAsync(buildCommand, { cwd: buildDir });
+
+    console.log("Build output:", stdout);
+    if (stderr) console.error("Build errors:", stderr);
+
+    // Zip the build output
+    const zipFilePath = await zipBuildOutput(buildDir);
+
+    // Clean up the temporary directory
+    // await fsPromises.rm(buildDir, { recursive: true, force: true });
+
+    // Return the zip file
+    const fileContent = await fsPromises.readFile(zipFilePath);
+    await fsPromises.unlink(zipFilePath);
+
+    return new NextResponse(fileContent, {
+      status: 200,
+      headers: {
+        "Content-Type": "application/zip",
+        "Content-Disposition": "attachment; filename=build.zip",
+      },
+    });
+  } catch (error: any) {
+    console.error("Build failed:", error);
+    return NextResponse.json(
+      { message: "Build failed", error: error.message },
+      { status: 500 }
+    );
   }
+}
 
-  // Путь к директории с проектом
-  const projectDir = path.resolve(
-    process.cwd(),
-    "src/components",
-    componentName
+async function createBuildFiles(
+  buildDir: string,
+  serializedNodes: any,
+  styles: string
+) {
+  // Create package.json
+  await fsPromises.writeFile(
+    path.join(buildDir, "package.json"),
+    JSON.stringify(
+      {
+        name: "craft-js-page",
+        version: "1.0.0",
+        scripts: {
+          build: "next build",
+        },
+        dependencies: {
+          next: "13.4.19",
+          react: "18.2.0",
+          "react-dom": "18.2.0",
+        },
+      },
+      null,
+      2
+    )
   );
-  console.log("projectDir", projectDir);
-  execSync("npm run build", { cwd: projectDir });
 
-  // Выполнение команды npm run build
-  //   exec(
-  //     '"C:\\Windows\\System32\\cmd.exe" /c npm run build',
-  //     { cwd: projectDir },
-  //     async (err, stdout, stderr) => {
-  //       if (err) {
-  //         console.error("Build error:", stderr, err);
-  //         return new Response("Build error", { status: 500 });
-  //       }
+  // Create next.config.js
+  await fsPromises.writeFile(
+    path.join(buildDir, "next.config.js"),
+    `
+    /** @type {import('next').NextConfig} */
+    const nextConfig = {
+      output: 'export',
+      reactStrictMode: true,
+    }
+    
+    module.exports = nextConfig
+  `
+  );
 
-  //       console.log("Build output:", stdout);
+  // Create app directory
+  const appDir = path.join(buildDir, "app");
+  await fsPromises.mkdir(appDir, { recursive: true });
 
-  //       // Создание архива с продакшн-билдом
-  //       const file = await fs.open(`${componentName}.zip`);
-  //       let output = file.createWriteStream();
-  //       const archive = archiver("zip", {
-  //         zlib: { level: 9 }, // Уровень сжатия
-  //       });
+  // Create page.tsx in app directory
+  await fsPromises.writeFile(
+    path.join(appDir, "page.tsx"),
+    `
+    import React from 'react'
+    
+    export default function Home() {
+      return (
+        <div>
+          ${generateCraftContent(serializedNodes)}
+        </div>
+      )
+    }
+  `
+  );
 
-  //       output.on("close", () => {
-  //         console.log(archive.pointer() + " total bytes");
-  //         console.log(
-  //           "Archiver has been finalized and the output file descriptor has closed."
-  //         );
+  // Create layout.tsx in app directory
+  await fsPromises.writeFile(
+    path.join(appDir, "layout.tsx"),
+    `
+    import React from 'react'
+    import './globals.css'
 
-  //         // Отправка архива клиенту
-  //         res.setHeader("Content-Type", "application/zip");
-  //         res.setHeader(
-  //           "Content-Disposition",
-  //           `attachment; filename="${componentName}.zip"`
-  //         );
-  //         fs.createReadStream(`${componentName}.zip`).pipe(res);
-  //       });
+    export const metadata = {
+      title: 'Craft.js Generated Page',
+      description: 'A page created with Craft.js',
+    }
 
-  //       archive.on("error", (err) => {
-  //         console.error("Archiving error:", err);
-  //         return new Response("Build error", { status: 500 });
-  //       });
+    export default function RootLayout({
+      children,
+    }: {
+      children: React.ReactNode
+    }) {
+      return (
+        <html lang="en">
+          <body>{children}</body>
+        </html>
+      )
+    }
+  `
+  );
 
-  //       // Архивируем содержимое папки с билдом
-  //       archive.directory(path.join(projectDir, "out"), false);
+  // Create globals.css in app directory
+  await fsPromises.writeFile(path.join(appDir, "globals.css"), styles);
+}
 
-  //       // Финализируем архив
-  //       archive.pipe(output);
-  //       archive.finalize();
-  //     }
-  //   );
-  //     console.log("componentName", componentName);
+function generateCraftContent(serializedNodes: any) {
+  let content = "";
+  for (const nodeId in serializedNodes) {
+    const node = serializedNodes[nodeId];
+    if (node.type === "Text") {
+      content += `<p style={{fontSize: '${
+        node.props.fontSize
+      }px'}}>{${JSON.stringify(node.props.text)}}</p>`;
+    } else if (node.type === "Container") {
+      content += `<div style={{padding: '${node.props.padding}px', background: '${node.props.background}'}}>`;
+      if (node.nodes) {
+        for (const childId of node.nodes) {
+          content += generateCraftContent({
+            [childId]: serializedNodes[childId],
+          });
+        }
+      }
+      content += "</div>";
+    }
+    // Add more conditions for other component types
+  }
+  return content;
+}
 
-  //   if (!componentCode || !componentName) {
-  //     return res
-  //       .status(400)
-  //       .json({ error: "Отсутствует код компонента или имя" });
-  //   }
+async function zipBuildOutput(buildDir: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const outputPath = path.join(process.cwd(), "build.zip");
+    const output = fs.createWriteStream(outputPath);
+    const archive = archiver("zip", { zlib: { level: 9 } });
 
-  //   // Путь к временной директории для сборки компонента
-  //   const buildDir = path.resolve(process.cwd(), "temp_build", componentName);
-  //   await fs.mkdir(buildDir, { recursive: true });
+    output.on("close", () => resolve(outputPath));
+    archive.on("error", reject);
 
-  //   // Создаем файл с кодом компонента
-  //   const componentPath = path.join(buildDir, `${componentName}.js`);
-  //   await fs.writeFile(componentPath, componentCode);
-
-  //   // Создаем entry-файл для сборки компонента
-  //   const entryCode = `
-  //       import React from 'react';
-  //       import ReactDOM from 'react-dom';
-  //       import ${componentName} from './${componentName}.js';
-
-  //       ReactDOM.render(<${componentName} />, document.getElementById('root'));
-  //     `;
-  //   const entryPath = path.join(buildDir, "index.js");
-  //   await fs.writeFile(entryPath, entryCode);
-
-  //   // Создаем HTML-файл для сборки
-  //   const htmlCode = `
-  //       <!DOCTYPE html>
-  //       <html lang="en">
-  //       <head>
-  //         <meta charset="UTF-8">
-  //         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  //         <title>${componentName}</title>
-  //       </head>
-  //       <body>
-  //         <div id="root"></div>
-  //         <script src="index.js"></script>
-  //       </body>
-  //       </html>
-  //     `;
-  //   const htmlPath = path.join(buildDir, "index.html");
-  //   await fs.writeFile(htmlPath, htmlCode);
-
-  //   // Запуск сборки через Webpack или другой бандлер
-  //   exec(
-  //     "npx webpack --entry ./index.js --output ./bundle.js --mode production",
-  //     { cwd: buildDir },
-  //     async (err, stdout, stderr) => {
-  //       if (err) {
-  //         console.error("Build error:", stderr);
-  //         return new Response("Build error", { status: 500 });
-  //       }
-
-  //       // Создание архива с результатами сборки
-  //       const archive = archiver("zip", { zlib: { level: 9 } });
-  //       res.setHeader("Content-Type", "application/zip");
-  //       res.setHeader(
-  //         "Content-Disposition",
-  //         `attachment; filename="${componentName}.zip"`
-  //       );
-  //       archive.pipe(res);
-
-  //       archive.directory(buildDir, false);
-  //       await archive.finalize();
-
-  //       // Очистка временной директории после отправки
-  //       await fs.rm(buildDir, { recursive: true, force: true });
-  //     }
-  //   );
-
-  //     // Путь к директории с компонентами
-  //     const componentsDir = path.resolve(process.cwd(), "src", "components");
-  //     await fs.mkdir(componentsDir, { recursive: true });
-
-  //     // Сохраняем компонент в файл
-  //     const componentPath = path.join(componentsDir, `${componentName}.js`);
-  //     await fs.writeFile(componentPath, componentCode);
-
-  //     // Запуск сборки Webpack через npm run build
-  //     exec("npm run build", (err, stdout, stderr) => {
-  //       if (err) {
-  //         console.error("Ошибка сборки:", stderr);
-  //         return new Response("Ошибка сборки", { status: 500 });
-  //       }
-
-  //       console.log("Сборка завершена:", stdout);
-
-  //       // Создаем архив с бандлом
-  //       const outputDir = path.resolve(process.cwd(), "out"); // директория с результатами сборки Next.js
-
-  //       const archive = archiver("zip", {
-  //         zlib: { level: 9 }, // Максимальное сжатие
-  //       });
-
-  //       res.setHeader("Content-Type", "application/zip");
-  //       res.setHeader(
-  //         "Content-Disposition",
-  //         `attachment; filename="${componentName}.zip"`
-  //       );
-  //       archive.pipe(res);
-
-  //       archive.directory(outputDir, false);
-
-  //       archive.finalize();
-  //     });
-  //   } else {
-  //     return new Response("Метод не разрешен", { status: 405 });
-  //   }
-  return new Response(JSON.stringify("Hello from Next.js!"));
-};
+    archive.pipe(output);
+    archive.directory(path.join(buildDir, "out"), false);
+    archive.finalize();
+  });
+}

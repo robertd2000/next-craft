@@ -1,1 +1,1 @@
-export { NodeText } from "./ui/Text";
+export { NodeText, Text } from "./ui/Text";

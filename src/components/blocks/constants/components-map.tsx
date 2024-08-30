@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { NodeButton } from "../button/ui/NodeButton";
 import { NodeCard } from "../card";
-import { NodeText } from "../text";
+import { NodeText, Text } from "../text";
 import { DivBlock, NodeDiv } from "../div";
 
 export type Components = {
@@ -72,13 +72,13 @@ export const componentsMap: Components[] = [
     items: [
       {
         name: "Paragraph",
-        demo: "Paragraph",
-        node: <NodeText tagName="p" text="Paragraph" />,
+        demo: <Text tagName="p">Paragraph</Text>,
+        node: <NodeText tagName="p">Paragraph</NodeText>,
       },
       {
         name: "Title",
-        demo: <h2>Title</h2>,
-        node: <NodeText tagName="h2" text="Title" />,
+        demo: <Text tagName="h2">Title</Text>,
+        node: <NodeText tagName="h2">Title</NodeText>,
       },
     ],
   },

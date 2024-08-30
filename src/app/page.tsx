@@ -17,43 +17,48 @@ import { ReactIframe } from "@/components/react-iframe";
 import { RenderNode } from "@/components/render-node/render-node";
 import { SideMenu } from "@/components/side-menu";
 import { Viewport } from "@/components/viewport";
-import { Editor, Frame, Element } from "@craftjs/core";
+import { Editor, Frame, Element, useEditor } from "@craftjs/core";
 import { spawn } from "child_process";
 import { useState } from "react";
 
 export default function Home() {
-  const [loading, setLoading] = useState(false);
+  const appStructure = {
+    type: "div",
+    props: {
+      className: "app-container",
+    },
+    children: [
+      {
+        type: "Card",
+        props: {
+          content: "This is a card",
+        },
+      },
+      {
+        type: "Button",
+        props: {
+          onClick: () => alert("Button clicked"),
+          children: "Click Me",
+        },
+      },
+    ],
+  };
 
-  const exportSite = async () => {
-    setLoading(true);
-    const response = await fetch("/api/export", {
+  const generateApp = async () => {
+    const response = await fetch("/api/generate-app", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        pageData: yourPageData, // данные текущей страницы
-      }),
+      body: JSON.stringify({ appStructure }),
     });
 
-    if (response.ok) {
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(new Blob([blob]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "exportedSite.zip");
-      document.body.appendChild(link);
-      link.click();
-      link?.parentNode?.removeChild(link);
-    } else {
-      console.error("Ошибка экспорта");
-    }
-    setLoading(false);
+    const data = await response.json();
   };
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between ">
-      <button onClick={exportSite}>Export</button>
+      <button onClick={generateApp}>Generate App</button>
       <Editor
         resolver={{
           NodeButton,

@@ -19,7 +19,7 @@ export function Blocks({ componentsMap }: BlocksProps) {
     <Accordion type="multiple" className="w-full p-1">
       {componentsMap.map((menuItem, index) => {
         return (
-          <AccordionItem value={menuItem.name}>
+          <AccordionItem value={menuItem.name} key={index}>
             <AccordionTrigger>{menuItem.name}</AccordionTrigger>
             <AccordionContent
               className={`grid w-full grid-cols-${menuItem.grid} `}

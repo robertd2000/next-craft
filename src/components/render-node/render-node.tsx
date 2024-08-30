@@ -45,7 +45,7 @@ export const RenderNode = ({ render }: { render: React.ReactNode }) => {
       : { top: 0, left: 0, bottom: 0 };
 
     return {
-      top: `${top > 0 ? top + 35 : bottom}px`,
+      top: `${top > 0 ? top + 55 : bottom}px`,
       left: `${left + 350}px`,
     };
   }, []);
