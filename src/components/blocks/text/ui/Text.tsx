@@ -1,7 +1,7 @@
-import { SettingsControl } from "@/components/controls/SettingsControl";
-import { useEditor, useNode } from "@craftjs/core";
 import React, { HTMLAttributes } from "react";
 import ContentEditable from "react-contenteditable";
+import { useEditor, useNode } from "@craftjs/core";
+import { SettingsControl } from "@/components/controls/SettingsControl";
 
 interface TextProps extends HTMLAttributes<HTMLParagraphElement> {
   tagName: string;
@@ -44,6 +44,7 @@ export function NodeText({ children, tagName, ...props }: TextProps) {
   );
 }
 
+// @ts-ignore
 NodeText.craft = {
   ...NodeText.craft,
   displayName: "Text",

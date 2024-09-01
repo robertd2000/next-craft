@@ -90,6 +90,7 @@ export const SettingsControl = () => {
     const { onMouseMove, onMouseOver, ...rest } = props.innerProps;
     const newProps = { ...props, innerProps: rest };
     return (
+      // @ts-ignore
       <components.Option {...newProps}>
         <div className="text-xs">{children}</div>
       </components.Option>
@@ -130,6 +131,7 @@ export const SettingsControl = () => {
         options={selectOptions}
         isSearchable
         isClearable={false}
+        // @ts-ignore
         components={{ MenuList, Option: CustomOption }}
         isMulti
         placeholder={"Add new class"}

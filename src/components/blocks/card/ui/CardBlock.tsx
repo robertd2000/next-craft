@@ -14,7 +14,7 @@ import { SettingsControl } from "@/components/controls/SettingsControl";
 interface NodeCardProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const draggable = true;
-const droppable = true; // Can drop items into to this component
+const droppable = true;
 
 export const NodeCardHeader = withNode(CardHeader, {
   droppable,
@@ -25,7 +25,9 @@ export const NodeCardTitle = withNode(CardTitle, {
   droppable,
 });
 
+// @ts-ignore
 NodeCardTitle.craft = {
+  // @ts-ignore
   ...NodeCardTitle.craft,
   related: {
     toolbar: SettingsControl,
@@ -37,7 +39,9 @@ export const NodeCardDescription = withNode(CardDescription, {
   droppable,
 });
 
+// @ts-ignore
 NodeCardDescription.craft = {
+  // @ts-ignore
   ...NodeCardDescription.craft,
   related: {
     toolbar: SettingsControl,
@@ -84,6 +88,7 @@ export const NodeCard = ({ ...props }: NodeCardProps) => {
   );
 };
 
+// @ts-ignore
 NodeCard.craft = {
   ...NodeCard.craft,
   displayName: "Card",

@@ -34,30 +34,33 @@ interface TransformedNode {
 function transformNode(
   nodeId: string,
   structure: SerializedNodes
-): ReactNode | null | TransformedNode {
+): TransformedNode | ReactNode | null {
   const node = structure[nodeId];
 
   if (!node) return null;
 
+  const { displayName, props, linkedNodes, nodes } = node;
+
   const transformedNode: TransformedNode = {
-    type: node.displayName,
-    props: { ...node.props },
+    type: displayName,
+    props: { ...props },
+    children: [],
   };
 
-  const linkedNodes = Object.values(node.linkedNodes || {});
-  if (linkedNodes.length > 0) {
-    transformedNode.children = linkedNodes
+  if (linkedNodes) {
+    transformedNode.children = Object.values(linkedNodes)
       .map((childId) => transformNode(childId, structure))
       .filter((child) => child !== null) as ReactNode[];
   }
-  if (node.nodes && node.nodes.length > 0) {
-    transformedNode.children = [
-      ...(transformedNode.children || []),
-      ...node.nodes
+
+  if (nodes) {
+    transformedNode.children.push(
+      ...nodes
         .map((childId) => transformNode(childId, structure))
-        .filter((child) => child !== null),
-    ] as ReactNode[];
+        .filter((child) => child !== null)
+    );
   }
+
   return transformedNode;
 }
 
@@ -74,21 +77,26 @@ export function parseStructure(structure: SerializedNodes) {
   return createComponent(transformedStructure as TransformedNode);
 }
 
-export function createComponent(
-  node: TransformedNode | null
-): JSX.Element | null {
+export function createComponent(node?: TransformedNode): JSX.Element | null {
   if (!node) return null;
-  const { type, props, children } = node;
 
-  const Component = componentMap[type] || type;
+  const {
+    type: ComponentType,
+    props: componentProps,
+    children: nodeChildren,
+  } = node;
 
-  if (!children || children.length === 0) {
-    return <Component {...props} key={props?.key} />;
+  const Component = componentMap[ComponentType] || ComponentType;
+
+  if (!nodeChildren || nodeChildren.length === 0) {
+    return <Component {...componentProps} key={componentProps?.key} />;
   }
 
   return (
-    <Component {...props}>
-      {children.map((child: TransformedNode) => createComponent(child))}
+    <Component {...componentProps}>
+      {nodeChildren.map((nodeChild: TransformedNode | undefined) =>
+        createComponent(nodeChild)
+      )}
     </Component>
   );
 }

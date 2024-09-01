@@ -8,8 +8,9 @@ const draggable = true;
 export const NodeButton = withNode(Button, {
   draggable,
 });
-
+// @ts-ignore
 NodeButton.craft = {
+  // @ts-ignore
   ...NodeButton.craft,
   related: {
     // toolbar: SettingsControl,

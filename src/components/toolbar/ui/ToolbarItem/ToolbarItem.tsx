@@ -59,7 +59,7 @@ export function ToolbarItem({
               <h4 className="text-sm text-light-gray-2">{props.label}</h4>
             ) : null}
             <Slider
-              value={parseInt(value) || 0}
+              value={[parseInt(value) || 0]}
               onChange={
                 ((_: any, value: number) => {
                   setProp((props: any) => {
