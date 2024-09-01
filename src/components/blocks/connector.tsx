@@ -98,11 +98,7 @@ export const withNode = <T extends Record<string, unknown>>(
   WithNode.displayName = `WithNode(${Component.displayName})`;
 
   const importPathMapKey = Component.displayName?.toLowerCase();
-  console.log(
-    "importPathMapKey ",
-    importPathMapKey,
-    importPathMapKey && importPathMap[importPathMapKey]
-  );
+
   // @ts-ignore
   WithNode.craft = {
     displayName: Component.displayName,

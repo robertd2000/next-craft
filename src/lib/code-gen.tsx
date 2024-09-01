@@ -14,8 +14,6 @@ const generateComponentCode = (
   const openingTag = `<${displayName}${generatePropsString(props)}>`;
   const closingTag = `</${displayName}>`;
 
-  console.log(" custom ", displayName, custom);
-
   if (!imports.find((item) => item.displayName === displayName)) {
     imports.push({
       displayName,
@@ -132,8 +130,6 @@ export const getOutputCode = (nodes: Nodes) => {
   const componentString = generateComponentCode(nodes, "ROOT", 2);
   const importString = generateImportStatements(imports);
   const output = wrapInsideComponent(componentString);
-  console.log(generateImportStatements(imports));
-  console.log("imports ", imports);
 
   return { importString, output };
 };
