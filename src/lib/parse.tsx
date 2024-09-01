@@ -8,10 +8,12 @@ import {
 } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Text } from "../components/blocks/text";
-import React from "react";
+import React, { ReactNode } from "react";
 import { SerializedNodes } from "@craftjs/core";
 
-const componentMap = {
+const componentMap: {
+  [key: string]: any;
+} = {
   Card,
   CardTitle,
   CardDescription,
@@ -23,67 +25,70 @@ const componentMap = {
   // Добавляйте сюда другие компоненты по мере необходимости
 };
 
-function transformNode(nodeId, structure) {
+interface TransformedNode {
+  type: any;
+  props: any;
+  children?: any;
+}
+
+function transformNode(
+  nodeId: string,
+  structure: SerializedNodes
+): ReactNode | null | TransformedNode {
   const node = structure[nodeId];
 
   if (!node) return null;
 
-  // Создаем базовый объект для текущего узла
-  const transformedNode = {
+  const transformedNode: TransformedNode = {
     type: node.displayName,
     props: { ...node.props },
   };
 
-  // Если узел имеет связные узлы (linkedNodes), добавляем их как дочерние элементы
   const linkedNodes = Object.values(node.linkedNodes || {});
   if (linkedNodes.length > 0) {
     transformedNode.children = linkedNodes
       .map((childId) => transformNode(childId, structure))
-      .filter((child) => child !== null); // Убираем null элементы
+      .filter((child) => child !== null) as ReactNode[];
   }
-  // Если у узла есть дочерние узлы, добавляем их к children
   if (node.nodes && node.nodes.length > 0) {
     transformedNode.children = [
       ...(transformedNode.children || []),
       ...node.nodes
         .map((childId) => transformNode(childId, structure))
         .filter((child) => child !== null),
-    ];
+    ] as ReactNode[];
   }
   return transformedNode;
 }
-function transformStructure(structure) {
-  // Начинаем с корневого узла, обычно это "ROOT"
+
+function transformStructure(
+  structure: SerializedNodes
+): TransformedNode | ReactNode {
   const rootId = "ROOT";
   return transformNode(rootId, structure);
 }
 
 export function parseStructure(structure: SerializedNodes) {
-  console.log("structure", structure);
   const transformedStructure = transformStructure(structure);
-  console.log("transformedStructure", transformedStructure);
 
-  return createComponent(transformedStructure);
+  return createComponent(transformedStructure as TransformedNode);
 }
 
 export function createComponent(
-  node: { type: any; props: any; children: any } | null
-) {
+  node: TransformedNode | null
+): JSX.Element | null {
   if (!node) return null;
   const { type, props, children } = node;
 
-  // Если тип компонента есть в словаре componentMap, используем его
   const Component = componentMap[type] || type;
 
-  // Если у узла нет дочерних элементов, просто создаем компонент
   if (!children || children.length === 0) {
     return <Component {...props} key={props?.key} />;
   }
 
-  // Если у узла есть дочерние элементы, создаем компонент рекурсивно
   return (
     <Component {...props}>
-      {children.map((child, index) => createComponent(child))}
+      {children.map((child: TransformedNode) => createComponent(child))}
     </Component>
   );
 }
