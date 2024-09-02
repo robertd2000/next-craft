@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { promisify } from "util";
 import { exec } from "child_process";
 import {
+  buildPath,
   componentsDir,
   destComponentsDir,
   eslintrcContent,
@@ -11,12 +12,19 @@ import {
   packageJsonContent,
   pageFilePath,
   projectName,
+  projectPath,
   tempDir,
   tsconfigContent,
+  zipBuildPath,
   zipFilePath,
 } from "./constatnts";
 import { copyComponentFile, generateZipFile } from "./utils";
-import { initEssentials, initPublic, initTailwind } from "./service";
+import {
+  initEssentials,
+  initPackageJSON,
+  initPublic,
+  initTailwind,
+} from "./service";
 
 const execPromise = promisify(exec);
 const mkdir = promisify(fs.mkdir);
@@ -59,31 +67,13 @@ export async function POST(req: Request) {
 
     // Create a ReadableStream from the buffer
 
-    const projectPath = path.join(process.cwd(), "src", projectName);
-    const buildPath = path.join(projectPath, "build");
-    const zipBuildPath = path.join(
-      process.cwd(),
-      "src",
-      "temp",
-      `${projectName}-build.zip`
-    );
-
     try {
       await access(projectPath);
     } catch (error) {
       await mkdir(projectPath, { recursive: true });
     }
 
-    const packageJsonPath = path.join(projectPath, "package.json");
-    try {
-      await access(packageJsonPath);
-    } catch (error) {
-      await writeFile(
-        packageJsonPath,
-        JSON.stringify(packageJsonContent, null, 2)
-      );
-    }
-
+    await initPackageJSON();
     const gitignorePath = path.join(projectPath, ".gitignore");
 
     try {
