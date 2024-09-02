@@ -98,7 +98,7 @@ export const Canvas = ({ children }: CanvasProps) => {
         </div>
 
         <div
-          className="w-full flex-1 bg-white rounded-b-lg"
+          className="w-full h-full flex-1 bg-white rounded-b-lg"
           ref={(ref) => {
             if (ref) {
               connect(drag(ref));
