@@ -8,6 +8,9 @@ export const Viewport = ({ children }: { children: React.ReactNode }) => {
     query: state.nodes,
   }));
 
+  // @ts-ignore
+  const { renderComponent } = parseStructure(query.getSerializedNodes());
+
   return (
     <div className="viewport w-full overflow-y-auto overflow-x-hidden">
       <Drawer>
@@ -15,10 +18,7 @@ export const Viewport = ({ children }: { children: React.ReactNode }) => {
           <Button variant="outline">Open Drawer</Button>
         </DrawerTrigger>
         <DrawerContent className="w-full h-[80%] p-2 m-2">
-          {
-            // @ts-ignore
-            <div>{parseStructure(query.getSerializedNodes())}</div>
-          }
+          {<div>{renderComponent}</div>}
         </DrawerContent>
       </Drawer>
 

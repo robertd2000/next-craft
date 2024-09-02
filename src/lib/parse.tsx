@@ -74,29 +74,38 @@ function transformStructure(
 export function parseStructure(structure: SerializedNodes) {
   const transformedStructure = transformStructure(structure);
 
-  return createComponent(transformedStructure as TransformedNode);
-}
+  const components: React.ForwardRefExoticComponent<
+    React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>
+  >[] = [];
 
-export function createComponent(node?: TransformedNode): JSX.Element | null {
-  if (!node) return null;
+  function createComponent(node?: TransformedNode): JSX.Element | null {
+    if (!node) return null;
 
-  const {
-    type: ComponentType,
-    props: componentProps,
-    children: nodeChildren,
-  } = node;
+    const {
+      type: ComponentType,
+      props: componentProps,
+      children: nodeChildren,
+    } = node;
 
-  const Component = componentMap[ComponentType] || ComponentType;
+    const Component = componentMap[ComponentType] || ComponentType;
 
-  if (!nodeChildren || nodeChildren.length === 0) {
-    return <Component {...componentProps} key={componentProps?.key} />;
+    components.push(Component);
+
+    if (!nodeChildren || nodeChildren.length === 0) {
+      return <Component {...componentProps} key={componentProps?.key} />;
+    }
+
+    return (
+      <Component {...componentProps}>
+        {nodeChildren.map((nodeChild: TransformedNode | undefined) =>
+          createComponent(nodeChild)
+        )}
+      </Component>
+    );
   }
 
-  return (
-    <Component {...componentProps}>
-      {nodeChildren.map((nodeChild: TransformedNode | undefined) =>
-        createComponent(nodeChild)
-      )}
-    </Component>
-  );
+  return {
+    renderComponent: createComponent(transformedStructure as TransformedNode),
+    components,
+  };
 }
