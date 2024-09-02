@@ -6,14 +6,9 @@ import {
   CardContent,
   CardFooter,
 } from "../components/ui/card";
-import { Button, ButtonProps } from "../components/ui/button";
+import { Button } from "../components/ui/button";
 import { Text } from "@/components/ui/text";
-import React, {
-  ForwardRefExoticComponent,
-  HTMLAttributes,
-  ReactNode,
-  RefAttributes,
-} from "react";
+import React, { ReactNode } from "react";
 import { SerializedNodes } from "@craftjs/core";
 
 const componentMap: {
@@ -23,6 +18,7 @@ const componentMap: {
   };
 } = {
   Card: { component: Card, path: "card" },
+  CardHeader: { component: CardHeader, path: "card" },
   CardTitle: { component: CardTitle, path: "card" },
   CardDescription: { component: CardDescription, path: "card" },
   CardContent: { component: CardContent, path: "card" },
@@ -154,6 +150,7 @@ export function parseStructureToString(structure: SerializedNodes) {
   } = {
     Card: { component: "Card", path: "card" },
     CardTitle: { component: "CardTitle", path: "card" },
+    CardHeader: { component: "CardHeader", path: "card" },
     CardDescription: { component: "CardDescription", path: "card" },
     CardContent: { component: "CardContent", path: "card" },
     CardFooter: { component: "CardFooter", path: "card" },
