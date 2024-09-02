@@ -1,25 +1,20 @@
-import path from "path";
-import fs, { readFile, writeFile } from "fs-extra";
+import fs, { readFile } from "fs-extra";
 import { NextResponse } from "next/server";
 import { promisify } from "util";
 import { exec } from "child_process";
 import {
   buildPath,
-  componentsDir,
   destComponentsDir,
-  eslintrcContent,
-  gitignoreContent,
-  packageJsonContent,
   pageFilePath,
   projectName,
   projectPath,
   tempDir,
-  tsconfigContent,
   zipBuildPath,
   zipFilePath,
 } from "./constatnts";
-import { copyComponentFile, generateZipFile } from "./utils";
+import { generateZipFile } from "./utils";
 import {
+  initComponents,
   initEslintrc,
   initEssentials,
   initGitignore,
@@ -28,14 +23,11 @@ import {
   initTailwind,
   initTsconfig,
 } from "./service";
+import { ComponentImport } from "./types";
 
 const execPromise = promisify(exec);
 const mkdir = promisify(fs.mkdir);
 const access = promisify(fs.access);
-type ComponentImport = {
-  component: string;
-  path: string;
-};
 
 export async function POST(req: Request) {
   try {
@@ -48,16 +40,7 @@ export async function POST(req: Request) {
     fs.ensureDirSync(tempDir);
     fs.ensureDirSync(destComponentsDir);
 
-    components?.forEach((component) => {
-      if (!component?.component) return;
-      const componentPath = path.join(
-        componentsDir,
-        `/${component?.path?.toLowerCase()}.tsx`
-      );
-      console.log("Copying component file from", componentPath);
-      copyComponentFile(componentPath, destComponentsDir);
-    });
-
+    await initComponents(components);
     fs.writeFileSync(pageFilePath, componentCode, "utf8");
 
     await generateZipFile(zipFilePath, [pageFilePath, destComponentsDir]);
@@ -67,8 +50,6 @@ export async function POST(req: Request) {
 
     // Read the ZIP file into a buffer
     const fileBuffer = await readFile(zipFilePath);
-
-    // Create a ReadableStream from the buffer
 
     try {
       await access(projectPath);
