@@ -25,6 +25,7 @@ import {
   initPackageJSON,
   initPublic,
   initTailwind,
+  initTsconfig,
 } from "./service";
 
 const execPromise = promisify(exec);
@@ -77,9 +78,7 @@ export async function POST(req: Request) {
     await initPackageJSON();
     await initGitignore();
     // Create tsconfig.json file
-    const tsconfigPath = path.join(projectPath, "tsconfig.json");
-
-    await writeFile(tsconfigPath, JSON.stringify(tsconfigContent, null, 2));
+    await initTsconfig();
 
     // Create .eslintrc.json file
     const eslintrcPath = path.join(projectPath, ".eslintrc.json");
