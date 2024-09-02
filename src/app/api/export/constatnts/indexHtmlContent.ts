@@ -1,3 +1,4 @@
+export const indexHtmlContent = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,3 +11,4 @@
   <div id="root"></div>
 </body>
 </html>
+`;
