@@ -8,9 +8,6 @@ import {
   destComponentsDir,
   eslintrcContent,
   gitignoreContent,
-  indexContent,
-  indexCssContent,
-  indexHtmlContent,
   packageJsonContent,
   pageFilePath,
   projectName,
@@ -19,7 +16,7 @@ import {
   zipFilePath,
 } from "./constatnts";
 import { copyComponentFile, generateZipFile } from "./utils";
-import { initTailwind } from "./service";
+import { initEssentials, initPublic, initTailwind } from "./service";
 
 const execPromise = promisify(exec);
 const mkdir = promisify(fs.mkdir);
@@ -113,31 +110,8 @@ export async function POST(req: Request) {
     await initTailwind();
 
     // Create public and src directories if they don't exist
-    const publicPath = path.join(projectPath, "public");
-    await mkdir(publicPath, { recursive: true });
-    // Create index.html if it doesn't exist
-    const indexHtmlPath = path.join(publicPath, "index.html");
-
-    await writeFile(indexHtmlPath, indexHtmlContent.trim());
-    // Step 5: Create essential project files
-    const srcPath = path.join(projectPath, "src");
-    const indexPath = path.join(srcPath, "index.tsx");
-    const appPath = path.join(srcPath, "App.tsx");
-
-    await mkdir(srcPath, { recursive: true });
-
-    // Create index.tsx
-
-    await writeFile(indexPath, indexContent.trim());
-
-    // Create App.tsx
-    const appContent = componentCode;
-    await writeFile(appPath, appContent.trim());
-
-    // Create index.css for Tailwind styles
-    const indexCssPath = path.join(srcPath, "index.css");
-
-    await writeFile(indexCssPath, indexCssContent.trim());
+    await initPublic();
+    await initEssentials(componentCode);
 
     // Step 6: Run build command (npm run build)
     await execPromise("npm run build", { cwd: projectPath });
