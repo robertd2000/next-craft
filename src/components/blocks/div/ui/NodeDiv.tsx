@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { NodeCardContent } from "../../card";
 import { cn } from "@/lib/utils";
 import { withNode } from "../../connector";
+import { SettingsControl } from "@/components/controls/SettingsControl";
 
 interface DivBlockProps extends HTMLAttributes<HTMLDivElement> {}
 export function DivBlock({ className, ...props }: DivBlockProps) {
@@ -42,6 +43,6 @@ NodeDiv.craft = {
     className: "p-6 m-2",
   },
   related: {
-    //   toolbar: SettingsControl,
+    toolbar: SettingsControl,
   },
 };
