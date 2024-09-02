@@ -15,7 +15,7 @@ import {
   tailwindConfigContent,
   tsconfigContent,
 } from "./constatnts";
-import { generateZipFile } from "./utils";
+import { copyComponentFile, generateZipFile } from "./utils";
 
 const execPromise = promisify(exec);
 const mkdir = promisify(fs.mkdir);
@@ -197,9 +197,3 @@ export async function POST(req: Request) {
     return new Response("Internal error", { status: 500 });
   }
 }
-
-const copyComponentFile = (componentPath: string, destDir: string) => {
-  const componentName = path.basename(componentPath);
-  const destPath = path.join(destDir, componentName);
-  fs.copySync(componentPath, destPath);
-};
