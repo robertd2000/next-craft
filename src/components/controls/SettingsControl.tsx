@@ -1,18 +1,23 @@
 "use client";
 
-import { useEditor, useNode } from "@craftjs/core";
 import { Component, ReactNode, useEffect, useState } from "react";
 import Select, { MultiValue, components, createFilter } from "react-select";
-import { suggestions } from "@/lib/tw-classes";
 import { FixedSizeList as List } from "react-window";
+import { useEditor, useNode } from "@craftjs/core";
 import { Trash2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { suggestions } from "@/lib/tw-classes";
 
 const selectOptions = suggestions.map((value) => ({ label: value, value }));
 
-export const SettingsControl = () => {
+interface SettingsControlProps {
+  children?: ReactNode;
+}
+
+export function SettingsControl({ children }: SettingsControlProps) {
   const { query, actions } = useEditor();
+
   const {
     id,
     classNames,
@@ -152,6 +157,7 @@ export const SettingsControl = () => {
           setValue(option);
         }}
       />
+      {children}
     </div>
   );
-};
+}

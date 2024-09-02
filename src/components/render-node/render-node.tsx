@@ -3,8 +3,7 @@
 import { useNode, useEditor, ROOT_NODE } from "@craftjs/core";
 import { Move, ArrowUp, Delete } from "lucide-react";
 import React, { useCallback, useEffect, useRef } from "react";
-import ReactDOM, { createPortal } from "react-dom";
-import { Button } from "../ui/button";
+import { createPortal } from "react-dom";
 
 export const RenderNode = ({ render }: { render: React.ReactNode }) => {
   const { id } = useNode();

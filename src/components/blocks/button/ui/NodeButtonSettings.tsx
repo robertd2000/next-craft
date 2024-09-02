@@ -1,9 +1,10 @@
-import { ToolbarSection, ToolbarItem } from "@/components/toolbar";
 import React from "react";
+import { SettingsControl } from "@/components/controls/SettingsControl";
+import { ToolbarItem } from "@/components/toolbar";
 
 export function NodeButtonSettings() {
   return (
-    <div>
+    <SettingsControl>
       <ToolbarItem
         full={true}
         propKey="background"
@@ -11,6 +12,6 @@ export function NodeButtonSettings() {
         label="Background"
       />
       <ToolbarItem full={true} propKey="color" type="color" label="Text" />
-    </div>
+    </SettingsControl>
   );
 }
