@@ -21,6 +21,7 @@ import {
 import { copyComponentFile, generateZipFile } from "./utils";
 import {
   initEssentials,
+  initGitignore,
   initPackageJSON,
   initPublic,
   initTailwind,
@@ -74,15 +75,7 @@ export async function POST(req: Request) {
     }
 
     await initPackageJSON();
-    const gitignorePath = path.join(projectPath, ".gitignore");
-
-    try {
-      // Write the .gitignore file
-      await writeFile(gitignorePath, gitignoreContent.trim());
-    } catch (error: any) {
-      console.error("Error creating .gitignore file:", error);
-    }
-
+    await initGitignore();
     // Create tsconfig.json file
     const tsconfigPath = path.join(projectPath, "tsconfig.json");
 
