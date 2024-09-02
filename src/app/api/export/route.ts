@@ -23,9 +23,9 @@ export async function POST(req: Request) {
 
     const componentsDir = //path.resolve(__dirname, "../../../components/ui");
       path.join(process.cwd(), "src", "components/ui");
-    const tempDir = path.join(process.cwd(), "src", "temp_export");
+    const tempDir = path.join(process.cwd(), "src", "temp");
     // path.resolve(__dirname, "temp_export");
-    const destComponentsDir = path.join(tempDir, "components");
+    const destComponentsDir = path.join(tempDir, "src/components/ui");
     const pageFilePath = path.join(tempDir, "PageComponent.jsx");
     const zipFilePath = path.join(process.cwd(), "src", "export.zip"); // path.join(__dirname, "export.zip");
 
@@ -136,6 +136,54 @@ export async function POST(req: Request) {
       );
     }
 
+    const gitignoreContent = `
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+    `;
+
+    const gitignorePath = path.join(projectPath, ".gitignore");
+
+    try {
+      // Write the .gitignore file
+      await writeFile(gitignorePath, gitignoreContent.trim());
+    } catch (error: any) {
+      console.error("Error creating .gitignore file:", error);
+    }
+
     // Create tsconfig.json file
     const tsconfigPath = path.join(projectPath, "tsconfig.json");
     const tsconfigContent = {
@@ -157,7 +205,7 @@ export async function POST(req: Request) {
         outDir: "./build",
         baseUrl: "./src",
         paths: {
-          "@/*": ["*"],
+          "@lib/*": ["./lib/*"],
         },
       },
       include: ["src"],
@@ -179,6 +227,19 @@ export async function POST(req: Request) {
 
     // Step 4: Initialize Tailwind CSS
     await execPromise("npx tailwindcss init", { cwd: projectPath });
+
+    const sourceFilePath = path.join(process.cwd(), "src", "lib", "utils.ts"); // Path to the source file
+    const targetDirPath = path.join(tempDir, "src", "lib"); // Target directory path
+    const targetFilePath = path.join(targetDirPath, "utils.ts"); // Target file path
+
+    // Ensure the target directory exists
+    await mkdir(targetDirPath, { recursive: true });
+
+    // Read content from the source file
+    const content = await readFile(sourceFilePath, "utf8");
+
+    // Write content to the new file in the target directory
+    await writeFile(targetFilePath, content);
 
     // Create public and src directories if they don't exist
     const publicPath = path.join(projectPath, "public");
@@ -226,21 +287,7 @@ root.render(
     await writeFile(indexPath, indexContent.trim());
 
     // Create App.tsx
-    const appContent = `
-import React from 'react';
-
-function App() {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <h1 className="text-3xl font-bold underline">
-        Hello, React with Tailwind!
-      </h1>
-    </div>
-  );
-}
-
-export default App;
-    `;
+    const appContent = componentCode;
     await writeFile(appPath, appContent.trim());
 
     // Create Tailwind config

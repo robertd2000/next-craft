@@ -21,8 +21,8 @@
     "outDir": "./build",
     "baseUrl": "./src",
     "paths": {
-      "@/*": [
-        "*"
+      "@lib/*": [
+        "./lib/*"
       ]
     }
   },

@@ -201,7 +201,7 @@ export function parseStructureToString(structure: SerializedNodes) {
   components
     ?.filter((i) => !unimportedNodes?.includes(i?.component))
     ?.forEach((component: ComponentImport) => {
-      const importString = `import ${component?.component} from './components/${component?.path}'`;
+      const importString = `import {${component?.component}} from './components/ui/${component?.path}'`;
 
       if (!imports.includes(importString) && component?.component) {
         imports.push(importString);
@@ -211,9 +211,11 @@ export function parseStructureToString(structure: SerializedNodes) {
   const componentCode = `
   ${imports?.join("\n")}
 
-  export function MyComponent() {
+  function App() {
     return ${componentString}
   }
+
+  export default App;
 `;
 
   return {

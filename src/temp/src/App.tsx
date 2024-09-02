@@ -1,13 +1,12 @@
-import React from 'react';
+import {Button} from './components/ui/button'
 
-function App() {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <h1 className="text-3xl font-bold underline">
-        Hello, React with Tailwind!
-      </h1>
-    </div>
-  );
-}
+  function App() {
+    return <div className="w-full h-full" id="ROOT" data-cy="root-container">
+  <Button children="Button 1" />
+  <Button children="Button 2" />
+  <Button children="Button 3" />
+  <Button children="Button 4" />
+</div>
+  }
 
-export default App;
+  export default App;

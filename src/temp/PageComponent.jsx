@@ -1,7 +1,7 @@
 
-  import Button from './components/button'
+  import {Button} from './components/ui/button'
 
-  export function MyComponent() {
+  function App() {
     return <div className="w-full h-full" id="ROOT" data-cy="root-container">
   <Button children="Button 1" />
   <Button children="Button 2" />
@@ -9,3 +9,5 @@
   <Button children="Button 4" />
 </div>
   }
+
+  export default App;
