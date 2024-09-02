@@ -57,7 +57,7 @@ export const Viewport = ({ children }: { children: React.ReactNode }) => {
       <div className="flex justify-between p-4 pb-0">
         <Drawer>
           <DrawerTrigger asChild>
-            <Button variant="outline">Open Drawer</Button>
+            <Button variant="outline">Preview</Button>
           </DrawerTrigger>
           <DrawerContent className="w-full h-[80%] p-2 m-2">
             {<div>{renderComponent}</div>}
