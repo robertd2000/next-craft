@@ -1,18 +1,23 @@
 "use client";
 
-import { useEditor, useNode } from "@craftjs/core";
 import { Component, ReactNode, useEffect, useState } from "react";
 import Select, { MultiValue, components, createFilter } from "react-select";
-import { suggestions } from "@/lib/tw-classes";
 import { FixedSizeList as List } from "react-window";
+import { useEditor, useNode } from "@craftjs/core";
 import { Trash2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { suggestions } from "@/lib/tw-classes";
 
 const selectOptions = suggestions.map((value) => ({ label: value, value }));
 
-export const SettingsControl = () => {
+interface SettingsControlProps {
+  children?: ReactNode;
+}
+
+export function SettingsControl({ children }: SettingsControlProps) {
   const { query, actions } = useEditor();
+
   const {
     id,
     classNames,
@@ -90,6 +95,7 @@ export const SettingsControl = () => {
     const { onMouseMove, onMouseOver, ...rest } = props.innerProps;
     const newProps = { ...props, innerProps: rest };
     return (
+      // @ts-ignore
       <components.Option {...newProps}>
         <div className="text-xs">{children}</div>
       </components.Option>
@@ -130,6 +136,7 @@ export const SettingsControl = () => {
         options={selectOptions}
         isSearchable
         isClearable={false}
+        // @ts-ignore
         components={{ MenuList, Option: CustomOption }}
         isMulti
         placeholder={"Add new class"}
@@ -139,7 +146,6 @@ export const SettingsControl = () => {
           if (option && Array.isArray(option)) {
             const classNames = option.map((item) => item.value).join(" ");
             setProp((props: { className: string }) => {
-              console.log("Setting props ", props.className);
               props.className = classNames;
             });
           }
@@ -151,6 +157,7 @@ export const SettingsControl = () => {
           setValue(option);
         }}
       />
+      {children}
     </div>
   );
-};
+}

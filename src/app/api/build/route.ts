@@ -12,19 +12,12 @@ export async function POST(request: NextRequest) {
   try {
     const { serializedNodes, styles } = await request.json();
 
-    // Create a temporary directory for the build
     const buildDir = path.join(process.cwd(), "temp");
     await fsPromises.mkdir(buildDir, { recursive: true });
 
-    // Create necessary files for the build
     await createBuildFiles(buildDir, serializedNodes, styles);
-
-    // Install dependencies
-    console.log("Installing dependencies...");
     await execAsync("npm install", { cwd: buildDir });
 
-    // Run the build command
-    console.log("Building the project...");
     const buildCommand =
       process.platform === "win32"
         ? "set NODE_ENV=production && npm run build"
@@ -32,16 +25,10 @@ export async function POST(request: NextRequest) {
 
     const { stdout, stderr } = await execAsync(buildCommand, { cwd: buildDir });
 
-    console.log("Build output:", stdout);
     if (stderr) console.error("Build errors:", stderr);
 
-    // Zip the build output
     const zipFilePath = await zipBuildOutput(buildDir);
 
-    // Clean up the temporary directory
-    // await fsPromises.rm(buildDir, { recursive: true, force: true });
-
-    // Return the zip file
     const fileContent = await fsPromises.readFile(zipFilePath);
     await fsPromises.unlink(zipFilePath);
 

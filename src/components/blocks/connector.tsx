@@ -17,12 +17,30 @@ const importPathMap: { [key: string]: string } = {
   carddescription: CARD_PATH,
 };
 
-export const withNode = <T extends {}>(
+/**
+ * Wrap a component with Craft.js functionality.
+ *
+ * @param Component The component to wrap. Must be a function component.
+ * @param options Options for the wrapper component.
+ * @param options.draggable Whether the component can be dragged into a container.
+ * @param options.droppable Whether the component can be dropped into another
+ *   component.
+ * @returns A new component with the same props as `Component` plus a `ref` prop.
+ */
+export const withNode = <T extends Record<string, unknown>>(
   Component: React.ComponentType<T>,
-  { draggable = true, droppable = true } = {}
-) => {
+  {
+    draggable = true,
+    droppable = true,
+  }: {
+    draggable?: boolean;
+    droppable?: boolean;
+  } = {}
+): React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<T> & React.RefAttributes<HTMLElement>
+> => {
   // Wrap the returned component with forwardRef
-  const WithNode = forwardRef<HTMLElement, PropsWithChildren<T>>(
+  const WithNode = React.forwardRef<HTMLElement, PropsWithChildren<T>>(
     (props, ref) => {
       const {
         id,
@@ -52,6 +70,7 @@ export const withNode = <T extends {}>(
       };
 
       return (
+        // @ts-ignore
         <Component
           ref={applyRef}
           {...props}
@@ -79,12 +98,8 @@ export const withNode = <T extends {}>(
   WithNode.displayName = `WithNode(${Component.displayName})`;
 
   const importPathMapKey = Component.displayName?.toLowerCase();
-  console.log(
-    "importPathMapKey ",
-    importPathMapKey,
-    importPathMapKey && importPathMap[importPathMapKey]
-  );
 
+  // @ts-ignore
   WithNode.craft = {
     displayName: Component.displayName,
     custom: {

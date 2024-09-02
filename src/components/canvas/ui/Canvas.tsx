@@ -44,11 +44,7 @@ export const Canvas = ({ children }: CanvasProps) => {
     <div className="w-full h-full flex justify-center">
       <div className={`${canvasWidth} flex flex-col h-full border rounded-sm`}>
         <div className="flex justify-between items-center p-4 w-full bg-gray-200">
-          <div className="flex gap-3">
-            {/* <div className="h-3 w-3 rounded-full bg-red-400"></div>
-            <div className="h-3 w-3 rounded-full bg-yellow-400"></div>
-            <div className="h-3 w-3 rounded-full bg-green-400"></div> */}
-          </div>
+          <div className="flex gap-3"></div>
           <div className="flex gap-2">
             <Drawer
               open={open}
@@ -69,25 +65,6 @@ export const Canvas = ({ children }: CanvasProps) => {
                 <CodeView codeString={output as string} />
               </DrawerContent>
             </Drawer>
-            {/* <Drawer
-              open={htmlOpen}
-              onOpenChange={(value: boolean) => {
-                generateHTML();
-                setHtmlOpen(value);
-              }}
-            >
-              <DrawerTrigger>
-                <FileCode2
-                  size={24}
-                  strokeWidth={1.75}
-                  className="text-gray-500 hover:text-primary transition duration-300"
-                />
-              </DrawerTrigger>
-
-              <DrawerContent className="h-[75vh]">
-                <CodeView codeString={htmlOutput as string} />
-              </DrawerContent>
-            </Drawer> */}
           </div>
 
           <div className="flex items-center gap-2 opacity-80 active:text-primary">

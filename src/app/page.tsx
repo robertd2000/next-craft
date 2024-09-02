@@ -17,9 +17,8 @@ import { ReactIframe } from "@/components/react-iframe";
 import { RenderNode } from "@/components/render-node/render-node";
 import { SideMenu } from "@/components/side-menu";
 import { Viewport } from "@/components/viewport";
-import { Editor, Frame, Element, useEditor } from "@craftjs/core";
-import { spawn } from "child_process";
-import { useState } from "react";
+import { Editor, Frame, Element } from "@craftjs/core";
+import { ControlPanel } from "@/components/control-panel/ui/ControlPanel";
 
 export default function Home() {
   const appStructure = {
@@ -91,6 +90,7 @@ export default function Home() {
               </Frame>
             </ReactIframe>
           </Viewport>
+          <ControlPanel />
         </div>
       </Editor>
     </main>

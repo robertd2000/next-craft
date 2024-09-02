@@ -15,7 +15,10 @@ export const Viewport = ({ children }: { children: React.ReactNode }) => {
           <Button variant="outline">Open Drawer</Button>
         </DrawerTrigger>
         <DrawerContent className="w-full h-[80%] p-2 m-2">
-          <div>{parseStructure(query.getSerializedNodes())}</div>
+          {
+            // @ts-ignore
+            <div>{parseStructure(query.getSerializedNodes())}</div>
+          }
         </DrawerContent>
       </Drawer>
 

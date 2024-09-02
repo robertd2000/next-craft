@@ -1,9 +1,10 @@
 import React, { HTMLAttributes } from "react";
-import { withNode } from "../../connector";
-import { cn } from "@/lib/utils";
 import { Element } from "@craftjs/core";
-import { NodeCardContent } from "../../card";
 import { Card } from "@/components/ui/card";
+import { NodeCardContent } from "../../card";
+import { cn } from "@/lib/utils";
+import { withNode } from "../../connector";
+import { SettingsControl } from "@/components/controls/SettingsControl";
 
 interface DivBlockProps extends HTMLAttributes<HTMLDivElement> {}
 export function DivBlock({ className, ...props }: DivBlockProps) {
@@ -34,6 +35,7 @@ export const NodeDiv = ({ ...props }: DivBlockProps) => {
   );
 };
 
+// @ts-ignore
 NodeDiv.craft = {
   ...NodeDiv.craft,
   displayName: "div",
@@ -41,6 +43,6 @@ NodeDiv.craft = {
     className: "p-6 m-2",
   },
   related: {
-    //   toolbar: SettingsControl,
+    toolbar: SettingsControl,
   },
 };
