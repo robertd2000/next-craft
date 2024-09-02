@@ -25,6 +25,7 @@ import {
   initTsconfig,
 } from "./service";
 import { ComponentImport } from "./types";
+import { initProject } from "./service/project";
 
 const execPromise = promisify(exec);
 const mkdir = promisify(fs.mkdir);
@@ -49,12 +50,8 @@ export async function POST(req: Request) {
     // Read the ZIP file into a buffer
     const fileBuffer = await readFile(zipFilePath);
 
-    try {
-      await access(projectPath);
-    } catch (error) {
-      await mkdir(projectPath, { recursive: true });
-    }
-
+    await initProject();
+    // Create package.json file
     await initPackageJSON();
     // Create .gitignore file
     await initGitignore();
