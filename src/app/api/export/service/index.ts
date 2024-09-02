@@ -5,4 +5,5 @@ export * from "./package";
 export * from "./gitignore";
 export * from "./tsconfig";
 export * from "./eslintrc";
+export * from "./headers";
 export * from "./components";

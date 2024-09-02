@@ -18,6 +18,7 @@ import {
   initEslintrc,
   initEssentials,
   initGitignore,
+  initHeaders,
   initPackageJSON,
   initPublic,
   initTailwind,
@@ -44,10 +45,7 @@ export async function POST(req: Request) {
     fs.writeFileSync(pageFilePath, componentCode, "utf8");
 
     await generateZipFile(zipFilePath, [pageFilePath, destComponentsDir]);
-    const headers = new Headers();
-    headers.append("Content-Disposition", 'attachment; filename="test.zip"');
-    headers.append("Content-Type", "application/zip");
-
+    await initHeaders();
     // Read the ZIP file into a buffer
     const fileBuffer = await readFile(zipFilePath);
 
