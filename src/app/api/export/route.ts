@@ -4,18 +4,22 @@ import { NextResponse } from "next/server";
 import { promisify } from "util";
 import { exec } from "child_process";
 import {
+  componentsDir,
+  destComponentsDir,
   eslintrcContent,
   gitignoreContent,
   indexContent,
   indexCssContent,
   indexHtmlContent,
   packageJsonContent,
-  postcssConfigContent,
+  pageFilePath,
   projectName,
-  tailwindConfigContent,
+  tempDir,
   tsconfigContent,
+  zipFilePath,
 } from "./constatnts";
 import { copyComponentFile, generateZipFile } from "./utils";
+import { initTailwind } from "./service";
 
 const execPromise = promisify(exec);
 const mkdir = promisify(fs.mkdir);
@@ -32,14 +36,6 @@ export async function POST(req: Request) {
       componentCode,
       components,
     }: { componentCode: string; components: ComponentImport[] } = body;
-
-    const componentsDir = //path.resolve(__dirname, "../../../components/ui");
-      path.join(process.cwd(), "src", "components/ui");
-    const tempDir = path.join(process.cwd(), "src", "temp");
-    // path.resolve(__dirname, "temp_export");
-    const destComponentsDir = path.join(tempDir, "src/components/ui");
-    const pageFilePath = path.join(tempDir, "PageComponent.jsx");
-    const zipFilePath = path.join(process.cwd(), "src", "export.zip"); // path.join(__dirname, "export.zip");
 
     fs.ensureDirSync(tempDir);
     fs.ensureDirSync(destComponentsDir);
@@ -75,14 +71,12 @@ export async function POST(req: Request) {
       `${projectName}-build.zip`
     );
 
-    // Step 1: Ensure project directory exists, create if not
     try {
       await access(projectPath);
     } catch (error) {
       await mkdir(projectPath, { recursive: true });
     }
 
-    // Step 2: Initialize package.json if it doesn't exist
     const packageJsonPath = path.join(projectPath, "package.json");
     try {
       await access(packageJsonPath);
@@ -116,20 +110,7 @@ export async function POST(req: Request) {
     await execPromise("npm install", { cwd: projectPath });
 
     // Step 4: Initialize Tailwind CSS
-    await execPromise("npx tailwindcss init", { cwd: projectPath });
-
-    const sourceFilePath = path.join(process.cwd(), "src", "lib", "utils.ts"); // Path to the source file
-    const targetDirPath = path.join(tempDir, "src", "lib"); // Target directory path
-    const targetFilePath = path.join(targetDirPath, "utils.ts"); // Target file path
-
-    // Ensure the target directory exists
-    await mkdir(targetDirPath, { recursive: true });
-
-    // Read content from the source file
-    const content = await readFile(sourceFilePath, "utf8");
-
-    // Write content to the new file in the target directory
-    await writeFile(targetFilePath, content);
+    await initTailwind();
 
     // Create public and src directories if they don't exist
     const publicPath = path.join(projectPath, "public");
@@ -142,8 +123,6 @@ export async function POST(req: Request) {
     const srcPath = path.join(projectPath, "src");
     const indexPath = path.join(srcPath, "index.tsx");
     const appPath = path.join(srcPath, "App.tsx");
-    const tailwindConfigPath = path.join(projectPath, "tailwind.config.js");
-    const postcssConfigPath = path.join(projectPath, "postcss.config.js");
 
     await mkdir(srcPath, { recursive: true });
 
@@ -154,13 +133,6 @@ export async function POST(req: Request) {
     // Create App.tsx
     const appContent = componentCode;
     await writeFile(appPath, appContent.trim());
-
-    // Create Tailwind config
-    await writeFile(tailwindConfigPath, tailwindConfigContent.trim());
-
-    // Create PostCSS config
-
-    await writeFile(postcssConfigPath, postcssConfigContent.trim());
 
     // Create index.css for Tailwind styles
     const indexCssPath = path.join(srcPath, "index.css");
