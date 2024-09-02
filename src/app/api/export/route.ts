@@ -20,6 +20,7 @@ import {
 } from "./constatnts";
 import { copyComponentFile, generateZipFile } from "./utils";
 import {
+  initEslintrc,
   initEssentials,
   initGitignore,
   initPackageJSON,
@@ -76,15 +77,12 @@ export async function POST(req: Request) {
     }
 
     await initPackageJSON();
+    // Create .gitignore file
     await initGitignore();
     // Create tsconfig.json file
     await initTsconfig();
-
     // Create .eslintrc.json file
-    const eslintrcPath = path.join(projectPath, ".eslintrc.json");
-
-    await writeFile(eslintrcPath, JSON.stringify(eslintrcContent, null, 2));
-
+    await initEslintrc();
     // Step 3: Install dependencies (npm install)
     await execPromise("npm install", { cwd: projectPath });
 
