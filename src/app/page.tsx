@@ -21,43 +21,8 @@ import { Editor, Frame, Element } from "@craftjs/core";
 import { ControlPanel } from "@/components/control-panel/ui/ControlPanel";
 
 export default function Home() {
-  const appStructure = {
-    type: "div",
-    props: {
-      className: "app-container",
-    },
-    children: [
-      {
-        type: "Card",
-        props: {
-          content: "This is a card",
-        },
-      },
-      {
-        type: "Button",
-        props: {
-          onClick: () => alert("Button clicked"),
-          children: "Click Me",
-        },
-      },
-    ],
-  };
-
-  const generateApp = async () => {
-    const response = await fetch("/api/generate-app", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ appStructure }),
-    });
-
-    const data = await response.json();
-  };
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-between ">
-      <button onClick={generateApp}>Generate App</button>
       <Editor
         resolver={{
           NodeButton,

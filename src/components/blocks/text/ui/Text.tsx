@@ -8,17 +8,6 @@ interface TextProps extends HTMLAttributes<HTMLParagraphElement> {
   children: string;
 }
 
-export function Text({ children, tagName, ...props }: TextProps) {
-  return (
-    <ContentEditable
-      tagName={tagName}
-      html={children}
-      disabled={true}
-      onChange={() => {}}
-      {...props}
-    />
-  );
-}
 export function NodeText({ children, tagName, ...props }: TextProps) {
   const {
     connectors: { connect },

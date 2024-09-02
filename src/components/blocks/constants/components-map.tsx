@@ -9,9 +9,10 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
+import { Text } from "@/components/ui/text";
 import { NodeButton } from "../button/ui/NodeButton";
 import { NodeCard } from "../card";
-import { NodeText, Text } from "../text";
+import { NodeText } from "../text";
 import { DivBlock, NodeDiv } from "../div";
 
 export type Components = {
