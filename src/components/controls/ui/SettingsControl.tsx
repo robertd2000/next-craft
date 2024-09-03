@@ -21,6 +21,7 @@ import { HexColorPicker } from "react-colorful";
 import { Label } from "../../ui/label";
 import { Backgrounds } from "./backgrounds";
 import { Display } from "./display";
+import { Typography } from "./typography";
 
 const selectOptions = suggestions.map((value) => ({ label: value, value }));
 
@@ -174,6 +175,8 @@ export function SettingsControl({ children }: SettingsControlProps) {
       />
 
       <Display />
+
+      <Typography />
 
       <Backgrounds />
 
