@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { withNode } from "../../connector";
-import { SettingsControl } from "@/components/controls/SettingsControl";
+import { SettingsControl } from "@/components/controls";
 import { NodeButtonSettings } from "./NodeButtonSettings";
 
 const draggable = true;

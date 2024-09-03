@@ -3,7 +3,7 @@ import { Element, useNode } from "@craftjs/core";
 import { Card } from "@/components/ui/card";
 import { NodeCardContent } from "../../card";
 import { withNode } from "../../connector";
-import { SettingsControl } from "@/components/controls/SettingsControl";
+import { SettingsControl } from "@/components/controls";
 
 const NodeDivContainer = withNode(Card, {
   droppable: true,

@@ -1,7 +1,7 @@
 import React, { HTMLAttributes } from "react";
 import ContentEditable from "react-contenteditable";
 import { useEditor, useNode } from "@craftjs/core";
-import { SettingsControl } from "@/components/controls/SettingsControl";
+import { SettingsControl } from "@/components/controls";
 
 interface TextProps extends HTMLAttributes<HTMLParagraphElement> {
   tagName: string;

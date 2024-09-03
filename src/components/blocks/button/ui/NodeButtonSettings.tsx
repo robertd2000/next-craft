@@ -1,5 +1,5 @@
 import React from "react";
-import { SettingsControl } from "@/components/controls/SettingsControl";
+import { SettingsControl } from "@/components/controls";
 import { ToolbarItem } from "@/components/toolbar";
 
 export function NodeButtonSettings() {

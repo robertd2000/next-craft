@@ -5,8 +5,8 @@ import Select, { MultiValue, components, createFilter } from "react-select";
 import { FixedSizeList as List } from "react-window";
 import { useEditor, useNode } from "@craftjs/core";
 import { Trash2 } from "lucide-react";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import { Button } from "../../ui/button";
+import { Input } from "../../ui/input";
 import { suggestions } from "@/lib/tw-classes";
 import {
   Select as SelectPrimitive,
@@ -16,8 +16,9 @@ import {
   SelectGroup,
   SelectLabel,
   SelectItem,
-} from "@radix-ui/react-select";
+} from "@/components/ui/select";
 import { HexColorPicker } from "react-colorful";
+import { Label } from "../../ui/label";
 
 const selectOptions = suggestions.map((value) => ({ label: value, value }));
 
@@ -169,32 +170,43 @@ export function SettingsControl({ children }: SettingsControlProps) {
           setValue(option);
         }}
       />
-      <div className="border-b border-b-1">
-        <h2>Layout</h2>
+      <div className="border-b border-b-1 mt-2">
+        <h2 className="font-bold">Layout</h2>
 
-        <SelectPrimitive
-          onValueChange={(e) => {
-            setProp((props: { style: any }) => (props.style.display = e));
-          }}
-        >
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select a display" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Display</SelectLabel>
-              <SelectItem value="flex">Flex</SelectItem>
-              <SelectItem value="block">Block</SelectItem>
-              <SelectItem value="grid">Grid</SelectItem>
-              <SelectItem value="none">None</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </SelectPrimitive>
+        <div className="flex gap-2 items-center mt-2 mb-2">
+          <Label htmlFor="display">Display</Label>
+          <SelectPrimitive
+            value={props.style.display}
+            onValueChange={(e) => {
+              setProp(
+                (props: { style: { display: string } }) =>
+                  (props.style = { ...props.style, display: e }),
+                500
+              );
+            }}
+          >
+            <SelectTrigger className="w-full" id="display">
+              <SelectValue placeholder="Select a display" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Display</SelectLabel>
+                <SelectItem value="flex">Flex</SelectItem>
+                <SelectItem value="block">Block</SelectItem>
+                <SelectItem value="grid">Grid</SelectItem>
+                <SelectItem value="none">None</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </SelectPrimitive>
+        </div>
       </div>
-      <div className="border-b border-b-1">
-        <h2>Backgrounds</h2>
+      <div className="border-b border-b-1 mt-2">
+        <h2 className="font-bold">Backgrounds</h2>
+
+        <Label htmlFor="backgroundColor">Color</Label>
         <HexColorPicker
-          color={props.backgroundColor}
+          id="backgroundColor"
+          color={props.style.backgroundColor}
           onChange={(color) => {
             console.log(color);
 

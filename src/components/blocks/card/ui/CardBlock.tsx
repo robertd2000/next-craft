@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { withNode } from "../../connector";
 import { NodeButton } from "../../button/ui/NodeButton";
-import { SettingsControl } from "@/components/controls/SettingsControl";
+import { SettingsControl } from "@/components/controls";
 
 interface NodeCardProps extends React.HTMLAttributes<HTMLDivElement> {}
 
