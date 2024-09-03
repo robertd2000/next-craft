@@ -44,3 +44,27 @@ export function generateZipFile(outputPath: string, filesToInclude: any[]) {
     archive.finalize();
   });
 }
+
+export async function archiveFolder(sourceDir: string, outPath: fs.PathLike) {
+  const output = fs.createWriteStream(outPath);
+  const archive = archiver("zip", {
+    zlib: { level: 9 },
+  });
+
+  return new Promise<void>((resolve, reject) => {
+    output.on("close", () => {
+      console.log(`Архив создан: ${outPath} (${archive.pointer()} байт)`);
+      resolve();
+    });
+
+    archive.on("error", (err) => {
+      reject(err);
+    });
+
+    archive.pipe(output);
+
+    archive.directory(sourceDir, false);
+
+    archive.finalize();
+  });
+}

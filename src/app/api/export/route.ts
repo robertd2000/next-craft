@@ -9,9 +9,8 @@ import {
   projectPath,
   tempDir,
   zipBuildPath,
-  zipFilePath,
 } from "./constatnts";
-import { generateZipFile } from "./utils";
+import { archiveFolder } from "./utils";
 import {
   initComponents,
   initEslintrc,
@@ -43,10 +42,10 @@ export async function POST(req: Request) {
     await initComponents(components);
     fs.writeFileSync(pageFilePath, componentCode, "utf8");
 
-    await generateZipFile(zipFilePath, [pageFilePath, destComponentsDir]);
+    // await generateZipFile(zipFilePath, [pageFilePath, destComponentsDir]);
     const headers = await initHeaders();
     // Read the ZIP file into a buffer
-    const fileBuffer = await readFile(zipFilePath);
+    // const fileBuffer = await readFile(zipFilePath);
 
     await initProject();
     // Create package.json file
@@ -69,14 +68,19 @@ export async function POST(req: Request) {
     // Check if the build directory exists
     await access(buildPath, fs.constants.R_OK);
 
-    await generateZipFile(zipBuildPath, [buildPath]);
+    await archiveFolder(buildPath, zipBuildPath);
+    // await generateZipFile(zipBuildPath, [
+    //   buildPath,
+    //   staticDir,
+    //   staticDirJS,
+    //   staticDirCSS,
+    // ]);
 
     const fileBuildBuffer = await readFile(zipBuildPath);
 
     const readableBuildStream = new ReadableStream({
       start(controller) {
         controller.enqueue(fileBuildBuffer);
-        // controller.enqueue(fileBuffer);
         controller.close();
       },
     });

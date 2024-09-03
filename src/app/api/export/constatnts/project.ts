@@ -10,6 +10,9 @@ export const zipFilePath = path.join(process.cwd(), "src", "export.zip"); // pat
 export const projectName = "temp";
 export const projectPath = path.join(process.cwd(), "src", projectName);
 export const buildPath = path.join(projectPath, "build");
+export const staticDir = path.join(buildPath, "static");
+export const staticDirCSS = path.join(staticDir, "css");
+export const staticDirJS = path.join(staticDir, "js");
 export const zipBuildPath = path.join(
   process.cwd(),
   "src",
