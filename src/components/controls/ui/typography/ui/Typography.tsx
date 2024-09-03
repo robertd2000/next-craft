@@ -88,6 +88,24 @@ export function Typography() {
             }}
           />
         </div>
+
+        <div className="w-[33%]">
+          <Label htmlFor="height">Height</Label>
+          <Input
+            id="height"
+            value={props.style?.lineHeight}
+            onChange={(e) => {
+              setProp(
+                (props: { style: { lineHeight: string } }) =>
+                  (props.style = {
+                    ...props.style,
+                    lineHeight: e.target.value,
+                  }),
+                500
+              );
+            }}
+          />
+        </div>
       </div>
     </div>
   );
