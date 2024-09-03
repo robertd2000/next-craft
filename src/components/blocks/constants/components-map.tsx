@@ -13,7 +13,8 @@ import { Text } from "@/components/ui/text";
 import { NodeButton } from "../button/ui/NodeButton";
 import { NodeCard } from "../card";
 import { NodeText } from "../text";
-import { DivBlock, NodeDiv } from "../div";
+import { NodeDivElement } from "../div";
+import { DivBlock } from "@/components/ui/div";
 
 export type Components = {
   name: string;
@@ -46,7 +47,7 @@ export const componentsMap: Components[] = [
       {
         name: "Div",
         demo: <DivBlock className="text-center	align-middle">div</DivBlock>,
-        node: <NodeDiv />,
+        node: <NodeDivElement />,
       },
       {
         name: "Default",

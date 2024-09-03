@@ -9,6 +9,7 @@ import {
   NodeCardHeader,
   NodeCardTitle,
   NodeDiv,
+  NodeDivElement,
   NodeText,
 } from "@/components/blocks";
 import { componentsMap } from "@/components/blocks/constants/components-map";
@@ -35,6 +36,7 @@ export default function Home() {
           NodeCardFooter,
           NodeText,
           NodeDiv,
+          NodeDivElement,
         }}
         onRender={RenderNode}
       >

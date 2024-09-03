@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerTrigger, DrawerContent } from "@/components/ui/drawer";
 import { useEditor } from "@craftjs/core";
-import { parseStructure, parseStructureToString } from "../../../lib/parse";
+import { parseStructureToString } from "../../../lib/parse";
 import { useState } from "react";
 import { Spinner } from "@/components/spinner";
+import { parseStructure } from "@/lib/parseToJSX";
 
 export const Viewport = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,6 +15,7 @@ export const Viewport = ({ children }: { children: React.ReactNode }) => {
 
   // @ts-ignore
   const state = query.getSerializedNodes();
+
   const handleExport = async () => {
     setIsLoading(true);
 
@@ -34,7 +36,7 @@ export const Viewport = ({ children }: { children: React.ReactNode }) => {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `$export.zip`;
+      a.download = `export.zip`;
       document.body.appendChild(a);
       a.click();
 
@@ -53,7 +55,7 @@ export const Viewport = ({ children }: { children: React.ReactNode }) => {
   const { renderComponent } = parseStructure(state);
 
   return (
-    <div className="viewport w-full overflow-y-auto overflow-x-hidden">
+    <div className="viewport w-full overflow-x-hidden">
       <div className="flex justify-between p-4 pb-0">
         <Drawer>
           <DrawerTrigger asChild>

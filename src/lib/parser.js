@@ -8,8 +8,6 @@ const generateComponentCode = (nodesMap, nodeId, level) => {
   const openingTag = `<${displayName}${generatePropsString(props)}>`;
   const closingTag = `</${displayName}>`;
 
-  console.log(" custom ", displayName, custom);
-
   if (!imports.find((item) => item.displayName === displayName)) {
     imports.push({
       displayName,
