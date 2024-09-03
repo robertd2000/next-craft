@@ -1,3 +1,4 @@
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -70,6 +71,23 @@ export function Typography() {
             );
           }}
         />
+      </div>
+
+      <div className="flex gap-2 items-center mt-2">
+        <div className="w-[33%]">
+          <Label htmlFor="size">Size</Label>
+          <Input
+            id="size"
+            value={props.style?.fontSize}
+            onChange={(e) => {
+              setProp(
+                (props: { style: { fontSize: string } }) =>
+                  (props.style = { ...props.style, fontSize: e.target.value }),
+                500
+              );
+            }}
+          />
+        </div>
       </div>
     </div>
   );
