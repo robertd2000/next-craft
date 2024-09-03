@@ -13,7 +13,8 @@ import { Text } from "@/components/ui/text";
 import { NodeButton } from "../button/ui/NodeButton";
 import { NodeCard } from "../card";
 import { NodeText } from "../text";
-import { DivBlock, NodeDivElement } from "../div";
+import { NodeDivElement } from "../div";
+import { DivBlock } from "@/components/ui/div";
 
 export type Components = {
   name: string;

@@ -10,6 +10,7 @@ import { Button } from "../components/ui/button";
 import { Text } from "@/components/ui/text";
 import React, { ReactNode } from "react";
 import { SerializedNodes } from "@craftjs/core";
+import { NodeDivElement } from "@/components/blocks";
 
 const componentMap: {
   [key: string]: {
@@ -26,6 +27,7 @@ const componentMap: {
   Button: { component: Button, path: "button" },
   //@ts-ignore
   Text: { component: Text, path: "text" },
+  NodeDivElement: { component: NodeDivElement, path: "div" },
   // Button,
   // Text,
   // Добавляйте сюда другие компоненты по мере необходимости
@@ -156,6 +158,7 @@ export function parseStructureToString(structure: SerializedNodes) {
     CardFooter: { component: "CardFooter", path: "card" },
     Button: { component: "Button", path: "button" },
     Text: { component: "Text", path: "text" },
+    NodeDivElement: { component: "NodeDivElement", path: "div" },
   };
 
   function createComponentString(node?: TransformedNode, depth = 0): string {

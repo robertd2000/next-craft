@@ -5,13 +5,13 @@ import { ToolbarItem } from "@/components/toolbar";
 export function NodeButtonSettings() {
   return (
     <SettingsControl>
-      <ToolbarItem
+      {/* <ToolbarItem
         full={true}
         propKey="background"
         type="bg"
         label="Background"
       />
-      <ToolbarItem full={true} propKey="color" type="color" label="Text" />
+      <ToolbarItem full={true} propKey="color" type="color" label="Text" /> */}
     </SettingsControl>
   );
 }

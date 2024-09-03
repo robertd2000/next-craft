@@ -47,6 +47,8 @@ export const withNode = <T extends Record<string, unknown>>(
         connectors: { connect, drag },
       } = useNode();
 
+      console.log("props", props);
+
       const { isActive } = useEditor((_, query) => ({
         isActive: query.getEvent("selected").contains(id),
       }));

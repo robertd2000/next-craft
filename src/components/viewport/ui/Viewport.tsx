@@ -34,7 +34,7 @@ export const Viewport = ({ children }: { children: React.ReactNode }) => {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `$export.zip`;
+      a.download = `export.zip`;
       document.body.appendChild(a);
       a.click();
 

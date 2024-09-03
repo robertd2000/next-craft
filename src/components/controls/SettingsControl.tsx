@@ -8,6 +8,16 @@ import { Trash2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { suggestions } from "@/lib/tw-classes";
+import {
+  Select as SelectPrimitive,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectGroup,
+  SelectLabel,
+  SelectItem,
+} from "@radix-ui/react-select";
+import { HexColorPicker } from "react-colorful";
 
 const selectOptions = suggestions.map((value) => ({ label: value, value }));
 
@@ -24,7 +34,9 @@ export function SettingsControl({ children }: SettingsControlProps) {
     deletable,
     text,
     actions: { setProp },
+    props,
   } = useNode((node) => ({
+    props: node.data.props,
     classNames: node.data.props["className"] as string,
     text: node.data.props["children"] as string,
     deletable: query.node(node.id).isDeletable(),
@@ -157,6 +169,43 @@ export function SettingsControl({ children }: SettingsControlProps) {
           setValue(option);
         }}
       />
+      <div className="border-b border-b-1">
+        <h2>Layout</h2>
+
+        <SelectPrimitive
+          onValueChange={(e) => {
+            setProp((props: { style: any }) => (props.style.display = e));
+          }}
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select a display" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Display</SelectLabel>
+              <SelectItem value="flex">Flex</SelectItem>
+              <SelectItem value="block">Block</SelectItem>
+              <SelectItem value="grid">Grid</SelectItem>
+              <SelectItem value="none">None</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </SelectPrimitive>
+      </div>
+      <div className="border-b border-b-1">
+        <h2>Backgrounds</h2>
+        <HexColorPicker
+          color={props.backgroundColor}
+          onChange={(color) => {
+            console.log(color);
+
+            setProp(
+              (props: { style: { backgroundColor: string } }) =>
+                (props.style = { ...props.style, backgroundColor: color }),
+              500
+            );
+          }}
+        />
+      </div>
       {children}
     </div>
   );
