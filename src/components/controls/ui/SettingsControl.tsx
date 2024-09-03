@@ -22,6 +22,7 @@ import { Label } from "../../ui/label";
 import { Backgrounds } from "./backgrounds";
 import { Display } from "./display";
 import { Typography } from "./typography";
+import { Size } from "./size";
 
 const selectOptions = suggestions.map((value) => ({ label: value, value }));
 
@@ -181,6 +182,8 @@ export function SettingsControl({ children }: SettingsControlProps) {
       />
 
       <Display />
+
+      <Size />
 
       <Typography />
 
