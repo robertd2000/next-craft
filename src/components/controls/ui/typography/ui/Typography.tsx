@@ -106,6 +106,24 @@ export function Typography() {
             }}
           />
         </div>
+
+        <div className="w-[33%]">
+          <Label htmlFor="spacing">Spacing</Label>
+          <Input
+            id="spacing"
+            value={props.style?.lineHeight}
+            onChange={(e) => {
+              setProp(
+                (props: { style: { letterSpacing: string } }) =>
+                  (props.style = {
+                    ...props.style,
+                    letterSpacing: e.target.value,
+                  }),
+                500
+              );
+            }}
+          />
+        </div>
       </div>
     </div>
   );
