@@ -16,6 +16,7 @@ import {
   AlignJustify,
   AlignLeft,
   AlignRight,
+  Italic,
   Strikethrough,
   Underline,
   X,
@@ -193,7 +194,59 @@ export function Typography() {
         </Tabs>
       </div>
 
-      <div className="mt-2"></div>
+      <div className="mt-2 flex gap-2">
+        <Tabs
+          defaultValue="none"
+          value={props.style?.textTransform}
+          onValueChange={(e) => {
+            setProp(
+              (props: { style: { textTransform: string } }) =>
+                (props.style = {
+                  ...props.style,
+                  textTransform: e,
+                })
+            );
+          }}
+        >
+          <TabsList>
+            <TabsTrigger value="none">
+              <h2 className="text-lg">X</h2>
+            </TabsTrigger>
+            <TabsTrigger value="uppercase">
+              <h2 className="text-lg">AA</h2>
+            </TabsTrigger>
+            <TabsTrigger value="capitalize">
+              <h2 className="text-lg">Aa</h2>
+            </TabsTrigger>
+            <TabsTrigger value="lowercase">
+              <h2 className="text-lg">aa</h2>
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+
+        <Tabs
+          defaultValue="none"
+          value={props.style?.fontStyle}
+          onValueChange={(e) => {
+            setProp(
+              (props: { style: { fontStyle: string } }) =>
+                (props.style = {
+                  ...props.style,
+                  fontStyle: e,
+                })
+            );
+          }}
+        >
+          <TabsList>
+            <TabsTrigger value="none">
+              <X />
+            </TabsTrigger>
+            <TabsTrigger value="italic">
+              <Italic />
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+      </div>
     </div>
   );
 }
