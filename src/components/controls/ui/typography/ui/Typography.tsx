@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useNode } from "@craftjs/core";
+import { HexColorPicker } from "react-colorful";
 
 export function Typography() {
   const {
@@ -19,10 +20,7 @@ export function Typography() {
   }));
 
   return (
-    <div
-      className="border-b border-b-
-    1 mt-2"
-    >
+    <div className="border-b border-b-1 mt-2 pb-2">
       <h2 className="font-bold">Typography</h2>
 
       <div className="flex gap-2 items-center mt-2 mb-2">
@@ -55,6 +53,23 @@ export function Typography() {
             </SelectGroup>
           </SelectContent>
         </Select>
+      </div>
+
+      <div>
+        <Label htmlFor="color">Color</Label>
+        <HexColorPicker
+          id="color"
+          color={props.style?.color}
+          onChange={(color) => {
+            console.log(color);
+
+            setProp(
+              (props: { style: { color: string } }) =>
+                (props.style = { ...props.style, color: color }),
+              500
+            );
+          }}
+        />
       </div>
     </div>
   );
