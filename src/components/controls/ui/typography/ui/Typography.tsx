@@ -11,7 +11,15 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useNode } from "@craftjs/core";
-import { AlignCenter, AlignJustify, AlignLeft, AlignRight } from "lucide-react";
+import {
+  AlignCenter,
+  AlignJustify,
+  AlignLeft,
+  AlignRight,
+  Strikethrough,
+  Underline,
+  X,
+} from "lucide-react";
 import { HexColorPicker } from "react-colorful";
 
 export function Typography() {
@@ -128,7 +136,7 @@ export function Typography() {
         </div>
       </div>
 
-      <div className="mt-2">
+      <div className="mt-2 flex gap-2">
         <Tabs
           defaultValue="start"
           value={props.style?.textAlign}
@@ -157,7 +165,35 @@ export function Typography() {
             </TabsTrigger>
           </TabsList>
         </Tabs>
+
+        <Tabs
+          defaultValue="none"
+          value={props.style?.textDecorationLine}
+          onValueChange={(e) => {
+            setProp(
+              (props: { style: { textDecorationLine: string } }) =>
+                (props.style = {
+                  ...props.style,
+                  textDecorationLine: e,
+                })
+            );
+          }}
+        >
+          <TabsList>
+            <TabsTrigger value="none">
+              <X />
+            </TabsTrigger>
+            <TabsTrigger value="underline">
+              <Underline />
+            </TabsTrigger>
+            <TabsTrigger value="line-through">
+              <Strikethrough />
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
+
+      <div className="mt-2"></div>
     </div>
   );
 }
