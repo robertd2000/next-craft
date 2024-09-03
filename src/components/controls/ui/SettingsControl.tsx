@@ -120,34 +120,40 @@ export function SettingsControl({ children }: SettingsControlProps) {
 
   return (
     <div className="p-4">
-      {deletable ? (
-        <Button
-          variant={"destructive"}
-          className="cursor-pointer mb-4 w-full"
-          onClick={(event) => {
-            event.stopPropagation();
-            if (parent) {
-              actions.delete(id);
+      <div className="border-b border-b-1 mt-2 pb-2">
+        {deletable ? (
+          <Button
+            variant={"destructive"}
+            className="cursor-pointer mb-4 w-full"
+            onClick={(event) => {
+              event.stopPropagation();
+              if (parent) {
+                actions.delete(id);
+              }
+            }}
+          >
+            <Trash2 className="mr-2 h-4 w-4" />
+            Delete
+          </Button>
+        ) : null}
+        {typeof text === "string" ? (
+          <Input
+            type="text"
+            value={text}
+            className="mb-4"
+            onChange={(e) =>
+              setProp(
+                (props: { children: ReactNode }) =>
+                  (props.children = e.target.value.replace(
+                    /<\/?[^>]+(>|$)/g,
+                    ""
+                  ))
+              )
             }
-          }}
-        >
-          <Trash2 className="mr-2 h-4 w-4" />
-          Delete
-        </Button>
-      ) : null}
-      {typeof text === "string" ? (
-        <Input
-          type="text"
-          value={text}
-          className="mb-4"
-          onChange={(e) =>
-            setProp(
-              (props: { children: ReactNode }) =>
-                (props.children = e.target.value.replace(/<\/?[^>]+(>|$)/g, ""))
-            )
-          }
-        />
-      ) : null}
+          />
+        ) : null}
+      </div>
+
       <Select
         options={selectOptions}
         isSearchable
