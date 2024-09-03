@@ -1,5 +1,5 @@
 import React, { HTMLAttributes } from "react";
-import { Element } from "@craftjs/core";
+import { Element, useNode } from "@craftjs/core";
 import { Card } from "@/components/ui/card";
 import { NodeCardContent } from "../../card";
 import { cn } from "@/lib/utils";
@@ -21,22 +21,28 @@ export function DivBlock({ className, ...props }: DivBlockProps) {
 
 const NodeDivContainer = withNode(Card, {
   droppable: true,
+  draggable: true,
 });
 
-export const NodeDiv = ({ ...props }: DivBlockProps) => {
+export const NodeDiv = withNode(NodeDivContainer, {
+  droppable: true,
+  draggable: true,
+});
+
+export const NodeDivElement = ({ ...props }: DivBlockProps) => {
   return (
-    <NodeDivContainer {...props}>
-      <Element
-        canvas
-        id="div-content"
-        is={NodeCardContent as typeof NodeCardContent & string}
-      ></Element>
-    </NodeDivContainer>
+    <Element
+      canvas
+      id="div-content"
+      {...props}
+      is={NodeDiv as typeof NodeCardContent & string}
+    ></Element>
   );
 };
 
 // @ts-ignore
 NodeDiv.craft = {
+  // @ts-ignore
   ...NodeDiv.craft,
   displayName: "div",
   props: {
