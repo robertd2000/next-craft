@@ -225,7 +225,7 @@ export function Typography() {
         </Tabs>
 
         <Tabs
-          defaultValue="none"
+          defaultValue="normal"
           value={props.style?.fontStyle}
           onValueChange={(e) => {
             setProp(
@@ -238,7 +238,7 @@ export function Typography() {
           }}
         >
           <TabsList>
-            <TabsTrigger value="none">
+            <TabsTrigger value="normal">
               <X />
             </TabsTrigger>
             <TabsTrigger value="italic">

@@ -17,7 +17,7 @@ export const ControlPanel = () => {
       <h3 className="py-2 px-4 border-b text-md font-semibold text-left">
         Control Panel
       </h3>
-      <ScrollArea className="h-[94vh] w-full rounded-md border">
+      <ScrollArea className="h-[94vh] w-full border">
         {active && related.toolbar && React.createElement(related.toolbar)}
       </ScrollArea>
     </div>

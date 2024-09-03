@@ -24,6 +24,7 @@ import { Display } from "./display";
 import { Typography } from "./typography";
 import { Size } from "./size";
 import { Position } from "./position";
+import { Space } from "./space";
 
 const selectOptions = suggestions.map((value) => ({ label: value, value }));
 
@@ -183,6 +184,8 @@ export function SettingsControl({ children }: SettingsControlProps) {
       />
 
       <Display />
+
+      <Space />
 
       <Size />
 
