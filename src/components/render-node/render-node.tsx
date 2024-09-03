@@ -74,7 +74,7 @@ export const RenderNode = ({ render }: { render: React.ReactNode }) => {
 
   return (
     <>
-      {isHover || isActive
+      {/* {isHover || isActive
         ? createPortal(
             <div
               ref={currentRef}
@@ -116,7 +116,7 @@ export const RenderNode = ({ render }: { render: React.ReactNode }) => {
             </div>,
             document.body
           )
-        : null}
+        : null} */}
       {render}
     </>
   );
