@@ -9,7 +9,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useNode } from "@craftjs/core";
+import { AlignCenter, AlignJustify, AlignLeft, AlignRight } from "lucide-react";
 import { HexColorPicker } from "react-colorful";
 
 export function Typography() {
@@ -124,6 +126,37 @@ export function Typography() {
             }}
           />
         </div>
+      </div>
+
+      <div className="mt-2">
+        <Tabs
+          defaultValue="start"
+          value={props.style?.textAlign}
+          onValueChange={(e) => {
+            setProp(
+              (props: { style: { textAlign: string } }) =>
+                (props.style = {
+                  ...props.style,
+                  textAlign: e,
+                })
+            );
+          }}
+        >
+          <TabsList>
+            <TabsTrigger value="start">
+              <AlignLeft />
+            </TabsTrigger>
+            <TabsTrigger value="end">
+              <AlignRight />
+            </TabsTrigger>
+            <TabsTrigger value="center">
+              <AlignCenter />
+            </TabsTrigger>
+            <TabsTrigger value="justify">
+              <AlignJustify />
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
     </div>
   );
