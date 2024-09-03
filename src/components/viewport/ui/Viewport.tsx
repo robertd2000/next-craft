@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerTrigger, DrawerContent } from "@/components/ui/drawer";
 import { useEditor } from "@craftjs/core";
-import { parseStructure, parseStructureToString } from "../../../lib/parse";
+import { parseStructureToString } from "../../../lib/parse";
 import { useState } from "react";
 import { Spinner } from "@/components/spinner";
+import { parseStructure } from "@/lib/parseToJSX";
 
 export const Viewport = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,6 +15,7 @@ export const Viewport = ({ children }: { children: React.ReactNode }) => {
 
   // @ts-ignore
   const state = query.getSerializedNodes();
+
   const handleExport = async () => {
     setIsLoading(true);
 

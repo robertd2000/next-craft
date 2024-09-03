@@ -73,8 +73,6 @@ export function Typography() {
           id="color"
           color={props.style?.color}
           onChange={(color) => {
-            console.log(color);
-
             setProp(
               (props: { style: { color: string } }) =>
                 (props.style = { ...props.style, color: color }),

@@ -22,8 +22,6 @@ export function Backgrounds() {
         id="backgroundColor"
         color={props.style?.backgroundColor}
         onChange={(color) => {
-          console.log(color);
-
           setProp(
             (props: { style: { backgroundColor: string } }) =>
               (props.style = { ...props.style, backgroundColor: color }),

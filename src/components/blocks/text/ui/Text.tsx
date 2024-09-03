@@ -17,8 +17,6 @@ export function NodeText({ children, tagName, ...props }: TextProps) {
     enabled: state.options.enabled,
   }));
 
-  console.log(props);
-
   return (
     <ContentEditable
       innerRef={connect}
