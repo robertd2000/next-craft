@@ -74,7 +74,7 @@ export const Canvas = ({ children }: CanvasProps) => {
                   <Undo
                     size={24}
                     strokeWidth={1.75}
-                    className="text-gray-500 hover:text-primary transition duration-300"
+                    className="text-gray-500 hover:text-primary transition duration-300 cursor-pointer"
                     onClick={(event) => {
                       actions.history.undo();
                     }}
@@ -86,7 +86,7 @@ export const Canvas = ({ children }: CanvasProps) => {
                   <Redo
                     size={24}
                     strokeWidth={1.75}
-                    className="text-gray-500 hover:text-primary transition duration-300"
+                    className="text-gray-500 hover:text-primary transition duration-300 cursor-pointer"
                     onClick={(event) => {
                       actions.history.redo();
                     }}
