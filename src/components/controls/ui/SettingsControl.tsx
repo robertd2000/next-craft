@@ -157,7 +157,7 @@ export function SettingsControl({ children }: SettingsControlProps) {
         placeholder={"Add new class"}
         value={value}
         filterOption={createFilter({ ignoreAccents: false })}
-        className="p-4"
+        className="p-4 border-b border-b-1"
         onChange={(option) => {
           if (option && Array.isArray(option)) {
             const classNames = option.map((item) => item.value).join(" ");
@@ -173,8 +173,19 @@ export function SettingsControl({ children }: SettingsControlProps) {
           setValue(option);
         }}
       />
-      <ScrollArea className="h-[94vh] w-full p-4">
-        <Accordion type="multiple" className="w-full">
+      <ScrollArea className="h-[calc(100vh-260px)] w-full p-4">
+        <Accordion
+          type="multiple"
+          className="w-full"
+          defaultValue={[
+            "Display",
+            "Space",
+            "Size",
+            "Position",
+            "Typography",
+            "Backgrounds",
+          ]}
+        >
           <Display />
 
           <Space />
