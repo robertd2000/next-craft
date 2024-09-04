@@ -1,6 +1,6 @@
-import { Label } from "@/components/ui/label";
 import { useNode } from "@craftjs/core";
 import { HexColorPicker } from "react-colorful";
+import { Label } from "@/components/ui/label";
 
 export function Backgrounds() {
   const {

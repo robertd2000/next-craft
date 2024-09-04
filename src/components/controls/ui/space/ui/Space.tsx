@@ -1,5 +1,5 @@
-import { Label } from "@/components/ui/label";
 import { useNode } from "@craftjs/core";
+import { Label } from "@/components/ui/label";
 import { InputMeasure } from "../../input-measure";
 
 export function Space() {
