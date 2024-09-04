@@ -14,6 +14,7 @@ export const packageJsonContent = {
     react: "^18.0.0",
     "react-dom": "^18.0.0",
     "react-scripts": "5.0.1",
+    "react-contenteditable": "^3.3.7",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-icons": "^1.3.0",
