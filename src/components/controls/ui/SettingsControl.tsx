@@ -16,6 +16,7 @@ import { Position } from "./position";
 import { Space } from "./space";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Accordion } from "@/components/ui/accordion";
+import { Borders } from "./borders";
 
 const selectOptions = suggestions.map((value) => ({ label: value, value }));
 
@@ -32,7 +33,6 @@ export function SettingsControl({ children }: SettingsControlProps) {
     deletable,
     text,
     actions: { setProp },
-    props,
   } = useNode((node) => ({
     props: node.data.props,
     classNames: node.data.props["className"] as string,
@@ -197,6 +197,8 @@ export function SettingsControl({ children }: SettingsControlProps) {
           <Typography />
 
           <Backgrounds />
+
+          <Borders />
         </Accordion>
 
         {children}
