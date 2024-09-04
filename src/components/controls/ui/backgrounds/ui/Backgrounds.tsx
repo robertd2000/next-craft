@@ -1,6 +1,11 @@
 import { useNode } from "@craftjs/core";
 import { HexColorPicker } from "react-colorful";
 import { Label } from "@/components/ui/label";
+import {
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export function Backgrounds() {
   const {
@@ -11,24 +16,23 @@ export function Backgrounds() {
   }));
 
   return (
-    <div
-      className="border-b border-b-
-    1 mt-2"
-    >
-      <h2 className="font-bold">Backgrounds</h2>
+    <AccordionItem value="Backgrounds">
+      <AccordionTrigger>Backgrounds</AccordionTrigger>
 
-      <Label htmlFor="backgroundColor">Color</Label>
-      <HexColorPicker
-        id="backgroundColor"
-        color={props.style?.backgroundColor}
-        onChange={(color) => {
-          setProp(
-            (props: { style: { backgroundColor: string } }) =>
-              (props.style = { ...props.style, backgroundColor: color }),
-            500
-          );
-        }}
-      />
-    </div>
+      <AccordionContent>
+        <Label htmlFor="backgroundColor">Color</Label>
+        <HexColorPicker
+          id="backgroundColor"
+          color={props.style?.backgroundColor}
+          onChange={(color) => {
+            setProp(
+              (props: { style: { backgroundColor: string } }) =>
+                (props.style = { ...props.style, backgroundColor: color }),
+              500
+            );
+          }}
+        />
+      </AccordionContent>
+    </AccordionItem>
   );
 }
