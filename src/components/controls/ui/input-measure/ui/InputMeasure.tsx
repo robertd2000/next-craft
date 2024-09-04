@@ -53,16 +53,15 @@ export function InputMeasure({
   );
 
   useEffect(() => {
-    setProp(
-      (props: { style: { propName: string } }) =>
-        (props.style = {
-          ...props.style,
-          [propName]: !isNaN(parseFloat(inputValue))
-            ? parseFloat(inputValue) + measurement
-            : "",
-        }),
-      500
-    );
+    if (!isNaN(parseFloat(inputValue)))
+      setProp(
+        (props: { style: { propName: string } }) =>
+          (props.style = {
+            ...props.style,
+            [propName]: parseFloat(inputValue) + measurement,
+          }),
+        500
+      );
   }, [inputValue, measurement]);
 
   return (

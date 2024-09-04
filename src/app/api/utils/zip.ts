@@ -45,7 +45,11 @@ export function generateZipFile(outputPath: string, filesToInclude: any[]) {
   });
 }
 
-export async function archiveFolder(sourceDir: string, outPath: fs.PathLike) {
+export async function archiveFolder(
+  sourceDir: string,
+  outPath: fs.PathLike,
+  excludeDirs: string[] = []
+) {
   const output = fs.createWriteStream(outPath);
   const archive = archiver("zip", {
     zlib: { level: 9 },
@@ -63,7 +67,16 @@ export async function archiveFolder(sourceDir: string, outPath: fs.PathLike) {
 
     archive.pipe(output);
 
-    archive.directory(sourceDir, false);
+    // archive.directory(sourceDir, false);
+    archive.directory(sourceDir, false, (entry) => {
+      const entryPath = entry.name;
+      const shouldExclude = excludeDirs.some(
+        (excludeDir) =>
+          entryPath.startsWith(`${excludeDir}/`) || entryPath === excludeDir
+      );
+
+      return shouldExclude ? false : entry;
+    });
 
     archive.finalize();
   });

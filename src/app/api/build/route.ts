@@ -1,17 +1,21 @@
 import fs, { readFile } from "fs-extra";
 import { NextResponse } from "next/server";
 import { promisify } from "util";
+import { exec } from "child_process";
 import {
+  buildPath,
   destComponentsDir,
   pageFilePath,
+  projectPath,
   tempDir,
-  zipFilePath,
+  zipBuildPath,
 } from "../constatnts";
 import { archiveFolder } from "../utils";
 import { initComponents, initHeaders } from "../service";
 import { ComponentImport } from "../types";
 import { setup } from "../service/setup";
 
+const execPromise = promisify(exec);
 const access = promisify(fs.access);
 
 export async function POST(req: Request) {
@@ -29,12 +33,16 @@ export async function POST(req: Request) {
     await initComponents(components);
     fs.writeFileSync(pageFilePath, componentCode, "utf8");
 
+    // Install dependencies (npm install)
+    await execPromise("npm install", { cwd: projectPath });
+    // Run build command (npm run build)
+    await execPromise("npm run build", { cwd: projectPath });
     // Check if the build directory exists
-    await access(tempDir, fs.constants.R_OK);
+    await access(buildPath, fs.constants.R_OK);
 
-    await archiveFolder(tempDir, zipFilePath, ["node_modules"]);
+    await archiveFolder(buildPath, zipBuildPath);
 
-    const fileBuildBuffer = await readFile(zipFilePath);
+    const fileBuildBuffer = await readFile(zipBuildPath);
 
     const readableBuildStream = new ReadableStream({
       start(controller) {
