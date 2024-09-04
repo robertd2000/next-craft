@@ -8,8 +8,8 @@ import {CardFooter} from './components/ui/card'
 
   function App() {
     return <div className="w-full h-full" id="ROOT" data-cy="root-container">
-  <Button children="Button 1" className="bg-green-500" />
-  <Button children="Button 2" style={{"backgroundColor":"#ff0000","width":"500px"}} />
+  <Button children="Button 1" className="bg-green-500" style={{"marginLeft":"10%"}} />
+  <Button children="Button 2" style={{"backgroundColor":"#ff0000","width":"500px","marginLeft":"5px"}} />
   <Card className="p-6 m-2">
     <CardHeader >
       <CardTitle children="Card Title" style={{"fontSize":"48px"}} />
