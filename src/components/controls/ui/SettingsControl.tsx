@@ -8,17 +8,6 @@ import { Trash2 } from "lucide-react";
 import { Button } from "../../ui/button";
 import { Input } from "../../ui/input";
 import { suggestions } from "@/lib/tw-classes";
-import {
-  Select as SelectPrimitive,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectGroup,
-  SelectLabel,
-  SelectItem,
-} from "@/components/ui/select";
-import { HexColorPicker } from "react-colorful";
-import { Label } from "../../ui/label";
 import { Backgrounds } from "./backgrounds";
 import { Display } from "./display";
 import { Typography } from "./typography";
@@ -90,7 +79,7 @@ export function SettingsControl({ children }: SettingsControlProps) {
 
       return (
         <List
-          width={"100%"} // Replace with the desired width value
+          width={"100%"}
           height={maxHeight}
           itemCount={children.length}
           itemSize={height}

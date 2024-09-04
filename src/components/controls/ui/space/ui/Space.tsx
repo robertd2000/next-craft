@@ -1,6 +1,6 @@
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useNode } from "@craftjs/core";
+import { Label } from "@/components/ui/label";
+import { InputMeasure } from "../../input-measure";
 
 export function Space() {
   const {
@@ -18,70 +18,42 @@ export function Space() {
       <div className="grid grid-cols-2 gap-2 mt-4 mb-4">
         <div>
           <Label htmlFor="marginTop">Margin Top</Label>
-          <Input
+          <InputMeasure
             id="marginTop"
             value={props.style?.marginTop}
-            onChange={(e) => {
-              setProp(
-                (props: { style: { marginTop: string } }) =>
-                  (props.style = { ...props.style, marginTop: e.target.value }),
-                500
-              );
-            }}
+            setProp={setProp}
+            propName="marginTop"
           />
         </div>
 
         <div>
           <Label htmlFor="marginBottom">Margin Bottom</Label>
-          <Input
+
+          <InputMeasure
             id="marginBottom"
             value={props.style?.marginBottom}
-            onChange={(e) => {
-              setProp(
-                (props: { style: { marginBottom: string } }) =>
-                  (props.style = {
-                    ...props.style,
-                    marginBottom: e.target.value,
-                  }),
-                500
-              );
-            }}
+            setProp={setProp}
+            propName="marginBottom"
           />
         </div>
 
         <div>
           <Label htmlFor="marginLeft">Margin Left</Label>
-          <Input
+          <InputMeasure
             id="marginLeft"
             value={props.style?.marginLeft}
-            onChange={(e) => {
-              setProp(
-                (props: { style: { marginLeft: string } }) =>
-                  (props.style = {
-                    ...props.style,
-                    marginLeft: e.target.value,
-                  }),
-                500
-              );
-            }}
+            setProp={setProp}
+            propName="marginLeft"
           />
         </div>
 
         <div>
           <Label htmlFor="marginRight">Margin Right</Label>
-          <Input
+          <InputMeasure
             id="marginRight"
             value={props.style?.marginRight}
-            onChange={(e) => {
-              setProp(
-                (props: { style: { marginRight: string } }) =>
-                  (props.style = {
-                    ...props.style,
-                    marginRight: e.target.value,
-                  }),
-                500
-              );
-            }}
+            setProp={setProp}
+            propName="marginRight"
           />
         </div>
       </div>
@@ -91,73 +63,41 @@ export function Space() {
       <div className="grid grid-cols-2 gap-2 mt-4 mb-4">
         <div>
           <Label htmlFor="paddingTop">Padding Top</Label>
-          <Input
+          <InputMeasure
             id="paddingTop"
             value={props.style?.paddingTop}
-            onChange={(e) => {
-              setProp(
-                (props: { style: { paddingTop: string } }) =>
-                  (props.style = {
-                    ...props.style,
-                    paddingTop: e.target.value,
-                  }),
-                500
-              );
-            }}
+            setProp={setProp}
+            propName="paddingTop"
           />
         </div>
 
         <div>
           <Label htmlFor="paddingBottom">Padding Bottom</Label>
-          <Input
+          <InputMeasure
             id="paddingBottom"
-            value={props.style?.paddingBotton}
-            onChange={(e) => {
-              setProp(
-                (props: { style: { paddingBottom: string } }) =>
-                  (props.style = {
-                    ...props.style,
-                    paddingBottom: e.target.value,
-                  }),
-                500
-              );
-            }}
+            value={props.style?.paddingBottom}
+            setProp={setProp}
+            propName="paddingBottom"
           />
         </div>
 
         <div>
           <Label htmlFor="paddingLeft">Padding Left</Label>
-          <Input
+          <InputMeasure
             id="paddingLeft"
             value={props.style?.paddingLeft}
-            onChange={(e) => {
-              setProp(
-                (props: { style: { paddingLeft: string } }) =>
-                  (props.style = {
-                    ...props.style,
-                    paddingLeft: e.target.value,
-                  }),
-                500
-              );
-            }}
+            setProp={setProp}
+            propName="paddingLeft"
           />
         </div>
 
         <div>
           <Label htmlFor="paddingRight">Padding Right</Label>
-          <Input
+          <InputMeasure
             id="paddingRight"
             value={props.style?.paddingRight}
-            onChange={(e) => {
-              setProp(
-                (props: { style: { paddingRight: string } }) =>
-                  (props.style = {
-                    ...props.style,
-                    paddingRight: e.target.value,
-                  }),
-                500
-              );
-            }}
+            setProp={setProp}
+            propName="paddingRight"
           />
         </div>
       </div>

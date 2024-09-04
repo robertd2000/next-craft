@@ -1,3 +1,4 @@
+import { useNode } from "@craftjs/core";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -8,7 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useNode } from "@craftjs/core";
 
 export function Position() {
   const {
