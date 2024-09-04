@@ -101,7 +101,7 @@ export const Viewport = ({ children }: { children: React.ReactNode }) => {
           </DrawerContent>
         </Drawer>
 
-        <div>
+        <div className="flex flex-row gap-2">
           <Button onClick={handleExport}>Export</Button>
           <Button onClick={handleBuild}>Build</Button>
         </div>
