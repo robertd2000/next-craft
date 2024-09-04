@@ -14,6 +14,8 @@ import { Typography } from "./typography";
 import { Size } from "./size";
 import { Position } from "./position";
 import { Space } from "./space";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Accordion } from "@/components/ui/accordion";
 
 const selectOptions = suggestions.map((value) => ({ label: value, value }));
 
@@ -111,8 +113,8 @@ export function SettingsControl({ children }: SettingsControlProps) {
   };
 
   return (
-    <div className="p-4">
-      <div className="border-b border-b-1 mt-2 pb-2">
+    <div className="">
+      <div className="border-b border-b-1 mt-2 p-4 pb-2">
         {deletable ? (
           <Button
             variant={"destructive"}
@@ -145,7 +147,6 @@ export function SettingsControl({ children }: SettingsControlProps) {
           />
         ) : null}
       </div>
-
       <Select
         options={selectOptions}
         isSearchable
@@ -156,6 +157,7 @@ export function SettingsControl({ children }: SettingsControlProps) {
         placeholder={"Add new class"}
         value={value}
         filterOption={createFilter({ ignoreAccents: false })}
+        className="p-4"
         onChange={(option) => {
           if (option && Array.isArray(option)) {
             const classNames = option.map((item) => item.value).join(" ");
@@ -171,20 +173,23 @@ export function SettingsControl({ children }: SettingsControlProps) {
           setValue(option);
         }}
       />
+      <ScrollArea className="h-[94vh] w-full p-4">
+        <Accordion type="multiple" className="w-full">
+          <Display />
 
-      <Display />
+          <Space />
 
-      <Space />
+          <Size />
 
-      <Size />
+          <Position />
 
-      <Position />
+          <Typography />
 
-      <Typography />
+          <Backgrounds />
+        </Accordion>
 
-      <Backgrounds />
-
-      {children}
+        {children}
+      </ScrollArea>{" "}
     </div>
   );
 }

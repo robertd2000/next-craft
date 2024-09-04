@@ -1,6 +1,5 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { useEditor } from "@craftjs/core";
 import React from "react";
+import { useEditor } from "@craftjs/core";
 
 export const ControlPanel = () => {
   const { active, related } = useEditor((state, query) => {
@@ -17,9 +16,7 @@ export const ControlPanel = () => {
       <h3 className="py-2 px-4 border-b text-md font-semibold text-left">
         Control Panel
       </h3>
-      <ScrollArea className="h-[94vh] w-full border">
-        {active && related.toolbar && React.createElement(related.toolbar)}
-      </ScrollArea>
+      {active && related.toolbar && React.createElement(related.toolbar)}
     </div>
   );
 };
