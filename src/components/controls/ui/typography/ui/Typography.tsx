@@ -1,4 +1,3 @@
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -22,6 +21,7 @@ import {
   X,
 } from "lucide-react";
 import { HexColorPicker } from "react-colorful";
+import { InputMeasure } from "../../input-measure";
 
 export function Typography() {
   const {
@@ -84,53 +84,32 @@ export function Typography() {
 
       <div className="flex gap-2 items-center mt-2">
         <div className="w-[33%]">
-          <Label htmlFor="size">Size</Label>
-          <Input
-            id="size"
+          <Label htmlFor="fontSize">Size</Label>
+          <InputMeasure
+            id="fontSize"
             value={props.style?.fontSize}
-            onChange={(e) => {
-              setProp(
-                (props: { style: { fontSize: string } }) =>
-                  (props.style = { ...props.style, fontSize: e.target.value }),
-                500
-              );
-            }}
+            setProp={setProp}
+            propName="fontSize"
           />
         </div>
 
         <div className="w-[33%]">
-          <Label htmlFor="height">Height</Label>
-          <Input
-            id="height"
+          <Label htmlFor="lineHeight">Height</Label>
+          <InputMeasure
+            id="lineHeight"
             value={props.style?.lineHeight}
-            onChange={(e) => {
-              setProp(
-                (props: { style: { lineHeight: string } }) =>
-                  (props.style = {
-                    ...props.style,
-                    lineHeight: e.target.value,
-                  }),
-                500
-              );
-            }}
+            setProp={setProp}
+            propName="lineHeight"
           />
         </div>
 
         <div className="w-[33%]">
-          <Label htmlFor="spacing">Spacing</Label>
-          <Input
-            id="spacing"
+          <Label htmlFor="letterSpacing">Spacing</Label>
+          <InputMeasure
+            id="letterSpacing"
             value={props.style?.letterSpacing}
-            onChange={(e) => {
-              setProp(
-                (props: { style: { letterSpacing: string } }) =>
-                  (props.style = {
-                    ...props.style,
-                    letterSpacing: e.target.value,
-                  }),
-                500
-              );
-            }}
+            setProp={setProp}
+            propName="letterSpacing"
           />
         </div>
       </div>

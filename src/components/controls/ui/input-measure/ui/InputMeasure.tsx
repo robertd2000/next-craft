@@ -57,7 +57,9 @@ export function InputMeasure({
       (props: { style: { propName: string } }) =>
         (props.style = {
           ...props.style,
-          [propName]: parseFloat(inputValue) + measurement,
+          [propName]: !isNaN(parseFloat(inputValue))
+            ? parseFloat(inputValue) + measurement
+            : "",
         }),
       500
     );
