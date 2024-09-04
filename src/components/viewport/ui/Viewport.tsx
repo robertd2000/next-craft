@@ -36,7 +36,7 @@ export const Viewport = ({ children }: { children: React.ReactNode }) => {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `export.zip`;
+      a.download = `build.zip`;
       document.body.appendChild(a);
       a.click();
 
@@ -102,7 +102,9 @@ export const Viewport = ({ children }: { children: React.ReactNode }) => {
         </Drawer>
 
         <div className="flex flex-row gap-2">
-          <Button onClick={handleExport}>Export</Button>
+          <Button onClick={handleExport} className="bg-green-500">
+            Export
+          </Button>
           <Button onClick={handleBuild}>Build</Button>
         </div>
       </div>{" "}
