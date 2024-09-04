@@ -32,16 +32,16 @@ export function Space() {
         </div>
 
         <div>
-          <Label htmlFor="marginBotton">Margin Bottom</Label>
+          <Label htmlFor="marginBottom">Margin Bottom</Label>
           <Input
-            id="marginBotton"
-            value={props.style?.marginBotton}
+            id="marginBottom"
+            value={props.style?.marginBottom}
             onChange={(e) => {
               setProp(
-                (props: { style: { marginBotton: string } }) =>
+                (props: { style: { marginBottom: string } }) =>
                   (props.style = {
                     ...props.style,
-                    marginBotton: e.target.value,
+                    marginBottom: e.target.value,
                   }),
                 500
               );
@@ -108,16 +108,16 @@ export function Space() {
         </div>
 
         <div>
-          <Label htmlFor="paddingBotton">Padding Bottom</Label>
+          <Label htmlFor="paddingBottom">Padding Bottom</Label>
           <Input
-            id="paddingBotton"
+            id="paddingBottom"
             value={props.style?.paddingBotton}
             onChange={(e) => {
               setProp(
-                (props: { style: { paddingBotton: string } }) =>
+                (props: { style: { paddingBottom: string } }) =>
                   (props.style = {
                     ...props.style,
-                    paddingBotton: e.target.value,
+                    paddingBottom: e.target.value,
                   }),
                 500
               );

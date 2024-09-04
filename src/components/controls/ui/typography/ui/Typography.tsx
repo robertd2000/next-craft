@@ -120,7 +120,7 @@ export function Typography() {
           <Label htmlFor="spacing">Spacing</Label>
           <Input
             id="spacing"
-            value={props.style?.lineHeight}
+            value={props.style?.letterSpacing}
             onChange={(e) => {
               setProp(
                 (props: { style: { letterSpacing: string } }) =>
