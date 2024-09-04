@@ -14,7 +14,6 @@ import { Typography } from "./typography";
 import { Size } from "./size";
 import { Position } from "./position";
 import { Space } from "./space";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Accordion } from "@/components/ui/accordion";
 import { Borders } from "./borders";
 
@@ -173,37 +172,35 @@ export function SettingsControl({ children }: SettingsControlProps) {
           setValue(option);
         }}
       />
-      <ScrollArea className="h-[calc(100vh-260px)] w-full p-4">
-        <Accordion
-          type="multiple"
-          className="w-full"
-          defaultValue={[
-            "Display",
-            "Space",
-            "Size",
-            "Position",
-            "Typography",
-            "Backgrounds",
-            "Borders",
-          ]}
-        >
-          <Display />
+      <Accordion
+        type="multiple"
+        className="w-full"
+        defaultValue={[
+          "Display",
+          "Space",
+          "Size",
+          "Position",
+          "Typography",
+          "Backgrounds",
+          "Borders",
+        ]}
+      >
+        <Display />
 
-          <Space />
+        <Space />
 
-          <Size />
+        <Size />
 
-          <Position />
+        <Position />
 
-          <Typography />
+        <Typography />
 
-          <Backgrounds />
+        <Backgrounds />
 
-          <Borders />
-        </Accordion>
+        <Borders />
+      </Accordion>
 
-        {children}
-      </ScrollArea>{" "}
+      {children}
     </div>
   );
 }
