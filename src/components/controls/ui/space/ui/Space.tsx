@@ -28,9 +28,7 @@ export function Space() {
 
         <div>
           <Label htmlFor="marginBottom">Margin Bottom</Label>
-          <Input
-            id="marginBottom"
-          <Label htmlFor="marginBottom">Margin Bottom</Label>
+
           <InputMeasure
             id="marginBottom"
             value={props.style?.marginBottom}
@@ -74,20 +72,6 @@ export function Space() {
         </div>
 
         <div>
-          <Label htmlFor="paddingBottom">Padding Bottom</Label>
-          <Input
-            id="paddingBottom"
-            value={props.style?.paddingBotton}
-            onChange={(e) => {
-              setProp(
-                (props: { style: { paddingBottom: string } }) =>
-                  (props.style = {
-                    ...props.style,
-                    paddingBottom: e.target.value,
-                  }),
-                500
-              );
-            }}
           <Label htmlFor="paddingBottom">Padding Bottom</Label>
           <InputMeasure
             id="paddingBottom"
