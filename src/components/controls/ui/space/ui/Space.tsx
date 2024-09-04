@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useNode } from "@craftjs/core";
+import { InputMeasure } from "../../input-measure";
 
 export function Space() {
   const {
@@ -18,16 +19,11 @@ export function Space() {
       <div className="grid grid-cols-2 gap-2 mt-4 mb-4">
         <div>
           <Label htmlFor="marginTop">Margin Top</Label>
-          <Input
+          <InputMeasure
             id="marginTop"
             value={props.style?.marginTop}
-            onChange={(e) => {
-              setProp(
-                (props: { style: { marginTop: string } }) =>
-                  (props.style = { ...props.style, marginTop: e.target.value }),
-                500
-              );
-            }}
+            setProp={setProp}
+            propName="marginTop"
           />
         </div>
 
