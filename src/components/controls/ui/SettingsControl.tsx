@@ -184,6 +184,7 @@ export function SettingsControl({ children }: SettingsControlProps) {
             "Position",
             "Typography",
             "Backgrounds",
+            "Borders",
           ]}
         >
           <Display />
