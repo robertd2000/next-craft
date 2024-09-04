@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useNode } from "@craftjs/core";
 import { X, Minus, Ellipsis, ChevronsLeftRightEllipsis } from "lucide-react";
+import { HexColorPicker } from "react-colorful";
 
 export function Borders() {
   const {
@@ -53,6 +54,21 @@ export function Borders() {
               </TabsTrigger>
             </TabsList>
           </Tabs>
+        </div>
+
+        <div className="flex flex-wrap justify-between items-center mt-2">
+          <Label htmlFor="borderColor">Color</Label>
+          <HexColorPicker
+            id="borderColor"
+            color={props.style?.borderColor}
+            onChange={(color) => {
+              setProp(
+                (props: { style: { borderColor: string } }) =>
+                  (props.style = { ...props.style, borderColor: color }),
+                500
+              );
+            }}
+          />
         </div>
       </AccordionContent>
     </AccordionItem>
