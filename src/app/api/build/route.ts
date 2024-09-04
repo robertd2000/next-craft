@@ -11,19 +11,8 @@ import {
   zipBuildPath,
 } from "../constatnts";
 import { archiveFolder } from "../utils";
-import {
-  initComponents,
-  initEslintrc,
-  initEssentials,
-  initGitignore,
-  initHeaders,
-  initPackageJSON,
-  initPublic,
-  initTailwind,
-  initTsconfig,
-} from "../service";
+import { initComponents, initHeaders } from "../service";
 import { ComponentImport } from "../types";
-import { initProject } from "../service/project";
 import { setup } from "../service/setup";
 
 const execPromise = promisify(exec);
@@ -52,12 +41,6 @@ export async function POST(req: Request) {
     await access(buildPath, fs.constants.R_OK);
 
     await archiveFolder(buildPath, zipBuildPath);
-    // await generateZipFile(zipBuildPath, [
-    //   buildPath,
-    //   staticDir,
-    //   staticDirJS,
-    //   staticDirCSS,
-    // ]);
 
     const fileBuildBuffer = await readFile(zipBuildPath);
 
