@@ -1,32 +1,17 @@
 import fs, { readFile } from "fs-extra";
 import { NextResponse } from "next/server";
 import { promisify } from "util";
-import { exec } from "child_process";
 import {
-  buildPath,
   destComponentsDir,
   pageFilePath,
-  projectPath,
   tempDir,
-  zipBuildPath,
+  zipFilePath,
 } from "../constatnts";
 import { archiveFolder } from "../utils";
-import {
-  initComponents,
-  initEslintrc,
-  initEssentials,
-  initGitignore,
-  initHeaders,
-  initPackageJSON,
-  initPublic,
-  initTailwind,
-  initTsconfig,
-} from "../service";
+import { initComponents, initHeaders } from "../service";
 import { ComponentImport } from "../types";
-import { initProject } from "../service/project";
 import { setup } from "../service/setup";
 
-const execPromise = promisify(exec);
 const access = promisify(fs.access);
 
 export async function POST(req: Request) {
@@ -44,22 +29,12 @@ export async function POST(req: Request) {
     await initComponents(components);
     fs.writeFileSync(pageFilePath, componentCode, "utf8");
 
-    // Install dependencies (npm install)
-    await execPromise("npm install", { cwd: projectPath });
-    // Run build command (npm run build)
-    await execPromise("npm run build", { cwd: projectPath });
     // Check if the build directory exists
-    await access(buildPath, fs.constants.R_OK);
+    await access(tempDir, fs.constants.R_OK);
 
-    await archiveFolder(buildPath, zipBuildPath);
-    // await generateZipFile(zipBuildPath, [
-    //   buildPath,
-    //   staticDir,
-    //   staticDirJS,
-    //   staticDirCSS,
-    // ]);
+    await archiveFolder(tempDir, zipFilePath, ["node_modules"]);
 
-    const fileBuildBuffer = await readFile(zipBuildPath);
+    const fileBuildBuffer = await readFile(zipFilePath);
 
     const readableBuildStream = new ReadableStream({
       start(controller) {

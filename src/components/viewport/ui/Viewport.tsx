@@ -16,6 +16,41 @@ export const Viewport = ({ children }: { children: React.ReactNode }) => {
   // @ts-ignore
   const state = query.getSerializedNodes();
 
+  const handleBuild = async () => {
+    setIsLoading(true);
+
+    try {
+      const { componentCode, components } = parseStructureToString(state);
+
+      const response = await fetch("/api/build", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ componentCode, components }),
+      });
+
+      const blob = await response.blob();
+
+      // Create a link element to download the Blob
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `export.zip`;
+      document.body.appendChild(a);
+      a.click();
+
+      // Clean up by revoking the object URL and removing the element
+      setTimeout(() => {
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }, 0);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   const handleExport = async () => {
     setIsLoading(true);
 
@@ -66,7 +101,10 @@ export const Viewport = ({ children }: { children: React.ReactNode }) => {
           </DrawerContent>
         </Drawer>
 
-        <Button onClick={handleExport}>Export</Button>
+        <div>
+          <Button onClick={handleExport}>Export</Button>
+          <Button onClick={handleBuild}>Build</Button>
+        </div>
       </div>{" "}
       {isLoading && <Spinner />}
       <div className={"craftjs-renderer flex-1 h-full w-full"}>{children}</div>
