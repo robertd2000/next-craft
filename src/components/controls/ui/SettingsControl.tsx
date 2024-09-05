@@ -22,7 +22,7 @@ const selectOptions = suggestions.map((value) => ({ label: value, value }));
 
 interface SettingsControlProps {
   children?: ReactNode;
-  type?: 'button';
+  type?: "button";
 }
 
 export function SettingsControl({ children, type }: SettingsControlProps) {
@@ -185,24 +185,24 @@ export function SettingsControl({ children, type }: SettingsControlProps) {
           "Typography",
           "Backgrounds",
           "Borders",
-          "Scripts"
+          "Scripts",
         ]}
       >
         <Display />
 
-        <Space />
+        {/* <Space /> */}
 
-        <Size />
+        {/* <Size /> */}
 
-        <Position />
+        {/* <Position /> */}
 
-        <Typography />
+        {/* <Typography /> */}
 
-        <Backgrounds />
+        {/* <Backgrounds /> */}
 
-        <Borders />
+        {/* <Borders /> */}
 
-        {type === 'button' && <Scripts/>}
+        {type === "button" && <Scripts />}
       </Accordion>
 
       {children}

@@ -28,7 +28,7 @@ export function Display() {
           <Select
             value={props.style?.display}
             onValueChange={(value) => {
-              setClassname({ value });
+              setClassname({ value, category: "display" });
             }}
           >
             <SelectTrigger className="w-full" id="display">

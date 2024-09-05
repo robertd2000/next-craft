@@ -1,3 +1,4 @@
+import { ClassCategory, parseTailwindClass } from "@/lib/tailwind";
 import { useNode } from "@craftjs/core";
 
 export function useClassname() {
@@ -11,15 +12,23 @@ export function useClassname() {
   function setClassname({
     classKey,
     value,
+    category,
   }: {
     classKey?: string;
     value: string;
+    category: ClassCategory;
   }) {
-    const className = classKey ? ` ${classKey}-[${value}]` : ` ${value}`;
+    const className = parseTailwindClass(
+      props.className,
+      classKey || "",
+      value,
+      category
+    ); // classKey ? ` ${classKey}-[${value}]` : ` ${value}`;
+    console.log("className", className);
 
     setProp(
-      (props: { className: string }) =>
-        (props.className = props.className + className),
+      (props: { className: string; settings: any }) =>
+        (props.className = className),
       500
     );
   }
