@@ -41,22 +41,22 @@ export function Space() {
         <div className="grid grid-cols-2 gap-2 mt-4 mb-4">
           <div>
             <Label htmlFor="pt">Padding Top</Label>
-            <InputMeasure classKey="pt" category="padding" />
+            <InputMeasure classKey="pt" category="paddingTop" />
           </div>
 
           <div>
             <Label htmlFor="paddingBottom">Padding Bottom</Label>
-            <InputMeasure classKey="pb" category="padding" />
+            <InputMeasure classKey="pb" category="paddingBottom" />
           </div>
 
           <div>
             <Label htmlFor="paddingLeft">Padding Left</Label>
-            <InputMeasure classKey="pl" category="padding" />
+            <InputMeasure classKey="pl" category="paddingLeft" />
           </div>
 
           <div>
             <Label htmlFor="paddingRight">Padding Right</Label>
-            <InputMeasure classKey="pr" category="padding" />
+            <InputMeasure classKey="pr" category="paddingRight" />
           </div>
         </div>
       </AccordionContent>

@@ -4,7 +4,7 @@ export type ClassCategory =
   | "textAlign"
   | "backgroundColor"
   // | "margin"
-  | "padding"
+  // | "padding"
   | "width"
   | "height"
   | "maxWidth"
@@ -24,7 +24,11 @@ export type ClassCategory =
   | "marginTop"
   | "marginBottom"
   | "marginLeft"
-  | "marginRight";
+  | "marginRight"
+  | "paddingTop"
+  | "paddingBottom"
+  | "paddingLeft"
+  | "paddingRight";
 
 // Объект с конфигурациями для категорий классов
 const classConfig: Record<
@@ -66,10 +70,26 @@ const classConfig: Record<
     pattern: /mr-\[(\d+(\.\d+)?(px|%|em|rem|svw|svh|lvh|lvw|ch))\]/,
     generateClass: (_, value) => `mr-[${value}]`,
   },
-  padding: {
-    pattern: /p[trblxy]?-?\[.*?\]/g,
-    generateClass: (classKey, value) => `${classKey}-[${value}]`,
+  paddingTop: {
+    pattern: /pt-\[(\d+(\.\d+)?(px|%|em|rem|svw|svh|lvh|lvw|ch))\]/,
+    generateClass: (_, value) => `pt-[${value}]`,
   },
+  paddingBottom: {
+    pattern: /pb-\[(\d+(\.\d+)?(px|%|em|rem|svw|svh|lvh|lvw|ch))\]/,
+    generateClass: (_, value) => `pb-[${value}]`,
+  },
+  paddingLeft: {
+    pattern: /pl-\[(\d+(\.\d+)?(px|%|em|rem|svw|svh|lvh|lvw|ch))\]/,
+    generateClass: (_, value) => `pl-[${value}]`,
+  },
+  paddingRight: {
+    pattern: /pr-\[(\d+(\.\d+)?(px|%|em|rem|svw|svh|lvh|lvw|ch))\]/,
+    generateClass: (_, value) => `pr-[${value}]`,
+  },
+  // padding: {
+  //   pattern: /p[trblxy]?-?\[.*?\]/g,
+  //   generateClass: (classKey, value) => `${classKey}-[${value}]`,
+  // },
   width: {
     pattern: /w-\[(\d+(\.\d+)?(px|%|em|rem|svw|svh|lvh|lvw|ch))\]/, // /w-\[.*?\]/g,
     generateClass: (_, value) => `w-[${value}]`,
