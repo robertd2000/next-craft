@@ -44,6 +44,7 @@ export function Typography() {
               setClassname({
                 classKey: "font",
                 value,
+                category: "fontWeight",
               });
             }}
           >
@@ -76,6 +77,7 @@ export function Typography() {
               setClassname({
                 classKey: "text",
                 value: color,
+                category: "textColor",
               });
             }}
           />
@@ -84,17 +86,17 @@ export function Typography() {
         <div className="flex gap-2 items-center mt-2">
           <div className="w-[33%]">
             <Label htmlFor="text">Size</Label>
-            <InputMeasure classKey="text" />
+            <InputMeasure classKey="text" category="fontSize" />
           </div>
 
           <div className="w-[33%]">
             <Label htmlFor="leading">Height</Label>
-            <InputMeasure classKey="leading" />
+            <InputMeasure classKey="leading" category="lineHeight" />
           </div>
 
           <div className="w-[33%]">
             <Label htmlFor="tracking">Spacing</Label>
-            <InputMeasure classKey="tracking" />
+            <InputMeasure classKey="tracking" category="letterSpacing" />
           </div>
         </div>
 
@@ -106,6 +108,7 @@ export function Typography() {
               setClassname({
                 classKey: "text",
                 value,
+                category: "textAlign",
               });
             }}
           >
@@ -131,6 +134,7 @@ export function Typography() {
             onValueChange={(value) => {
               setClassname({
                 value,
+                category: "textDecoration",
               });
             }}
           >
@@ -155,6 +159,7 @@ export function Typography() {
             onValueChange={(value) => {
               setClassname({
                 value,
+                category: "textTransform",
               });
             }}
           >
@@ -180,6 +185,7 @@ export function Typography() {
             onValueChange={(value) => {
               setClassname({
                 value,
+                category: "fontStyle",
               });
             }}
           >

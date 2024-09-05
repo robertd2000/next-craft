@@ -13,7 +13,14 @@ export type ClassCategory =
   | "minHeight"
   | "border"
   | "position"
-  | "display";
+  | "display"
+  | "fontWeight"
+  | "fontSize"
+  | "lineHeight"
+  | "letterSpacing"
+  | "textDecoration"
+  | "textTransform"
+  | "fontStyle";
 export function parseTailwindClass({
   currentClassName,
   classKey,
@@ -97,6 +104,43 @@ export function parseTailwindClass({
     case "position":
       classPattern =
         /\b(static|relative|absolute|sticky|fixed|inherit|revert|revert-layer|unset)\b/g;
+      newClass = `${value}`;
+      break;
+
+    case "fontWeight":
+      classPattern =
+        /font-(hairline|thin|light|normal|medium|semibold|bold|extrabold|black)/g;
+      newClass = `font-${value}`;
+      break;
+
+    case "fontSize":
+      classPattern = /text-(sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl)/g;
+      newClass = `text-${value}`;
+      break;
+
+    case "lineHeight":
+      classPattern =
+        /leading-(tight|snug|normal|relaxed|loose|[0-9]+(?:\.[0-9]+)?)/g;
+      newClass = `leading-${value}`;
+      break;
+
+    case "letterSpacing":
+      classPattern = /tracking-(tight|normal|wide|[0-9]+(?:\.[0-9]+)?)/g;
+      newClass = `tracking-${value}`;
+      break;
+
+    case "textDecoration":
+      classPattern = /(underline|line-through|no-underline)/g;
+      newClass = `${value}`;
+      break;
+
+    case "textTransform":
+      classPattern = /(uppercase|lowercase|capitalize|normal-case)/g;
+      newClass = `${value}`;
+      break;
+
+    case "fontStyle":
+      classPattern = /(italic|not-italic)/g;
       newClass = `${value}`;
       break;
   }
