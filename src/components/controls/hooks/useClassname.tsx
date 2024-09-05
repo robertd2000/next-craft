@@ -18,13 +18,12 @@ export function useClassname() {
     value: string;
     category: ClassCategory;
   }) {
-    const className = parseTailwindClass(
-      props.className,
-      classKey || "",
+    const className = parseTailwindClass({
+      currentClassName: props.className,
+      classKey: classKey || "",
       value,
-      category
-    ); // classKey ? ` ${classKey}-[${value}]` : ` ${value}`;
-    console.log("className", className);
+      category,
+    });
 
     setProp(
       (props: { className: string; settings: any }) =>

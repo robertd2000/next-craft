@@ -10,12 +10,17 @@ export type ClassCategory =
   | "border"
   | "display";
 
-export function parseTailwindClass(
-  currentClassName: string,
-  classKey: string,
-  value: string,
-  category: ClassCategory
-): string {
+export function parseTailwindClass({
+  currentClassName,
+  classKey,
+  value,
+  category,
+}: {
+  currentClassName: string;
+  classKey: string;
+  value: string;
+  category: ClassCategory;
+}): string {
   let classPattern: RegExp | null = null;
   let newClass = "";
 
@@ -36,27 +41,27 @@ export function parseTailwindClass(
       break;
 
     case "margin":
-      classPattern = /m[trbl]?-?\d+/g; // Отступы m, mt, mb, ml, mr и их числовые значения
+      classPattern = /m[trbl]?-?\d+/g;
       newClass = `${classKey}-${value}`;
       break;
 
     case "padding":
-      classPattern = /p[trbl]?-?\d+/g; // Паддинги p, pt, pb, pl, pr и их числовые значения
+      classPattern = /p[trbl]?-?\d+/g;
       newClass = `${classKey}-${value}`;
       break;
 
     case "width":
-      classPattern = /w-\[.*?\]/g; // Ширина, например w-[100px]
+      classPattern = /w-\[.*?\]/g;
       newClass = `w-[${value}]`;
       break;
 
     case "height":
-      classPattern = /h-\[.*?\]/g; // Высота, например h-[100px]
+      classPattern = /h-\[.*?\]/g;
       newClass = `h-[${value}]`;
       break;
 
     case "border":
-      classPattern = /border(-[a-z]+-[0-9]+)?/g; // Граница border, border-color
+      classPattern = /border(-[a-z]+-[0-9]+)?/g;
       newClass = `border-${value}`;
       break;
 
