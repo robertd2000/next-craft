@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useClassname } from "@/components/controls/hooks/useClassname";
+import { ClassCategory } from "@/lib/tailwind";
 
 type Measurement =
   | "px"
@@ -36,10 +37,12 @@ const measurementOptions: Measurement[] = [
 interface InputMeasureProps {
   defaultMeasurement?: Measurement;
   classKey: string;
+  category: ClassCategory;
 }
 export function InputMeasure({
   classKey,
   defaultMeasurement = "px",
+  category,
 }: InputMeasureProps) {
   const { props, setClassname } = useClassname();
 
@@ -56,6 +59,7 @@ export function InputMeasure({
       setClassname({
         classKey,
         value: parseFloat(inputValue) + measurement,
+        category,
       });
     }
   }, [inputValue, measurement]);

@@ -190,7 +190,7 @@ export function SettingsControl({ children, type }: SettingsControlProps) {
       >
         <Display />
 
-        {/* <Space /> */}
+        <Space />
 
         {/* <Size /> */}
 

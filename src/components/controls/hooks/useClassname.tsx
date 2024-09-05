@@ -1,5 +1,5 @@
-import { ClassCategory, parseTailwindClass } from "@/lib/tailwind";
 import { useNode } from "@craftjs/core";
+import { ClassCategory, parseTailwindClass } from "@/lib/tailwind";
 
 export function useClassname() {
   const {
