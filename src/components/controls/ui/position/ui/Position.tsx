@@ -1,4 +1,3 @@
-import { useNode } from "@craftjs/core";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -14,14 +13,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useClassname } from "@/components/controls/hooks/useClassname";
 
 export function Position() {
-  const {
-    actions: { setProp },
-    props,
-  } = useNode((node) => ({
-    props: node.data.props,
-  }));
+  const { props, setClassname } = useClassname();
 
   return (
     <AccordionItem value="Position">
@@ -33,12 +28,8 @@ export function Position() {
           <Select
             value={props.style?.position}
             defaultValue="static"
-            onValueChange={(e) => {
-              setProp(
-                (props: { style: { position: string } }) =>
-                  (props.style = { ...props.style, position: e }),
-                500
-              );
+            onValueChange={(value) => {
+              setClassname({ value });
             }}
           >
             <SelectTrigger className="w-full" id="position">

@@ -194,7 +194,7 @@ export function SettingsControl({ children, type }: SettingsControlProps) {
 
         <Size />
 
-        {/* <Position /> */}
+        <Position />
 
         {/* <Typography /> */}
 
