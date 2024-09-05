@@ -1,20 +1,12 @@
-import { useNode } from "@craftjs/core";
 import { Label } from "@/components/ui/label";
-import { InputMeasure } from "../../input-measure";
 import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { InputMeasure } from "../../input-measure";
 
 export function Space() {
-  const {
-    actions: { setProp },
-    props,
-  } = useNode((node) => ({
-    props: node.data.props,
-  }));
-
   return (
     <AccordionItem value="Space">
       <AccordionTrigger>Space</AccordionTrigger>
@@ -24,44 +16,23 @@ export function Space() {
 
         <div className="grid grid-cols-2 gap-2 mt-4 mb-4">
           <div>
-            <Label htmlFor="marginTop">Margin Top</Label>
-            <InputMeasure
-              id="marginTop"
-              value={props.style?.marginTop}
-              setProp={setProp}
-              propName="marginTop"
-            />
+            <Label htmlFor="mt">Margin Top</Label>
+            <InputMeasure classKey="mt" />
           </div>
 
           <div>
-            <Label htmlFor="marginBottom">Margin Bottom</Label>
-
-            <InputMeasure
-              id="marginBottom"
-              value={props.style?.marginBottom}
-              setProp={setProp}
-              propName="marginBottom"
-            />
+            <Label htmlFor="mb">Margin Bottom</Label>
+            <InputMeasure classKey="mb" />
           </div>
 
           <div>
             <Label htmlFor="marginLeft">Margin Left</Label>
-            <InputMeasure
-              id="marginLeft"
-              value={props.style?.marginLeft}
-              setProp={setProp}
-              propName="marginLeft"
-            />
+            <InputMeasure classKey="ml" />
           </div>
 
           <div>
             <Label htmlFor="marginRight">Margin Right</Label>
-            <InputMeasure
-              id="marginRight"
-              value={props.style?.marginRight}
-              setProp={setProp}
-              propName="marginRight"
-            />
+            <InputMeasure classKey="mr" />
           </div>
         </div>
 
@@ -69,43 +40,23 @@ export function Space() {
 
         <div className="grid grid-cols-2 gap-2 mt-4 mb-4">
           <div>
-            <Label htmlFor="paddingTop">Padding Top</Label>
-            <InputMeasure
-              id="paddingTop"
-              value={props.style?.paddingTop}
-              setProp={setProp}
-              propName="paddingTop"
-            />
+            <Label htmlFor="pt">Padding Top</Label>
+            <InputMeasure classKey="pt" />
           </div>
 
           <div>
             <Label htmlFor="paddingBottom">Padding Bottom</Label>
-            <InputMeasure
-              id="paddingBottom"
-              value={props.style?.paddingBottom}
-              setProp={setProp}
-              propName="paddingBottom"
-            />
+            <InputMeasure classKey="pb" />
           </div>
 
           <div>
             <Label htmlFor="paddingLeft">Padding Left</Label>
-            <InputMeasure
-              id="paddingLeft"
-              value={props.style?.paddingLeft}
-              setProp={setProp}
-              propName="paddingLeft"
-            />
+            <InputMeasure classKey="pl" />
           </div>
 
           <div>
             <Label htmlFor="paddingRight">Padding Right</Label>
-            <InputMeasure
-              id="paddingRight"
-              value={props.style?.paddingRight}
-              setProp={setProp}
-              propName="paddingRight"
-            />
+            <InputMeasure classKey="pr" />
           </div>
         </div>
       </AccordionContent>
