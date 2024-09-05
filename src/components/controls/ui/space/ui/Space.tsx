@@ -17,22 +17,22 @@ export function Space() {
         <div className="grid grid-cols-2 gap-2 mt-4 mb-4">
           <div>
             <Label htmlFor="mt">Margin Top</Label>
-            <InputMeasure classKey="mt" category="margin" />
+            <InputMeasure classKey="mt" category="marginTop" />
           </div>
 
           <div>
             <Label htmlFor="mb">Margin Bottom</Label>
-            <InputMeasure classKey="mb" category="margin" />
+            <InputMeasure classKey="mb" category="marginBottom" />
           </div>
 
           <div>
             <Label htmlFor="marginLeft">Margin Left</Label>
-            <InputMeasure classKey="ml" category="margin" />
+            <InputMeasure classKey="ml" category="marginLeft" />
           </div>
 
           <div>
             <Label htmlFor="marginRight">Margin Right</Label>
-            <InputMeasure classKey="mr" category="margin" />
+            <InputMeasure classKey="mr" category="marginRight" />
           </div>
         </div>
 

@@ -3,7 +3,7 @@ export type ClassCategory =
   | "textColor"
   | "textAlign"
   | "backgroundColor"
-  | "margin"
+  // | "margin"
   | "padding"
   | "width"
   | "height"
@@ -20,7 +20,11 @@ export type ClassCategory =
   | "letterSpacing"
   | "textDecoration"
   | "textTransform"
-  | "fontStyle";
+  | "fontStyle"
+  | "marginTop"
+  | "marginBottom"
+  | "marginLeft"
+  | "marginRight";
 
 // Объект с конфигурациями для категорий классов
 const classConfig: Record<
@@ -42,20 +46,36 @@ const classConfig: Record<
     pattern: /bg-\[\#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})\]/,
     generateClass: (_, value) => `bg-[${value}]`,
   },
-  margin: {
-    pattern: /m[trblxy]?-?\[.*?\]/g,
-    generateClass: (classKey, value) => `${classKey}-[${value}]`,
+  // margin: {
+  //   pattern: /m[trblxy]?-?\[.*?\]/g,
+  //   generateClass: (classKey, value) => `${classKey}-[${value}]`,
+  // },
+  marginTop: {
+    pattern: /mt-\[(\d+(\.\d+)?(px|%|em|rem|svw|svh|lvh|lvw|ch))\]/,
+    generateClass: (_, value) => `mt-[${value}]`,
+  },
+  marginBottom: {
+    pattern: /mb-\[(\d+(\.\d+)?(px|%|em|rem|svw|svh|lvh|lvw|ch))\]/,
+    generateClass: (_, value) => `mb-[${value}]`,
+  },
+  marginLeft: {
+    pattern: /ml-\[(\d+(\.\d+)?(px|%|em|rem|svw|svh|lvh|lvw|ch))\]/,
+    generateClass: (_, value) => `ml-[${value}]`,
+  },
+  marginRight: {
+    pattern: /mr-\[(\d+(\.\d+)?(px|%|em|rem|svw|svh|lvh|lvw|ch))\]/,
+    generateClass: (_, value) => `mr-[${value}]`,
   },
   padding: {
     pattern: /p[trblxy]?-?\[.*?\]/g,
     generateClass: (classKey, value) => `${classKey}-[${value}]`,
   },
   width: {
-    pattern: /w-\[.*?\]/g,
+    pattern: /w-\[(\d+(\.\d+)?(px|%|em|rem|svw|svh|lvh|lvw|ch))\]/, // /w-\[.*?\]/g,
     generateClass: (_, value) => `w-[${value}]`,
   },
   height: {
-    pattern: /h-\[.*?\]/g,
+    pattern: /h-\[(\d+(\.\d+)?(px|%|em|rem|svw|svh|lvh|lvw|ch))\]/, // /h-\[.*?\]/g,
     generateClass: (_, value) => `h-[${value}]`,
   },
   maxWidth: {

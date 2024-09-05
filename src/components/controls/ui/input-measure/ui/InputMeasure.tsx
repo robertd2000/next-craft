@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -46,15 +46,18 @@ export function InputMeasure({
 }: InputMeasureProps) {
   const { props, setClassname } = useClassname();
 
-  const parsedValues = parseTailwindClassesToValues(props?.className);
+  const parsedValues = useMemo(
+    () => parseTailwindClassesToValues(props?.className),
+    []
+  );
 
-  console.log("parsedValues", parsedValues);
+  console.log("parsedValues", parsedValues, props?.className);
 
   const [measurement, setMeasurement] =
     useState<Measurement>(defaultMeasurement);
   const [inputValue, setValue] = useState<string>(
-    props.className?.[classKey]
-      ? parseFloat(props.className?.[classKey]).toString()
+    parsedValues?.[category]
+      ? parseFloat(parsedValues?.[category]).toString()
       : ""
   );
 
@@ -69,11 +72,11 @@ export function InputMeasure({
   }, [inputValue, measurement]);
 
   useEffect(() => {
-    const m = props.className?.[classKey]?.replace(/\d+/g, "");
+    const m = parsedValues?.[category]?.replace(/\d+/g, "");
     if (m) {
       setMeasurement(m as Measurement);
     }
-  }, [props.className?.[classKey]]);
+  }, [parsedValues?.[category]]);
 
   return (
     <div className="flex justify-between rounded-md border border-input">
