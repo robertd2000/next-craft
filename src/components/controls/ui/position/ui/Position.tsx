@@ -29,7 +29,7 @@ export function Position() {
             value={props.style?.position}
             defaultValue="static"
             onValueChange={(value) => {
-              setClassname({ value });
+              setClassname({ value, category: "position" });
             }}
           >
             <SelectTrigger className="w-full" id="position">
