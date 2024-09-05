@@ -1,4 +1,3 @@
-import { useNode } from "@craftjs/core";
 import { HexColorPicker } from "react-colorful";
 import { Label } from "@/components/ui/label";
 import {
@@ -6,14 +5,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useClassname } from "@/components/controls/hooks/useClassname";
 
 export function Backgrounds() {
-  const {
-    actions: { setProp },
-    props,
-  } = useNode((node) => ({
-    props: node.data.props,
-  }));
+  const { props, setClassname } = useClassname();
 
   return (
     <AccordionItem value="Backgrounds">
@@ -25,11 +20,10 @@ export function Backgrounds() {
           id="backgroundColor"
           color={props.style?.backgroundColor}
           onChange={(color) => {
-            setProp(
-              (props: { style: { backgroundColor: string } }) =>
-                (props.style = { ...props.style, backgroundColor: color }),
-              500
-            );
+            setClassname({
+              classKey: "bg",
+              value: color,
+            });
           }}
         />
       </AccordionContent>
