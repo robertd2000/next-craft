@@ -14,8 +14,8 @@ import { Typography } from "./typography";
 import { Size } from "./size";
 import { Position } from "./position";
 import { Space } from "./space";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Accordion } from "@/components/ui/accordion";
+import { Borders } from "./borders";
 
 const selectOptions = suggestions.map((value) => ({ label: value, value }));
 
@@ -32,7 +32,6 @@ export function SettingsControl({ children }: SettingsControlProps) {
     deletable,
     text,
     actions: { setProp },
-    props,
   } = useNode((node) => ({
     props: node.data.props,
     classNames: node.data.props["className"] as string,
@@ -114,7 +113,7 @@ export function SettingsControl({ children }: SettingsControlProps) {
 
   return (
     <div className="">
-      <div className="border-b border-b-1 mt-2 p-4 pb-2">
+      <div className="border-b border-b-1 mt-2 pt-4 pb-4">
         {deletable ? (
           <Button
             variant={"destructive"}
@@ -157,7 +156,7 @@ export function SettingsControl({ children }: SettingsControlProps) {
         placeholder={"Add new class"}
         value={value}
         filterOption={createFilter({ ignoreAccents: false })}
-        className="p-4 border-b border-b-1"
+        className="pt-4 pb-4 border-b border-b-1"
         onChange={(option) => {
           if (option && Array.isArray(option)) {
             const classNames = option.map((item) => item.value).join(" ");
@@ -173,34 +172,35 @@ export function SettingsControl({ children }: SettingsControlProps) {
           setValue(option);
         }}
       />
-      <ScrollArea className="h-[calc(100vh-260px)] w-full p-4">
-        <Accordion
-          type="multiple"
-          className="w-full"
-          defaultValue={[
-            "Display",
-            "Space",
-            "Size",
-            "Position",
-            "Typography",
-            "Backgrounds",
-          ]}
-        >
-          <Display />
+      <Accordion
+        type="multiple"
+        className="w-full"
+        defaultValue={[
+          "Display",
+          "Space",
+          "Size",
+          "Position",
+          "Typography",
+          "Backgrounds",
+          "Borders",
+        ]}
+      >
+        <Display />
 
-          <Space />
+        <Space />
 
-          <Size />
+        <Size />
 
-          <Position />
+        <Position />
 
-          <Typography />
+        <Typography />
 
-          <Backgrounds />
-        </Accordion>
+        <Backgrounds />
 
-        {children}
-      </ScrollArea>{" "}
+        <Borders />
+      </Accordion>
+
+      {children}
     </div>
   );
 }

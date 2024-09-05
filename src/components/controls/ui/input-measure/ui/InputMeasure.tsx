@@ -68,8 +68,9 @@ export function InputMeasure({
     <div className="flex justify-between rounded-md border border-input">
       <Input
         id={id}
+        type="number"
         value={inputValue}
-        className="border-none"
+        className="border-none ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0 focus:ring-0 focus:ring-offset-0"
         onChange={(e) => {
           setValue(e.target.value);
         }}
@@ -78,7 +79,7 @@ export function InputMeasure({
         value={measurement}
         onValueChange={(e: Measurement) => setMeasurement(e)}
       >
-        <SelectTrigger className="w-[70px] border-none">
+        <SelectTrigger className="w-[70px] border-none focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0 focus:ring-0 focus:ring-offset-0">
           <SelectValue placeholder="Select a fruit" />
         </SelectTrigger>
         <SelectContent>

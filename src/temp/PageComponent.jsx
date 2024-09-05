@@ -9,38 +9,20 @@ import {CardFooter} from './components/ui/card'
 
   function App() {
     return <div className="w-full h-full" id="ROOT" data-cy="root-container">
-  <Button children="Button 1" style={{"marginTop":"10px","marginLeft":"50px"}} />
+  <Button children="Button 1" />
   <Button children="Button 2" />
   <Button children="Button 3" />
   <Button children="Button 4" />
-  <div >
-    <div className="p-6 m-2 gap-3" style={{"display":"flex","backgroundColor":"#f30000"}}>
-      <Card className="p-6 m-2">
-        <CardHeader >
-          <CardTitle children="Card Title" />
-          <CardDescription children="Card Description" />
-        </CardHeader>
-        <CardContent >
-          <Button variant="outline" children="Outline" />
-        </CardContent>
-        <CardFooter >
-          <Button children="Footer button" />
-        </CardFooter>
-      </Card>
-      <Card className="p-6 m-2">
-        <CardHeader >
-          <CardTitle children="Card Title" />
-          <CardDescription children="Card Description" />
-        </CardHeader>
-        <CardContent >
-          <Button children="Default" style={{"backgroundColor":"#ff0000"}} />
-        </CardContent>
-        <CardFooter >
-          <Button children="Footer button" />
-        </CardFooter>
-      </Card>
-    </div>
-  </div>
+  <Card className="p-6 m-2" style={{"borderStyle":"dashed","borderColor":"#11d800"}}>
+    <CardHeader >
+      <CardTitle children="Card Title" />
+      <CardDescription children="Card Description" />
+    </CardHeader>
+    <CardContent  />
+    <CardFooter >
+      <Button children="Footer button" style={{"borderColor":"#ff0505","borderStyle":"solid","borderTopWidth":"12px","borderBottomWidth":"12px","borderLeftWidth":"12px","borderRightWidth":"12px"}} />
+    </CardFooter>
+  </Card>
 </div>
   }
 
