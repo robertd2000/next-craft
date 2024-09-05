@@ -37,7 +37,7 @@ export function parseTailwindClass({
 
   switch (category) {
     case "textColor":
-      classPattern = /text-[a-z]+-[0-9]+/g;
+      classPattern = /text-\[\#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})\]/; // /text-\[.*?\]/g;
       newClass = `text-[${value}]`;
       break;
 
@@ -47,7 +47,7 @@ export function parseTailwindClass({
       break;
 
     case "backgroundColor":
-      classPattern = /bg-[a-z]+-[0-9]+/g;
+      classPattern = /bg-\[\#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})\]/; // /bg-\[.*?\]/g;
       newClass = `bg-[${value}]`;
       break;
 
@@ -108,24 +108,24 @@ export function parseTailwindClass({
       break;
 
     case "fontWeight":
-      classPattern =
-        /font-(hairline|thin|light|normal|medium|semibold|bold|extrabold|black)/g;
+      classPattern = /font-\[.*?\]/g;
+      // /font-(hairline|thin|light|normal|medium|semibold|bold|extrabold|black)/g;
       newClass = `font-[${value}]`;
       break;
 
     case "fontSize":
-      classPattern = /text-(sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl)/g;
+      classPattern = /text-\[\d+(px|%|em|rem|svw|svh|lvh|lvw|ch)\]/; // /text-\[.*?\]/g; // /text-(sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl)/g;
       newClass = `text-[${value}]`;
       break;
 
     case "lineHeight":
-      classPattern =
-        /leading-(tight|snug|normal|relaxed|loose|[0-9]+(?:\.[0-9]+)?)/g;
+      classPattern = /leading-\[.*?\]/g;
+      //  /leading-(tight|snug|normal|relaxed|loose|[0-9]+(?:\.[0-9]+)?)/g;
       newClass = `leading-[${value}]`;
       break;
 
     case "letterSpacing":
-      classPattern = /tracking-(tight|normal|wide|[0-9]+(?:\.[0-9]+)?)/g;
+      classPattern = /tracking-\[.*?\]/g; ///tracking-(tight|normal|wide|[0-9]+(?:\.[0-9]+)?)/g;
       newClass = `tracking-[${value}]`;
       break;
 
@@ -147,7 +147,10 @@ export function parseTailwindClass({
 
   // Удаление старого класса соответствующей категории
   if (classPattern) {
-    currentClassName = currentClassName?.replace(classPattern, "").trim();
+    currentClassName = currentClassName
+      ?.replace(classPattern, "")
+      ?.replace("undefined", "")
+      .trim();
   }
 
   // Добавление нового класса
