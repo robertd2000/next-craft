@@ -64,6 +64,13 @@ export function InputMeasure({
       );
   }, [inputValue, measurement]);
 
+  useEffect(() => {
+    const m = value?.replace(/\d+/g, "");
+    if (m) {
+      setMeasurement(m as Measurement);
+    }
+  }, [value]);
+
   return (
     <div className="flex justify-between rounded-md border border-input">
       <Input

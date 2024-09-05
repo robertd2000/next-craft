@@ -12,16 +12,30 @@ import {CardFooter} from './components/ui/card'
   <Button children="Button 2" />
   <Button children="Button 3" />
   <Button children="Button 4" />
-  <Card className="p-6 m-2" style={{"borderStyle":"dashed","borderColor":"#11d800"}}>
-    <CardHeader >
-      <CardTitle children="Card Title" />
-      <CardDescription children="Card Description" />
-    </CardHeader>
-    <CardContent  />
-    <CardFooter >
-      <Button children="Footer button" style={{"borderColor":"#ff0505","borderStyle":"solid","borderTopWidth":"12px","borderBottomWidth":"12px","borderLeftWidth":"12px","borderRightWidth":"12px"}} />
-    </CardFooter>
-  </Card>
+  <div >
+    <div className="p-6 m-2" style={{"display":"flex","backgroundColor":"#000000"}}>
+      <Card className="p-6 m-2" style={{"width":"50%"}}>
+        <CardHeader >
+          <CardTitle children="Card Title" />
+          <CardDescription children="Card Description" />
+        </CardHeader>
+        <CardContent  />
+        <CardFooter >
+          <Button children="Footer button" />
+        </CardFooter>
+      </Card>
+      <Card className="p-6 m-2" style={{"width":"50%","backgroundColor":"#ff0000"}}>
+        <CardHeader >
+          <CardTitle children="Card Title" />
+          <CardDescription children="Card Description" />
+        </CardHeader>
+        <CardContent  />
+        <CardFooter >
+          <Button children="Footer button" />
+        </CardFooter>
+      </Card>
+    </div>
+  </div>
 </div>
   }
 
