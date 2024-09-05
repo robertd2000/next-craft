@@ -16,14 +16,16 @@ import { Position } from "./position";
 import { Space } from "./space";
 import { Accordion } from "@/components/ui/accordion";
 import { Borders } from "./borders";
+import { Scripts } from "./scripts";
 
 const selectOptions = suggestions.map((value) => ({ label: value, value }));
 
 interface SettingsControlProps {
   children?: ReactNode;
+  type?: 'button';
 }
 
-export function SettingsControl({ children }: SettingsControlProps) {
+export function SettingsControl({ children, type }: SettingsControlProps) {
   const { query, actions } = useEditor();
 
   const {
@@ -183,6 +185,7 @@ export function SettingsControl({ children }: SettingsControlProps) {
           "Typography",
           "Backgrounds",
           "Borders",
+          "Scripts"
         ]}
       >
         <Display />
@@ -198,6 +201,8 @@ export function SettingsControl({ children }: SettingsControlProps) {
         <Backgrounds />
 
         <Borders />
+
+        {type === 'button' && <Scripts/>}
       </Accordion>
 
       {children}

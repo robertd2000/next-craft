@@ -37,16 +37,32 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  onClickScript?: string;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, onClickScript, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
+
+    const handleClick = () => {
+      if (onClickScript) {
+        try {
+          const func = new Function(onClickScript);
+          func();
+        } catch (error) {
+          console.error("Error executing script:", error);
+        }
+      }
+    };
+
+    const onClick = onClickScript ? handleClick : props.onClick;
+
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
+        onClick={onClick}
       />
     );
   }
