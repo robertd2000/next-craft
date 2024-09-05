@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useClassname } from "@/components/controls/hooks/useClassname";
 
 type Measurement =
   | "px"
@@ -33,48 +34,43 @@ const measurementOptions: Measurement[] = [
 ];
 
 interface InputMeasureProps {
-  value: string;
   defaultMeasurement?: Measurement;
-  id: string;
-  propName: string;
-  setProp: (cb: any, throttleRate?: number) => void;
+  classKey: string;
 }
 export function InputMeasure({
-  value,
+  classKey,
   defaultMeasurement = "px",
-  propName,
-  id,
-  setProp,
 }: InputMeasureProps) {
+  const { props, setClassname } = useClassname();
+
   const [measurement, setMeasurement] =
     useState<Measurement>(defaultMeasurement);
   const [inputValue, setValue] = useState<string>(
-    value ? parseFloat(value).toString() : ""
+    props.className?.[classKey]
+      ? parseFloat(props.className?.[classKey]).toString()
+      : ""
   );
 
   useEffect(() => {
-    if (!isNaN(parseFloat(inputValue)))
-      setProp(
-        (props: { style: { propName: string } }) =>
-          (props.style = {
-            ...props.style,
-            [propName]: parseFloat(inputValue) + measurement,
-          }),
-        500
-      );
+    if (!isNaN(parseFloat(inputValue))) {
+      setClassname({
+        classKey,
+        value: parseFloat(inputValue) + measurement,
+      });
+    }
   }, [inputValue, measurement]);
 
   useEffect(() => {
-    const m = value?.replace(/\d+/g, "");
+    const m = props.className?.[classKey]?.replace(/\d+/g, "");
     if (m) {
       setMeasurement(m as Measurement);
     }
-  }, [value]);
+  }, [props.className?.[classKey]]);
 
   return (
     <div className="flex justify-between rounded-md border border-input">
       <Input
-        id={id}
+        id={classKey}
         type="number"
         value={inputValue}
         className="border-none ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0 focus:ring-0 focus:ring-offset-0"

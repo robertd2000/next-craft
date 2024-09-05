@@ -190,13 +190,13 @@ export function SettingsControl({ children, type }: SettingsControlProps) {
       >
         <Display />
 
-        <Space />
+        {/* <Space /> */}
 
-        <Size />
+        {/* <Size /> */}
 
-        <Position />
+        {/* <Position /> */}
 
-        <Typography />
+        {/* <Typography /> */}
 
         <Backgrounds />
 
