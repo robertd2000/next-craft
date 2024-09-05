@@ -7,9 +7,12 @@ export type ClassCategory =
   | "padding"
   | "width"
   | "height"
+  | "maxWidth"
+  | "maxHeight"
+  | "minWidth"
+  | "minHeight"
   | "border"
   | "display";
-
 export function parseTailwindClass({
   currentClassName,
   classKey,
@@ -67,6 +70,30 @@ export function parseTailwindClass({
       newClass = `h-[${value}]`;
       break;
 
+    case "maxWidth":
+      // Регулярное выражение для максимальной ширины (например, max-w-[100px])
+      classPattern = /max-w-\[.*?\]/g;
+      newClass = `max-w-[${value}]`;
+      break;
+
+    case "maxHeight":
+      // Регулярное выражение для максимальной высоты (например, max-h-[100px])
+      classPattern = /max-h-\[.*?\]/g;
+      newClass = `max-h-[${value}]`;
+      break;
+
+    case "minWidth":
+      // Регулярное выражение для минимальной ширины (например, min-w-[100px])
+      classPattern = /min-w-\[.*?\]/g;
+      newClass = `min-w-[${value}]`;
+      break;
+
+    case "minHeight":
+      // Регулярное выражение для минимальной высоты (например, min-h-[100px])
+      classPattern = /min-h-\[.*?\]/g;
+      newClass = `min-h-[${value}]`;
+      break;
+
     case "border":
       // Регулярное выражение для классов границы (border, border-blue-500)
       classPattern = /border(-[a-z]+-[0-9]+)?/g;
@@ -82,7 +109,7 @@ export function parseTailwindClass({
 
   // Удаление старого класса соответствующей категории
   if (classPattern) {
-    currentClassName = currentClassName.replace(classPattern, "").trim();
+    currentClassName = currentClassName?.replace(classPattern, "").trim();
   }
 
   // Добавление нового класса

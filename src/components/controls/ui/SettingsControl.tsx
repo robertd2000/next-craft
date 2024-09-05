@@ -192,7 +192,7 @@ export function SettingsControl({ children, type }: SettingsControlProps) {
 
         <Space />
 
-        {/* <Size /> */}
+        <Size />
 
         {/* <Position /> */}
 
