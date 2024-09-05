@@ -23,6 +23,7 @@ export function Backgrounds() {
             setClassname({
               classKey: "bg",
               value: color,
+              category: "backgroundColor",
             });
           }}
         />

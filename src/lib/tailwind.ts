@@ -38,7 +38,7 @@ export function parseTailwindClass({
   switch (category) {
     case "textColor":
       classPattern = /text-[a-z]+-[0-9]+/g;
-      newClass = `text-${value}`;
+      newClass = `text-[${value}]`;
       break;
 
     case "textAlign":
@@ -48,7 +48,7 @@ export function parseTailwindClass({
 
     case "backgroundColor":
       classPattern = /bg-[a-z]+-[0-9]+/g;
-      newClass = `bg-${value}`;
+      newClass = `bg-[${value}]`;
       break;
 
     case "margin":
@@ -110,23 +110,23 @@ export function parseTailwindClass({
     case "fontWeight":
       classPattern =
         /font-(hairline|thin|light|normal|medium|semibold|bold|extrabold|black)/g;
-      newClass = `font-${value}`;
+      newClass = `font-[${value}]`;
       break;
 
     case "fontSize":
       classPattern = /text-(sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl)/g;
-      newClass = `text-${value}`;
+      newClass = `text-[${value}]`;
       break;
 
     case "lineHeight":
       classPattern =
         /leading-(tight|snug|normal|relaxed|loose|[0-9]+(?:\.[0-9]+)?)/g;
-      newClass = `leading-${value}`;
+      newClass = `leading-[${value}]`;
       break;
 
     case "letterSpacing":
       classPattern = /tracking-(tight|normal|wide|[0-9]+(?:\.[0-9]+)?)/g;
-      newClass = `tracking-${value}`;
+      newClass = `tracking-[${value}]`;
       break;
 
     case "textDecoration":

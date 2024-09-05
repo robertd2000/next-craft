@@ -198,7 +198,7 @@ export function SettingsControl({ children, type }: SettingsControlProps) {
 
         <Typography />
 
-        {/* <Backgrounds /> */}
+        <Backgrounds />
 
         {/* <Borders /> */}
 
