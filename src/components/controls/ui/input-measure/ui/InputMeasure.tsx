@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useClassname } from "@/components/controls/hooks/useClassname";
-import { ClassCategory } from "@/lib/tailwind";
+import { ClassCategory, parseTailwindClassesToValues } from "@/lib/tailwind";
 
 type Measurement =
   | "px"
@@ -45,6 +45,10 @@ export function InputMeasure({
   category,
 }: InputMeasureProps) {
   const { props, setClassname } = useClassname();
+
+  const parsedValues = parseTailwindClassesToValues(props?.className);
+
+  console.log("parsedValues", parsedValues);
 
   const [measurement, setMeasurement] =
     useState<Measurement>(defaultMeasurement);

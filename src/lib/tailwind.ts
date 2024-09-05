@@ -144,3 +144,23 @@ export function parseTailwindClass({
     ?.join(" ")
     ?.trim();
 }
+
+export type ParsedClasses = {
+  [key in ClassCategory]?: string;
+};
+
+export function parseTailwindClassesToValues(
+  classString: string
+): ParsedClasses {
+  const parsedValues: ParsedClasses = {};
+  const extractValue = (match: any) => match[1];
+
+  for (const [category, { pattern }] of Object.entries(classConfig)) {
+    const match = pattern.exec(classString);
+    if (match) {
+      parsedValues[category as ClassCategory] = extractValue(match);
+    }
+  }
+
+  return parsedValues;
+}
