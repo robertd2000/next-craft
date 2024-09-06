@@ -40,7 +40,7 @@ export function Display() {
                 <SelectItem value="flex">Flex</SelectItem>
                 <SelectItem value="block">Block</SelectItem>
                 <SelectItem value="grid">Grid</SelectItem>
-                <SelectItem value="none">None</SelectItem>
+                <SelectItem value="hidden">None</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
