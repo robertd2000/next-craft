@@ -6,19 +6,10 @@ import { Code, Redo, Undo } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { parseStructure } from "@/lib/parseToJSX";
-import { getOutputCode } from "@/lib/code-gen";
 import { CodeView } from "@/components/code-view";
+import { useCodeGeneration } from "../hooks/useCodeGeneration";
 
 export const ControlPanel = () => {
-  const [output, setOutput] = useState<string | null>();
-  const [open, setOpen] = useState(false);
-
-  const generateCode = () => {
-    const { importString, output } = getOutputCode(query.getNodes());
-
-    setOutput(`${importString}\n\n${output}`);
-  };
-
   const { active, related, query, canUndo, canRedo, actions } = useEditor(
     (state, query) => {
       const currentlySelectedNodeId = query.getEvent("selected").first();
@@ -108,6 +99,8 @@ export const ControlPanel = () => {
       setIsLoading(false);
     }
   };
+
+  const { output, open, setOpen, generateCode } = useCodeGeneration();
 
   const { renderComponent } = parseStructure(state);
 
