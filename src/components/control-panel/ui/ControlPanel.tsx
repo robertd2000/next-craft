@@ -1,12 +1,12 @@
 import React from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { useExport } from "../hooks/useExport";
-import { useBuild } from "../hooks/useBuild";
 import { ControlHistory } from "./history";
-import { useToolbar } from "../hooks/useToolbar";
 import { ControlPreview } from "./preview";
 import { ControlCodeView } from "./code-view";
+import { useToolbar } from "../hooks/useToolbar";
+import { useExport } from "../hooks/useExport";
+import { useBuild } from "../hooks/useBuild";
 
 export const ControlPanel = () => {
   const { isExportLoading, handleExport } = useExport();
@@ -28,10 +28,16 @@ export const ControlPanel = () => {
             <div className="flex items-center gap-2">
               <ControlHistory />
               <div className="flex gap-2">
-                <Button onClick={handleExport} className="bg-green-500">
+                <Button
+                  onClick={handleExport}
+                  className="bg-green-500"
+                  loading={isExportLoading}
+                >
                   Export
                 </Button>
-                <Button onClick={handleBuild}>Build</Button>
+                <Button onClick={handleBuild} loading={isBuildLoading}>
+                  Build
+                </Button>
               </div>
             </div>
           </div>
