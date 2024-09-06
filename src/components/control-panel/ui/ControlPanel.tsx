@@ -9,6 +9,7 @@ import { CodeView } from "@/components/code-view";
 import { useCodeGeneration } from "../hooks/useCodeGeneration";
 import { usePreview } from "../hooks/usePreview";
 import { useEditorHistory } from "../hooks/useEditorHistory";
+import { useExport } from "../hooks/useExport";
 
 export const ControlPanel = () => {
   const { query } = useEditor();
@@ -52,45 +53,11 @@ export const ControlPanel = () => {
       setIsLoading(false);
     }
   };
-  const handleExport = async () => {
-    setIsLoading(true);
-
-    try {
-      const { componentCode, components } = parseStructureToString(state);
-
-      const response = await fetch("/api/export", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ componentCode, components }),
-      });
-
-      const blob = await response.blob();
-
-      // Create a link element to download the Blob
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `export.zip`;
-      document.body.appendChild(a);
-      a.click();
-
-      // Clean up by revoking the object URL and removing the element
-      setTimeout(() => {
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-      }, 0);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const { output, open, setOpen, generateCode } = useCodeGeneration();
   const { active, related, canUndo, canRedo, actions } = useEditorHistory();
   const { renderComponent } = usePreview();
+  const { isExportLoading, handleExport } = useExport();
 
   return (
     <div className="w-full border-l h-auto">
