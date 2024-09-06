@@ -16,7 +16,7 @@ import {
 import { useClassname } from "@/components/controls/hooks/useClassname";
 
 export function Position() {
-  const { props, setClassname } = useClassname();
+  const { parsedValues, setClassname } = useClassname();
 
   return (
     <AccordionItem value="Position">
@@ -26,7 +26,7 @@ export function Position() {
         <div className="flex gap-2 items-center mt-2 mb-2">
           <Label htmlFor="position">Position</Label>
           <Select
-            value={props.style?.position}
+            value={parsedValues?.["position"]}
             defaultValue="static"
             onValueChange={(value) => {
               setClassname({ value, category: "position" });
