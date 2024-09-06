@@ -8,7 +8,7 @@ import {
 import { useClassname } from "@/components/controls/hooks/useClassname";
 
 export function Backgrounds() {
-  const { props, setClassname } = useClassname();
+  const { parsedValues, setClassname } = useClassname();
 
   return (
     <AccordionItem value="Backgrounds">
@@ -18,7 +18,7 @@ export function Backgrounds() {
         <Label htmlFor="backgroundColor">Color</Label>
         <HexColorPicker
           id="backgroundColor"
-          color={props.style?.backgroundColor}
+          color={parsedValues?.["backgroundColor"]}
           onChange={(color) => {
             setClassname({
               classKey: "bg",
