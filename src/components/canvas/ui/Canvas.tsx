@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import { Drawer, DrawerTrigger, DrawerContent } from "@/components/ui/drawer";
 import { getOutputCode, getOutputHTMLFromId } from "@/lib/code-gen";
 import { CodeView } from "@/components/code-view/ui/CodeView";
+import { parseStructureToString } from "@/lib/parse";
+import { parseStructure } from "@/lib/parseToJSX";
+import { Button } from "@/components/ui/button";
 
 type CanvasProps = {
   children: React.ReactNode;
@@ -17,6 +20,7 @@ export const Canvas = ({ children }: CanvasProps) => {
   const { canUndo, canRedo, actions, query } = useEditor((state, query) => ({
     canUndo: query.history.canUndo(),
     canRedo: query.history.canRedo(),
+    // query: state.nodes,
   }));
   const [output, setOutput] = useState<string | null>();
   const [htmlOutput, setHtmlOutput] = useState<string | null>();
@@ -40,12 +44,100 @@ export const Canvas = ({ children }: CanvasProps) => {
     setCanvasWidth(newWidth);
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  // @ts-ignore
+  const state = query.getSerializedNodes();
+
+  const handleBuild = async () => {
+    setIsLoading(true);
+
+    try {
+      const { componentCode, components } = parseStructureToString(state);
+
+      const response = await fetch("/api/build", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ componentCode, components }),
+      });
+
+      const blob = await response.blob();
+
+      // Create a link element to download the Blob
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `build.zip`;
+      document.body.appendChild(a);
+      a.click();
+
+      // Clean up by revoking the object URL and removing the element
+      setTimeout(() => {
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }, 0);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  const handleExport = async () => {
+    setIsLoading(true);
+
+    try {
+      const { componentCode, components } = parseStructureToString(state);
+
+      const response = await fetch("/api/export", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ componentCode, components }),
+      });
+
+      const blob = await response.blob();
+
+      // Create a link element to download the Blob
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `export.zip`;
+      document.body.appendChild(a);
+      a.click();
+
+      // Clean up by revoking the object URL and removing the element
+      setTimeout(() => {
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }, 0);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const { renderComponent } = parseStructure(state);
+
   return (
     <div className="w-full h-full flex justify-center">
-      <div className={`${canvasWidth} flex flex-col h-full border rounded-sm`}>
+      <div
+        className={`${canvasWidth} flex flex-col border rounded-sm w-full h-full`}
+      >
         <div className="flex justify-between items-center p-4 w-full bg-gray-200">
-          <div className="flex gap-3"></div>
           <div className="flex gap-2">
+            <Drawer>
+              <DrawerTrigger asChild>
+                <Button variant="outline">Preview</Button>
+              </DrawerTrigger>
+              <DrawerContent className="w-full h-[80%] p-2 m-2">
+                {<div>{renderComponent}</div>}
+              </DrawerContent>
+            </Drawer>
+
             <Drawer
               open={open}
               onOpenChange={(value: boolean) => {
@@ -67,7 +159,7 @@ export const Canvas = ({ children }: CanvasProps) => {
             </Drawer>
           </div>
 
-          <div className="flex items-center gap-2 opacity-80 active:text-primary">
+          <div className="flex flex-row gap-2 items-center active:text-primary">
             <div className="flex">
               <div className="w-8">
                 {canUndo && (
@@ -94,11 +186,15 @@ export const Canvas = ({ children }: CanvasProps) => {
                 )}
               </div>
             </div>
+            <Button onClick={handleExport} className="bg-green-500">
+              Export
+            </Button>
+            <Button onClick={handleBuild}>Build</Button>
           </div>
         </div>
 
         <div
-          className="w-full h-full flex-1 bg-white rounded-b-lg"
+          className="w-full h-full flex-1 bg-white rounded-b-lg overflow-auto max-h-full"
           ref={(ref) => {
             if (ref) {
               connect(drag(ref));

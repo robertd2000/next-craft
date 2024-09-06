@@ -90,7 +90,7 @@ export const Viewport = ({ children }: { children: React.ReactNode }) => {
   const { renderComponent } = parseStructure(state);
 
   return (
-    <div className="viewport w-full overflow-x-hidden">
+    <div className="viewport w-full">
       <div className="flex justify-between p-4 pb-0">
         <Drawer>
           <DrawerTrigger asChild>
