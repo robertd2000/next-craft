@@ -1,20 +1,18 @@
 import React from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Code, Redo, Undo } from "lucide-react";
+import { Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { CodeView } from "@/components/code-view";
 import { useCodeGeneration } from "../hooks/useCodeGeneration";
-import { usePreview } from "../hooks/usePreview";
-import { useEditorHistory } from "../hooks/useEditorHistory";
 import { useExport } from "../hooks/useExport";
 import { useBuild } from "../hooks/useBuild";
 import { ControlHistory } from "./history";
 import { useToolbar } from "../hooks/useToolbar";
+import { ControlPreview } from "./preview";
 
 export const ControlPanel = () => {
   const { output, open, setOpen, generateCode } = useCodeGeneration();
-  const { renderComponent } = usePreview();
   const { isExportLoading, handleExport } = useExport();
   const { isBuildLoading, handleBuild } = useBuild();
   const { active, related } = useToolbar();
@@ -25,14 +23,7 @@ export const ControlPanel = () => {
         <div className="flex flex-row gap-2 py-2 justify-between items-center border-b active:text-primary">
           <div>
             <div className="flex gap-2">
-              <Drawer>
-                <DrawerTrigger asChild>
-                  <Button variant="outline">Preview</Button>
-                </DrawerTrigger>
-                <DrawerContent className="w-full h-[80%] p-2 m-2">
-                  {<div>{renderComponent}</div>}
-                </DrawerContent>
-              </Drawer>
+              <ControlPreview />
 
               <Drawer
                 open={open}
