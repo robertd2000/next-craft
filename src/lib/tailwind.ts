@@ -163,7 +163,7 @@ const classConfig: Record<
   },
   borderStyle: {
     pattern: /\b(border-(solid|dashed|dotted|double|none))\b/g,
-    generateClass: (_, value) => `border-[${value}]`,
+    generateClass: (_, value) => `${value}`,
   },
   borderColor: {
     pattern: /border-\[\#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})\]/,
