@@ -15,7 +15,7 @@ export const SideMenu = ({ componentsMap }: SideMenuProps) => {
   return (
     <Tabs
       defaultValue="layers"
-      className="w-[450px] grid grid-cols-8 border border-zink-100"
+      className="w-full h-[100vh] grid grid-cols-8 border border-zink-100"
       orientation="vertical"
     >
       <TabsList className="flex flex-col h-full w-full col-span-2 justify-start pt-[0.5rem]">

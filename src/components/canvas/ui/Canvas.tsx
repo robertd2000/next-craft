@@ -194,7 +194,7 @@ export const Canvas = ({ children }: CanvasProps) => {
         </div>
 
         <div
-          className="w-full h-full flex-1 bg-white rounded-b-lg overflow-auto max-h-full"
+          className="min-w-[1920px] w-[1920px] h-full flex-1 bg-white rounded-b-lg overflow-auto "
           ref={(ref) => {
             if (ref) {
               connect(drag(ref));

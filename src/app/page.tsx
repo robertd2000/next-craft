@@ -40,18 +40,34 @@ export default function Home() {
         onRender={RenderNode}
       >
         <div className="flex flex-1 relative overflow-hidden h-full">
-          <SideMenu componentsMap={componentsMap} />
-          <ReactIframe title="my frame" className="w-full ">
-            <Frame>
-              <Element is={Canvas} id="ROOT" canvas data-cy="root-container">
-                <NodeButton>Button 1</NodeButton>
-                <NodeButton>Button 2</NodeButton>
-                <NodeButton>Button 3</NodeButton>
-                <NodeButton>Button 4</NodeButton>
-              </Element>
-            </Frame>
-          </ReactIframe>
-          <ControlPanel />
+          <div className="w-[300px] h-full flex-shrink-0">
+            <SideMenu componentsMap={componentsMap} />
+          </div>
+          <div className="flex-1 overflow-auto">
+            <div className="min-w-[1920px] ">
+              <ReactIframe
+                title="my frame"
+                className="w-full h-full min-h-[calc(100vh-20px)]"
+              >
+                <Frame>
+                  <Element
+                    is={Canvas}
+                    id="ROOT"
+                    canvas
+                    data-cy="root-container"
+                  >
+                    <NodeButton>Button 1</NodeButton>
+                    <NodeButton>Button 2</NodeButton>
+                    <NodeButton>Button 3</NodeButton>
+                    <NodeButton>Button 4</NodeButton>
+                  </Element>
+                </Frame>
+              </ReactIframe>
+            </div>
+          </div>
+          <div className="w-[300px] h-full flex-shrink-0">
+            <ControlPanel />
+          </div>
         </div>
       </Editor>
     </section>
