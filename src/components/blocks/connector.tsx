@@ -32,9 +32,11 @@ export const withNode = <T extends Record<string, unknown>>(
   {
     draggable = true,
     droppable = true,
+    type,
   }: {
     draggable?: boolean;
     droppable?: boolean;
+    type?: 'button';
   } = {}
 ): React.ForwardRefExoticComponent<
   React.PropsWithoutRef<T> & React.RefAttributes<HTMLElement>
@@ -69,29 +71,40 @@ export const withNode = <T extends Record<string, unknown>>(
         }
       };
 
-      return (
-        // @ts-ignore
-        <Component
-          ref={applyRef}
-          {...props}
-          className={
-            isActive
-              ? `${props?.className} component-selected`
-              : props?.className
-          }
-        >
-          {typeof props.children === "string" &&
-          props.children.trim() === "" ? (
-            <>Empty text</>
-          ) : (
-            props.children || (
-              <div className="text-center italic p-4 bg-yellow-100 outline-dashed outline-amber-400">
-                Empty container
-              </div>
-            )
-          )}
-        </Component>
+      const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        if (isActive) {
+          event.stopPropagation();
+        }
+      };
+
+      const component = (
+          <Component
+              ref={applyRef}
+              {...props}
+              className={
+                isActive
+                    ? `${props?.className} component-selected`
+                    : props?.className
+              }
+          >
+            {typeof props.children === "string" &&
+            props.children.trim() === "" ? (
+                <>Empty text</>
+            ) : (
+                props.children || (
+                    <div className="text-center italic p-4 bg-yellow-100 outline-dashed outline-amber-400">
+                      Empty container
+                    </div>
+                )
+            )}
+          </Component>
       );
+
+      return type === 'button' ? (
+          <div style={{ display: 'inline' }} onClickCapture={handleClick}>
+            {component}
+          </div>
+      ) : component;
     }
   );
 

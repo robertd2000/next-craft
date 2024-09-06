@@ -9,9 +9,12 @@ const generateComponentCode = (
 ): string => {
   const node = nodesMap[nodeId];
   const { displayName, props, nodes, linkedNodes, custom } = node.data;
-
+  let modifiedProps = props;
+  if ('onClickScript' in props) {
+    modifiedProps = {...props, onClickScript: props.onClickScript.replace(/"/g, "'")};
+  }
   const indendation = getIndentation(level);
-  const openingTag = `<${displayName}${generatePropsString(props)}>`;
+  const openingTag = `<${displayName}${generatePropsString(modifiedProps)}>`;
   const closingTag = `</${displayName}>`;
 
   if (!imports.find((item) => item.displayName === displayName)) {

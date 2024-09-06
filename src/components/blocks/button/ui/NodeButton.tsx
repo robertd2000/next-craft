@@ -6,12 +6,13 @@ const draggable = true;
 
 export const NodeButton = withNode(Button, {
   draggable,
+  type: 'button',
 });
 // @ts-ignore
 NodeButton.craft = {
   // @ts-ignore
   ...NodeButton.craft,
   related: {
-    toolbar: SettingsControl,
+    toolbar: () => <SettingsControl type="button" />,
   },
 };
