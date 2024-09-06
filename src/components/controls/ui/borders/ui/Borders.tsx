@@ -5,18 +5,13 @@ import {
 } from "@/components/ui/accordion";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useNode } from "@craftjs/core";
 import { X, Minus, Ellipsis, ChevronsLeftRightEllipsis } from "lucide-react";
 import { HexColorPicker } from "react-colorful";
 import { InputMeasure } from "../../input-measure";
+import { useClassname } from "@/components/controls/hooks/useClassname";
 
 export function Borders() {
-  const {
-    actions: { setProp },
-    props,
-  } = useNode((node) => ({
-    props: node.data.props,
-  }));
+  const { parsedValues, setClassname } = useClassname();
 
   return (
     <AccordionItem value="Borders">
@@ -29,28 +24,25 @@ export function Borders() {
           </div>
           <Tabs
             defaultValue="start"
-            value={props.style?.borderStyle}
-            onValueChange={(e) => {
-              setProp(
-                (props: { style: { borderStyle: string } }) =>
-                  (props.style = {
-                    ...props.style,
-                    borderStyle: e,
-                  })
-              );
+            value={parsedValues?.["borderStyle"]}
+            onValueChange={(value) => {
+              setClassname({
+                value,
+                category: "borderStyle",
+              });
             }}
           >
             <TabsList>
-              <TabsTrigger value="none">
+              <TabsTrigger value="border-none">
                 <X />
               </TabsTrigger>
-              <TabsTrigger value="solid">
+              <TabsTrigger value="border-solid">
                 <Minus />
               </TabsTrigger>
-              <TabsTrigger value="dashed">
+              <TabsTrigger value="border-dashed">
                 <ChevronsLeftRightEllipsis />
               </TabsTrigger>
-              <TabsTrigger value="dotted">
+              <TabsTrigger value="border-dotted">
                 <Ellipsis />
               </TabsTrigger>
             </TabsList>
@@ -61,13 +53,13 @@ export function Borders() {
           <Label htmlFor="borderColor">Color</Label>
           <HexColorPicker
             id="borderColor"
-            color={props.style?.borderColor}
+            color={parsedValues?.["borderColor"]}
             onChange={(color) => {
-              setProp(
-                (props: { style: { borderColor: string } }) =>
-                  (props.style = { ...props.style, borderColor: color }),
-                500
-              );
+              setClassname({
+                value: color,
+                classKey: "border",
+                category: "borderColor",
+              });
             }}
           />
         </div>
@@ -77,44 +69,23 @@ export function Borders() {
 
           <div className="grid grid-cols-2 gap-2 mt-4 mb-4">
             <div>
-              <Label htmlFor="borderTopWidth">Top</Label>
-              <InputMeasure
-                id="borderTopWidth"
-                value={props.style?.borderTopWidth}
-                setProp={setProp}
-                propName="borderTopWidth"
-              />
+              <Label htmlFor="border-t">Top</Label>
+              <InputMeasure classKey="border-t" category="border-t" />
             </div>
 
             <div>
-              <Label htmlFor="borderBottomWidth">Bottom</Label>
-
-              <InputMeasure
-                id="borderBottomWidth"
-                value={props.style?.borderBottomWidth}
-                setProp={setProp}
-                propName="borderBottomWidth"
-              />
+              <Label htmlFor="border-b">Bottom</Label>
+              <InputMeasure classKey="border-b" category="border-b" />
             </div>
 
             <div>
-              <Label htmlFor="borderLeftWidth">Left</Label>
-              <InputMeasure
-                id="borderLeftWidth"
-                value={props.style?.borderLeftWidth}
-                setProp={setProp}
-                propName="borderLeftWidth"
-              />
+              <Label htmlFor="border-l">Left</Label>
+              <InputMeasure classKey="border-l" category="border-l" />
             </div>
 
             <div>
-              <Label htmlFor="borderRightWidth">Right</Label>
-              <InputMeasure
-                id="borderRightWidth"
-                value={props.style?.borderRightWidth}
-                setProp={setProp}
-                propName="borderRightWidth"
-              />
+              <Label htmlFor="border-r">Right</Label>
+              <InputMeasure classKey="border-r" category="border-r" />
             </div>
           </div>
 
@@ -122,43 +93,23 @@ export function Borders() {
 
           <div className="grid grid-cols-2 gap-2 mt-4 mb-4">
             <div>
-              <Label htmlFor="borderTopLeftRadius">Top Left</Label>
-              <InputMeasure
-                id="borderTopLeftRadius"
-                value={props.style?.borderTopLeftRadius}
-                setProp={setProp}
-                propName="borderTopLeftRadius"
-              />
+              <Label htmlFor="rounded-tl">Top Left</Label>
+              <InputMeasure classKey="rounded-tl" category="rounded-tl" />
             </div>
 
             <div>
-              <Label htmlFor="borderTopRightRadius">Top Right</Label>
-              <InputMeasure
-                id="borderTopRightRadius"
-                value={props.style?.borderTopRightRadius}
-                setProp={setProp}
-                propName="borderTopRightRadius"
-              />
+              <Label htmlFor="rounded-tr">Top Right</Label>
+              <InputMeasure classKey="rounded-tr" category="rounded-tr" />
             </div>
 
             <div>
-              <Label htmlFor="borderBottomLeftRadius">Bottom Left</Label>
-              <InputMeasure
-                id="borderBottomLeftRadius"
-                value={props.style?.borderBottomLeftRadius}
-                setProp={setProp}
-                propName="borderBottomLeftRadius"
-              />
+              <Label htmlFor="rounded-bl">Bottom Left</Label>
+              <InputMeasure classKey="rounded-bl" category="rounded-bl" />
             </div>
 
             <div>
-              <Label htmlFor="borderBottomRightRadius">Bottom Right</Label>
-              <InputMeasure
-                id="borderBottomRightRadius"
-                value={props.style?.borderBottomRightRadius}
-                setProp={setProp}
-                propName="borderBottomRightRadius"
-              />
+              <Label htmlFor="rounded-br">Bottom Right</Label>
+              <InputMeasure classKey="rounded-br" category="rounded-br" />
             </div>
           </div>
         </div>

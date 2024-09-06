@@ -1,4 +1,3 @@
-import { useNode } from "@craftjs/core";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -14,14 +13,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useClassname } from "@/components/controls/hooks/useClassname";
 
 export function Display() {
-  const {
-    actions: { setProp },
-    props,
-  } = useNode((node) => ({
-    props: node.data.props,
-  }));
+  const { parsedValues, setClassname } = useClassname();
 
   return (
     <AccordionItem value="Display">
@@ -31,13 +26,9 @@ export function Display() {
         <div className="flex gap-2 items-center mt-2 mb-2">
           <Label htmlFor="display">Display</Label>
           <Select
-            value={props.style?.display}
-            onValueChange={(e) => {
-              setProp(
-                (props: { style: { display: string } }) =>
-                  (props.style = { ...props.style, display: e }),
-                500
-              );
+            value={parsedValues?.["display"]}
+            onValueChange={(value) => {
+              setClassname({ value, category: "display" });
             }}
           >
             <SelectTrigger className="w-full" id="display">
@@ -49,7 +40,7 @@ export function Display() {
                 <SelectItem value="flex">Flex</SelectItem>
                 <SelectItem value="block">Block</SelectItem>
                 <SelectItem value="grid">Grid</SelectItem>
-                <SelectItem value="none">None</SelectItem>
+                <SelectItem value="hidden">None</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>

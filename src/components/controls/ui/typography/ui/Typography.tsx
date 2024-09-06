@@ -9,7 +9,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useNode } from "@craftjs/core";
 import {
   AlignCenter,
   AlignJustify,
@@ -27,14 +26,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useClassname } from "@/components/controls/hooks/useClassname";
 
 export function Typography() {
-  const {
-    actions: { setProp },
-    props,
-  } = useNode((node) => ({
-    props: node.data.props,
-  }));
+  const { parsedValues, setClassname } = useClassname();
 
   return (
     <AccordionItem value="Typography">
@@ -44,13 +39,13 @@ export function Typography() {
         <div className="flex gap-2 items-center mt-2 mb-2">
           <Label htmlFor="display">Weight</Label>
           <Select
-            value={props.style?.weight}
-            onValueChange={(e) => {
-              setProp(
-                (props: { style: { fontWeight: string } }) =>
-                  (props.style = { ...props.style, fontWeight: e }),
-                500
-              );
+            value={parsedValues?.["fontWeight"]}
+            onValueChange={(value) => {
+              setClassname({
+                classKey: "font",
+                value,
+                category: "fontWeight",
+              });
             }}
           >
             <SelectTrigger className="w-full" id="weight">
@@ -77,61 +72,44 @@ export function Typography() {
           <Label htmlFor="color">Color</Label>
           <HexColorPicker
             id="color"
-            color={props.style?.color}
+            color={parsedValues?.["textColor"]}
             onChange={(color) => {
-              setProp(
-                (props: { style: { color: string } }) =>
-                  (props.style = { ...props.style, color: color }),
-                500
-              );
+              setClassname({
+                classKey: "text",
+                value: color,
+                category: "textColor",
+              });
             }}
           />
         </div>
 
         <div className="flex gap-2 items-center mt-2">
           <div className="w-[33%]">
-            <Label htmlFor="fontSize">Size</Label>
-            <InputMeasure
-              id="fontSize"
-              value={props.style?.fontSize}
-              setProp={setProp}
-              propName="fontSize"
-            />
+            <Label htmlFor="text">Size</Label>
+            <InputMeasure classKey="text" category="fontSize" />
           </div>
 
           <div className="w-[33%]">
-            <Label htmlFor="lineHeight">Height</Label>
-            <InputMeasure
-              id="lineHeight"
-              value={props.style?.lineHeight}
-              setProp={setProp}
-              propName="lineHeight"
-            />
+            <Label htmlFor="leading">Height</Label>
+            <InputMeasure classKey="leading" category="lineHeight" />
           </div>
 
           <div className="w-[33%]">
-            <Label htmlFor="letterSpacing">Spacing</Label>
-            <InputMeasure
-              id="letterSpacing"
-              value={props.style?.letterSpacing}
-              setProp={setProp}
-              propName="letterSpacing"
-            />
+            <Label htmlFor="tracking">Spacing</Label>
+            <InputMeasure classKey="tracking" category="letterSpacing" />
           </div>
         </div>
 
         <div className="mt-2 flex gap-2">
           <Tabs
             defaultValue="start"
-            value={props.style?.textAlign}
-            onValueChange={(e) => {
-              setProp(
-                (props: { style: { textAlign: string } }) =>
-                  (props.style = {
-                    ...props.style,
-                    textAlign: e,
-                  })
-              );
+            value={parsedValues?.["textAlign"]}
+            onValueChange={(value) => {
+              setClassname({
+                classKey: "text",
+                value,
+                category: "textAlign",
+              });
             }}
           >
             <TabsList>
@@ -152,15 +130,12 @@ export function Typography() {
 
           <Tabs
             defaultValue="none"
-            value={props.style?.textDecorationLine}
-            onValueChange={(e) => {
-              setProp(
-                (props: { style: { textDecorationLine: string } }) =>
-                  (props.style = {
-                    ...props.style,
-                    textDecorationLine: e,
-                  })
-              );
+            value={parsedValues?.["textDecoration"]}
+            onValueChange={(value) => {
+              setClassname({
+                value,
+                category: "textDecoration",
+              });
             }}
           >
             <TabsList>
@@ -180,15 +155,12 @@ export function Typography() {
         <div className="mt-2 flex gap-2">
           <Tabs
             defaultValue="none"
-            value={props.style?.textTransform}
-            onValueChange={(e) => {
-              setProp(
-                (props: { style: { textTransform: string } }) =>
-                  (props.style = {
-                    ...props.style,
-                    textTransform: e,
-                  })
-              );
+            value={parsedValues?.["textTransform"]}
+            onValueChange={(value) => {
+              setClassname({
+                value,
+                category: "textTransform",
+              });
             }}
           >
             <TabsList>
@@ -209,15 +181,12 @@ export function Typography() {
 
           <Tabs
             defaultValue="normal"
-            value={props.style?.fontStyle}
-            onValueChange={(e) => {
-              setProp(
-                (props: { style: { fontStyle: string } }) =>
-                  (props.style = {
-                    ...props.style,
-                    fontStyle: e,
-                  })
-              );
+            value={parsedValues?.["fontStyle"]}
+            onValueChange={(value) => {
+              setClassname({
+                value,
+                category: "fontStyle",
+              });
             }}
           >
             <TabsList>

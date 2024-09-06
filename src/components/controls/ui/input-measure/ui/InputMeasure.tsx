@@ -8,6 +8,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useClassname } from "@/components/controls/hooks/useClassname";
+import { ClassCategory } from "@/lib/tailwind";
 
 type Measurement =
   | "px"
@@ -33,53 +35,90 @@ const measurementOptions: Measurement[] = [
 ];
 
 interface InputMeasureProps {
-  value: string;
   defaultMeasurement?: Measurement;
-  id: string;
-  propName: string;
-  setProp: (cb: any, throttleRate?: number) => void;
+  classKey: string;
+  category: ClassCategory;
 }
 export function InputMeasure({
-  value,
+  classKey,
   defaultMeasurement = "px",
-  propName,
-  id,
-  setProp,
+  category,
 }: InputMeasureProps) {
+  // const { setClassname, parsedValues } = useClassname();
+
+  // const [measurement, setMeasurement] =
+  //   useState<Measurement>(defaultMeasurement);
+  // const [inputValue, setValue] = useState<string>(
+  //   parsedValues?.[category]
+  //     ? parseFloat(parsedValues?.[category]).toString()
+  //     : ""
+  // );
+
+  // useEffect(() => {
+  //   if (!isNaN(parseFloat(inputValue))) {
+  //     setClassname({
+  //       classKey,
+  //       value: parseFloat(inputValue) + measurement,
+  //       category,
+  //     });
+  //   }
+  // }, [inputValue, measurement]);
+
+  // useEffect(() => {
+  //   const m = parsedValues?.[category]?.replace(/\d+/g, "");
+  //   if (m) {
+  //     setMeasurement(m as Measurement);
+  //   }
+  //   const value = parseFloat(parsedValues?.[category] || "")?.toString();
+
+  //   setValue(value);
+  // }, [parsedValues?.[category]]);
+
+  const { setClassname, parsedValues } = useClassname();
+
   const [measurement, setMeasurement] =
     useState<Measurement>(defaultMeasurement);
-  const [inputValue, setValue] = useState<string>(
-    value ? parseFloat(value).toString() : ""
-  );
+  const [inputValue, setInputValue] = useState<string>("");
+
+  const extractValueAndMeasurement = (
+    value: string
+  ): { value: string; unit: Measurement } => {
+    const unit = value.replace(/\d+/g, "") as Measurement;
+    const numericValue = parseFloat(value)?.toString() || "";
+    return { value: numericValue, unit };
+  };
 
   useEffect(() => {
-    if (!isNaN(parseFloat(inputValue)))
-      setProp(
-        (props: { style: { propName: string } }) =>
-          (props.style = {
-            ...props.style,
-            [propName]: parseFloat(inputValue) + measurement,
-          }),
-        500
-      );
+    if (!isNaN(parseFloat(inputValue))) {
+      setClassname({
+        classKey,
+        value: `${parseFloat(inputValue)}${measurement}`,
+        category,
+      });
+    }
   }, [inputValue, measurement]);
 
   useEffect(() => {
-    const m = value?.replace(/\d+/g, "");
-    if (m) {
-      setMeasurement(m as Measurement);
+    if (parsedValues?.[category]) {
+      const { value, unit } = extractValueAndMeasurement(
+        parsedValues[category]
+      );
+      setInputValue(value);
+      setMeasurement(unit);
+    } else {
+      setInputValue("");
     }
-  }, [value]);
+  }, [parsedValues?.[category]]);
 
   return (
     <div className="flex justify-between rounded-md border border-input">
       <Input
-        id={id}
+        id={classKey}
         type="number"
         value={inputValue}
         className="border-none ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0 focus:ring-0 focus:ring-offset-0"
         onChange={(e) => {
-          setValue(e.target.value);
+          setInputValue(e.target.value);
         }}
       />
       <Select
