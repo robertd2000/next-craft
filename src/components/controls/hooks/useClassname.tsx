@@ -1,5 +1,11 @@
+import { useEffect, useMemo, useState } from "react";
 import { useNode } from "@craftjs/core";
-import { ClassCategory, parseTailwindClass } from "@/lib/tailwind";
+import {
+  ClassCategory,
+  ParsedClasses,
+  parseTailwindClass,
+  parseTailwindClassesToValues,
+} from "@/lib/tailwind";
 
 export function useClassname() {
   const {
@@ -7,6 +13,7 @@ export function useClassname() {
     props,
   } = useNode((node) => ({
     props: node.data.props,
+    className: node.data.props.className,
   }));
 
   function setClassname({
@@ -32,8 +39,16 @@ export function useClassname() {
     );
   }
 
+  const [parsedValues, setParsedValues] = useState<ParsedClasses>({});
+
+  useEffect(() => {
+    const parsed = parseTailwindClassesToValues(props?.className);
+    setParsedValues(parsed);
+  }, [props?.className]);
+
   return {
     props,
     setClassname,
+    parsedValues,
   };
 }

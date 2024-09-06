@@ -16,7 +16,7 @@ import {
 import { useClassname } from "@/components/controls/hooks/useClassname";
 
 export function Display() {
-  const { props, setClassname } = useClassname();
+  const { parsedValues, setClassname } = useClassname();
 
   return (
     <AccordionItem value="Display">
@@ -26,7 +26,7 @@ export function Display() {
         <div className="flex gap-2 items-center mt-2 mb-2">
           <Label htmlFor="display">Display</Label>
           <Select
-            value={props.style?.display}
+            value={parsedValues?.["display"]}
             onValueChange={(value) => {
               setClassname({ value, category: "display" });
             }}

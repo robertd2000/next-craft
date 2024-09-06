@@ -1,4 +1,3 @@
-// Типы категорий классов
 export type ClassCategory =
   | "textColor"
   | "textAlign"
@@ -30,7 +29,6 @@ export type ClassCategory =
   | "paddingLeft"
   | "paddingRight";
 
-// Объект с конфигурациями для категорий классов
 const classConfig: Record<
   ClassCategory,
   {
@@ -119,7 +117,7 @@ const classConfig: Record<
     generateClass: (_, value) => `border-${value}`,
   },
   display: {
-    pattern: /\b(block|inline-block|inline|flex|grid|hidden)\b/g,
+    pattern: /\b(block|inline-block|inline|flex|grid|hidden)\b/,
     generateClass: (_, value) => `${value}`,
   },
   position: {
@@ -157,7 +155,6 @@ const classConfig: Record<
   },
 };
 
-// Основная функция парсинга и замены класса
 export function parseTailwindClass({
   currentClassName,
   classKey,
@@ -171,12 +168,10 @@ export function parseTailwindClass({
 }): string {
   const config = classConfig[category];
 
-  // Удаление старого класса
   const cleanedClassName = currentClassName
     ?.replace(config?.pattern, "")
     .trim();
 
-  // Добавление нового класса
   const newClass = config?.generateClass(classKey, value);
 
   return [cleanedClassName, newClass]
