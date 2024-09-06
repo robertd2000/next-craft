@@ -16,7 +16,7 @@ export function Blocks({ componentsMap }: BlocksProps) {
   const { connectors } = useEditor();
 
   return (
-    <Accordion type="multiple" className="w-full p-1">
+    <Accordion type="multiple" className="w-full px-1">
       {componentsMap.map((menuItem, index) => {
         return (
           <AccordionItem value={menuItem.name} key={index}>

@@ -9,6 +9,7 @@ import { usePreview } from "../hooks/usePreview";
 import { useEditorHistory } from "../hooks/useEditorHistory";
 import { useExport } from "../hooks/useExport";
 import { useBuild } from "../hooks/useBuild";
+import { ControlHistory } from "./history";
 
 export const ControlPanel = () => {
   const { output, open, setOpen, generateCode } = useCodeGeneration();
@@ -47,7 +48,7 @@ export const ControlPanel = () => {
                   />
                 </DrawerTrigger>
 
-                <DrawerContent className="h-[75vh]">
+                <DrawerContent className="h-[85vh]">
                   <CodeView codeString={output as string} />
                 </DrawerContent>
               </Drawer>
@@ -55,30 +56,7 @@ export const ControlPanel = () => {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <div className="w-8">
-                {canUndo && (
-                  <Undo
-                    size={24}
-                    strokeWidth={1.75}
-                    className="text-gray-500 hover:text-primary transition duration-300 cursor-pointer"
-                    onClick={(event) => {
-                      actions.history.undo();
-                    }}
-                  />
-                )}
-              </div>
-              <div className="w-8">
-                {canRedo && (
-                  <Redo
-                    size={24}
-                    strokeWidth={1.75}
-                    className="text-gray-500 hover:text-primary transition duration-300 cursor-pointer"
-                    onClick={(event) => {
-                      actions.history.redo();
-                    }}
-                  />
-                )}
-              </div>
+              <ControlHistory />
               <div className="flex gap-2">
                 <Button onClick={handleExport} className="bg-green-500">
                   Export
