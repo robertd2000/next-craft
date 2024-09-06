@@ -11,7 +11,7 @@ import { InputMeasure } from "../../input-measure";
 import { useClassname } from "@/components/controls/hooks/useClassname";
 
 export function Borders() {
-  const { props, setClassname } = useClassname();
+  const { parsedValues, setClassname } = useClassname();
 
   return (
     <AccordionItem value="Borders">
@@ -24,10 +24,11 @@ export function Borders() {
           </div>
           <Tabs
             defaultValue="start"
-            value={props.style?.borderStyle}
+            value={parsedValues?.["borderStyle"]}
             onValueChange={(value) => {
               setClassname({
                 value,
+                category: "borderStyle",
               });
             }}
           >
@@ -52,17 +53,13 @@ export function Borders() {
           <Label htmlFor="borderColor">Color</Label>
           <HexColorPicker
             id="borderColor"
-            color={props.className?.borderColor}
+            color={parsedValues?.["borderColor"]}
             onChange={(color) => {
               setClassname({
                 value: color,
                 classKey: "border",
+                category: "borderColor",
               });
-              // setProp(
-              //   (props: { style: { borderColor: string } }) =>
-              //     (props.style = { ...props.style, borderColor: color }),
-              //   500
-              // );
             }}
           />
         </div>
@@ -73,22 +70,22 @@ export function Borders() {
           <div className="grid grid-cols-2 gap-2 mt-4 mb-4">
             <div>
               <Label htmlFor="border-t">Top</Label>
-              <InputMeasure classKey="border-t" />
+              <InputMeasure classKey="border-t" category="border-t" />
             </div>
 
             <div>
               <Label htmlFor="border-b">Bottom</Label>
-              <InputMeasure classKey="border-b" />
+              <InputMeasure classKey="border-b" category="border-b" />
             </div>
 
             <div>
               <Label htmlFor="border-l">Left</Label>
-              <InputMeasure classKey="border-l" />
+              <InputMeasure classKey="border-l" category="border-l" />
             </div>
 
             <div>
               <Label htmlFor="border-r">Right</Label>
-              <InputMeasure classKey="border-r" />
+              <InputMeasure classKey="border-r" category="border-r" />
             </div>
           </div>
 
@@ -97,22 +94,22 @@ export function Borders() {
           <div className="grid grid-cols-2 gap-2 mt-4 mb-4">
             <div>
               <Label htmlFor="rounded-tl">Top Left</Label>
-              <InputMeasure classKey="rounded-tl" />
+              <InputMeasure classKey="rounded-tl" category="rounded-tl" />
             </div>
 
             <div>
               <Label htmlFor="rounded-tr">Top Right</Label>
-              <InputMeasure classKey="rounded-tr" />
+              <InputMeasure classKey="rounded-tr" category="rounded-tr" />
             </div>
 
             <div>
               <Label htmlFor="rounded-bl">Bottom Left</Label>
-              <InputMeasure classKey="rounded-bl" />
+              <InputMeasure classKey="rounded-bl" category="rounded-bl" />
             </div>
 
             <div>
               <Label htmlFor="rounded-br">Bottom Right</Label>
-              <InputMeasure classKey="rounded-br" />
+              <InputMeasure classKey="rounded-br" category="rounded-br" />
             </div>
           </div>
         </div>

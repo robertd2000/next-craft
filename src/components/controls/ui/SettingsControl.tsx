@@ -200,7 +200,7 @@ export function SettingsControl({ children, type }: SettingsControlProps) {
 
         <Backgrounds />
 
-        {/* <Borders /> */}
+        <Borders />
 
         {type === "button" && <Scripts />}
       </Accordion>
