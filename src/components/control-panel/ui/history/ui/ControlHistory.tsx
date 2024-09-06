@@ -1,6 +1,5 @@
-import { useEditorHistory } from "@/components/control-panel/hooks/useEditorHistory";
 import { Redo, Undo } from "lucide-react";
-import React from "react";
+import { useEditorHistory } from "@/components/control-panel/hooks/useEditorHistory";
 
 export function ControlHistory() {
   const { canUndo, canRedo, actions } = useEditorHistory();
@@ -13,7 +12,7 @@ export function ControlHistory() {
             size={24}
             strokeWidth={1.75}
             className="text-gray-500 hover:text-primary transition duration-300 cursor-pointer"
-            onClick={(event) => {
+            onClick={() => {
               actions.history.undo();
             }}
           />
@@ -25,7 +24,7 @@ export function ControlHistory() {
             size={24}
             strokeWidth={1.75}
             className="text-gray-500 hover:text-primary transition duration-300 cursor-pointer"
-            onClick={(event) => {
+            onClick={() => {
               actions.history.redo();
             }}
           />

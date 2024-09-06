@@ -10,13 +10,14 @@ import { useEditorHistory } from "../hooks/useEditorHistory";
 import { useExport } from "../hooks/useExport";
 import { useBuild } from "../hooks/useBuild";
 import { ControlHistory } from "./history";
+import { useToolbar } from "../hooks/useToolbar";
 
 export const ControlPanel = () => {
   const { output, open, setOpen, generateCode } = useCodeGeneration();
-  const { active, related, canUndo, canRedo, actions } = useEditorHistory();
   const { renderComponent } = usePreview();
   const { isExportLoading, handleExport } = useExport();
   const { isBuildLoading, handleBuild } = useBuild();
+  const { active, related } = useToolbar();
 
   return (
     <div className="w-full border-l h-auto">
