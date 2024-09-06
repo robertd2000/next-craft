@@ -4,7 +4,6 @@ interface TextareaProps extends React.HTMLProps<HTMLTextAreaElement> {}
 
 export const Textarea = (props: TextareaProps) => {
 
-
   return (
       <textarea
         {...props}

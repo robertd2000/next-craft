@@ -38,12 +38,17 @@ export function parseStructureToString(structure: SerializedNodes) {
       children: nodeChildren,
     } = node;
 
+    let modifiedProps = componentProps;
+    if ('onClickScript' in componentProps) {
+      modifiedProps = {...componentProps, onClickScript: componentProps.onClickScript.replace(/"/g, "'")};
+    }
+
     const componentTag =
       typeof ComponentType === "string" ? ComponentType : ComponentType.name;
 
     if (ComponentType && !unimportedNodes.includes(ComponentType))
       components.push(componentsPaths[componentTag]);
-    const propsString = propsToString(componentProps);
+    const propsString = propsToString(modifiedProps);
 
     const indent = "  ".repeat(depth);
 
