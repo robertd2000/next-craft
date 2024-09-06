@@ -8,22 +8,10 @@ import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { CodeView } from "@/components/code-view";
 import { useCodeGeneration } from "../hooks/useCodeGeneration";
 import { usePreview } from "../hooks/usePreview";
+import { useEditorHistory } from "../hooks/useEditorHistory";
 
 export const ControlPanel = () => {
-  const { active, related, query, canUndo, canRedo, actions } = useEditor(
-    (state, query) => {
-      const currentlySelectedNodeId = query.getEvent("selected").first();
-      return {
-        active: currentlySelectedNodeId,
-        related:
-          currentlySelectedNodeId &&
-          state.nodes[currentlySelectedNodeId].related,
-        canUndo: query.history.canUndo(),
-        canRedo: query.history.canRedo(),
-      };
-    }
-  );
-
+  const { query } = useEditor();
   const [isLoading, setIsLoading] = useState(false);
 
   // @ts-ignore
@@ -101,7 +89,7 @@ export const ControlPanel = () => {
   };
 
   const { output, open, setOpen, generateCode } = useCodeGeneration();
-
+  const { active, related, canUndo, canRedo, actions } = useEditorHistory();
   const { renderComponent } = usePreview();
 
   return (
