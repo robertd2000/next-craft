@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import { useEditor } from "@craftjs/core";
+import React from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { parseStructureToString } from "@/lib/parse";
 import { Code, Redo, Undo } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
@@ -10,54 +8,14 @@ import { useCodeGeneration } from "../hooks/useCodeGeneration";
 import { usePreview } from "../hooks/usePreview";
 import { useEditorHistory } from "../hooks/useEditorHistory";
 import { useExport } from "../hooks/useExport";
+import { useBuild } from "../hooks/useBuild";
 
 export const ControlPanel = () => {
-  const { query } = useEditor();
-  const [isLoading, setIsLoading] = useState(false);
-
-  // @ts-ignore
-  const state = query.getSerializedNodes();
-
-  const handleBuild = async () => {
-    setIsLoading(true);
-
-    try {
-      const { componentCode, components } = parseStructureToString(state);
-
-      const response = await fetch("/api/build", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ componentCode, components }),
-      });
-
-      const blob = await response.blob();
-
-      // Create a link element to download the Blob
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `build.zip`;
-      document.body.appendChild(a);
-      a.click();
-
-      // Clean up by revoking the object URL and removing the element
-      setTimeout(() => {
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-      }, 0);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const { output, open, setOpen, generateCode } = useCodeGeneration();
   const { active, related, canUndo, canRedo, actions } = useEditorHistory();
   const { renderComponent } = usePreview();
   const { isExportLoading, handleExport } = useExport();
+  const { isBuildLoading, handleBuild } = useBuild();
 
   return (
     <div className="w-full border-l h-auto">
