@@ -5,9 +5,9 @@ import { parseStructureToString } from "@/lib/parse";
 import { Code, Redo, Undo } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { parseStructure } from "@/lib/parseToJSX";
 import { CodeView } from "@/components/code-view";
 import { useCodeGeneration } from "../hooks/useCodeGeneration";
+import { usePreview } from "../hooks/usePreview";
 
 export const ControlPanel = () => {
   const { active, related, query, canUndo, canRedo, actions } = useEditor(
@@ -102,7 +102,7 @@ export const ControlPanel = () => {
 
   const { output, open, setOpen, generateCode } = useCodeGeneration();
 
-  const { renderComponent } = parseStructure(state);
+  const { renderComponent } = usePreview();
 
   return (
     <div className="w-full border-l h-auto">
