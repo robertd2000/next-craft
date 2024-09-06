@@ -126,31 +126,31 @@ const classConfig: Record<
     generateClass: (_, value) => `${value}`,
   },
   fontWeight: {
-    pattern: /font-\[.*?\]/g,
+    pattern: /font-\[(\d+)\]/, // /font-\[.*?\]/g,
     generateClass: (_, value) => `font-[${value}]`,
   },
   fontSize: {
-    pattern: /text-\[\d+(px|%|em|rem|svw|svh|lvh|lvw|ch)\]/,
+    pattern: /text-\[(\d+(\.\d+)?(px|%|em|rem|svw|svh|lvh|lvw|ch))\]/, // /text-\[\d+(px|%|em|rem|svw|svh|lvh|lvw|ch)\]/,
     generateClass: (_, value) => `text-[${value}]`,
   },
   lineHeight: {
-    pattern: /leading-\[.*?\]/g,
+    pattern: /leading-\[(\d+(\.\d+)?)\]/, // /leading-\[.*?\]/g,
     generateClass: (_, value) => `leading-[${value}]`,
   },
   letterSpacing: {
-    pattern: /tracking-\[.*?\]/g,
+    pattern: /tracking-\[(\d+(\.\d+)?(px|em|rem|ch))\]/, // /tracking-\[.*?\]/g,
     generateClass: (_, value) => `tracking-[${value}]`,
   },
   textDecoration: {
-    pattern: /(underline|line-through|no-underline)/g,
+    pattern: /(underline|line-through|no-underline)/, // /(underline|line-through|no-underline)/g,
     generateClass: (_, value) => `${value}`,
   },
   textTransform: {
-    pattern: /(uppercase|lowercase|capitalize|normal-case)/g,
+    pattern: /(uppercase|lowercase|capitalize|normal-case)/, // /(uppercase|lowercase|capitalize|normal-case)/g,
     generateClass: (_, value) => `${value}`,
   },
   fontStyle: {
-    pattern: /(italic|not-italic)/g,
+    pattern: /(italic|not-italic)/, // /(italic|not-italic)/g,
     generateClass: (_, value) => `${value}`,
   },
 };

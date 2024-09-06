@@ -29,7 +29,7 @@ import {
 import { useClassname } from "@/components/controls/hooks/useClassname";
 
 export function Typography() {
-  const { props, setClassname } = useClassname();
+  const { parsedValues, setClassname } = useClassname();
 
   return (
     <AccordionItem value="Typography">
@@ -39,7 +39,7 @@ export function Typography() {
         <div className="flex gap-2 items-center mt-2 mb-2">
           <Label htmlFor="display">Weight</Label>
           <Select
-            value={props.style?.weight}
+            value={parsedValues?.["fontWeight"]}
             onValueChange={(value) => {
               setClassname({
                 classKey: "font",
@@ -72,7 +72,7 @@ export function Typography() {
           <Label htmlFor="color">Color</Label>
           <HexColorPicker
             id="color"
-            color={props.style?.color}
+            color={parsedValues?.["textColor"]}
             onChange={(color) => {
               setClassname({
                 classKey: "text",
@@ -103,7 +103,7 @@ export function Typography() {
         <div className="mt-2 flex gap-2">
           <Tabs
             defaultValue="start"
-            value={props.style?.textAlign}
+            value={parsedValues?.["textAlign"]}
             onValueChange={(value) => {
               setClassname({
                 classKey: "text",
@@ -130,7 +130,7 @@ export function Typography() {
 
           <Tabs
             defaultValue="none"
-            value={props.style?.textDecorationLine}
+            value={parsedValues?.["textDecoration"]}
             onValueChange={(value) => {
               setClassname({
                 value,
@@ -155,7 +155,7 @@ export function Typography() {
         <div className="mt-2 flex gap-2">
           <Tabs
             defaultValue="none"
-            value={props.style?.textTransform}
+            value={parsedValues?.["textTransform"]}
             onValueChange={(value) => {
               setClassname({
                 value,
@@ -181,7 +181,7 @@ export function Typography() {
 
           <Tabs
             defaultValue="normal"
-            value={props.style?.fontStyle}
+            value={parsedValues?.["fontStyle"]}
             onValueChange={(value) => {
               setClassname({
                 value,
