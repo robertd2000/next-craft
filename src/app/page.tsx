@@ -65,7 +65,7 @@ export default function Home() {
               </ReactIframe>
             </div>
           </div>
-          <div className="w-[300px] h-full flex-shrink-0">
+          <div className="w-[400px] h-full flex-shrink-0">
             <ControlPanel />
           </div>
         </div>
