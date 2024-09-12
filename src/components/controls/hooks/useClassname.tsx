@@ -6,8 +6,11 @@ import {
   parseTailwindClass,
   parseTailwindClassesToValues,
 } from "@/lib/tailwind";
+import {useBreakpointContext} from "@/components/side-menu/ui/tabs/breakpoints";
 
 export function useClassname() {
+  const { breakpoint } = useBreakpointContext();
+  
   const {
     actions: { setProp },
     props,
@@ -30,8 +33,9 @@ export function useClassname() {
       classKey: classKey || "",
       value,
       category,
+      breakpoint
     });
-
+    
     setProp(
       (props: { className: string; settings: any }) =>
         (props.className = className),

@@ -2,10 +2,11 @@ import React from "react";
 
 import { Components } from "@/components/blocks/constants/components-map";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CopyPlus, Layers3 } from "lucide-react";
+import { CopyPlus, Layers3, BrickWall } from "lucide-react";
 import { Blocks } from "./tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Layers } from "@craftjs/layers";
+import {Breakpoints} from "@/components/side-menu/ui/tabs/breakpoints";
 
 export interface SideMenuProps {
   componentsMap: Components[];
@@ -25,6 +26,9 @@ export const SideMenu = ({ componentsMap }: SideMenuProps) => {
         <TabsTrigger value="components">
           <CopyPlus />
         </TabsTrigger>
+        <TabsTrigger value="breakpoints">
+          <BrickWall />
+        </TabsTrigger>
       </TabsList>
       <ScrollArea className="col-span-8">
         <TabsContent value="layers">
@@ -32,6 +36,9 @@ export const SideMenu = ({ componentsMap }: SideMenuProps) => {
         </TabsContent>
         <TabsContent value="components">
           <Blocks componentsMap={componentsMap} />
+        </TabsContent>
+        <TabsContent value="breakpoints">
+          <Breakpoints />
         </TabsContent>
       </ScrollArea>
     </Tabs>

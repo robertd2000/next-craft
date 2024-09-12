@@ -10,6 +10,13 @@ const config = {
   ],
   prefix: "",
   theme: {
+    screens: {
+      '2xl': {'max': '1920px'},
+      'xl': {'max': '1440px'},
+      'lg': {'max': '1024px'},
+      'md': {'max': '768px'},
+      'sm': {'max': '385px'}
+    },
     container: {
       center: true,
       padding: "2rem",

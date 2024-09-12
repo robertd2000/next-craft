@@ -19,8 +19,11 @@ import { RenderNode } from "@/components/render-node/render-node";
 import { SideMenu } from "@/components/side-menu";
 import { Editor, Frame, Element } from "@craftjs/core";
 import { ControlPanel } from "@/components/control-panel/ui/ControlPanel";
+import { useBreakpointContext } from "@/components/side-menu/ui/tabs/breakpoints";
 
 export default function Home() {
+  const { width } = useBreakpointContext();
+  
   return (
     <section className="w-full h-full flex flex-col">
       <Editor
@@ -43,8 +46,8 @@ export default function Home() {
           <div className="w-[300px] h-full flex-shrink-0">
             <SideMenu componentsMap={componentsMap} />
           </div>
-          <div className="flex-1 overflow-auto">
-            <div className="min-w-[1920px] ">
+          <div className="overflow-hidden" style={{ width }}>
+            <div>
               <ReactIframe
                 title="my frame"
                 className="w-full h-full min-h-[calc(100vh-20px)]"
@@ -65,7 +68,7 @@ export default function Home() {
               </ReactIframe>
             </div>
           </div>
-          <div className="w-[400px] h-full flex-shrink-0">
+          <div className="w-[400px] h-full flex-1">
             <ControlPanel />
           </div>
         </div>

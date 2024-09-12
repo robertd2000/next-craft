@@ -30,7 +30,13 @@ NodeCardTitle.craft = {
   // @ts-ignore
   ...NodeCardTitle.craft,
   related: {
-    toolbar: SettingsControl,
+    toolbar: {
+      xs: () => <SettingsControl type="button" />,
+      sm: () => <SettingsControl type="button" />,
+      md: () => <SettingsControl type="button" />,
+      lg: () => <SettingsControl type="button" />,
+      xl: () => <SettingsControl type="button" />,
+    },
   },
 };
 
@@ -44,7 +50,13 @@ NodeCardDescription.craft = {
   // @ts-ignore
   ...NodeCardDescription.craft,
   related: {
-    toolbar: SettingsControl,
+    toolbar: {
+      xs: () => <SettingsControl type="button" />,
+      sm: () => <SettingsControl type="button" />,
+      md: () => <SettingsControl type="button" />,
+      lg: () => <SettingsControl type="button" />,
+      xl: () => <SettingsControl type="button" />,
+    },
   },
 };
 

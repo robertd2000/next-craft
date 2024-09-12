@@ -102,7 +102,7 @@ const classConfig: Record<
   //   generateClass: (classKey, value) => `${classKey}-[${value}]`,
   // },
   marginTop: {
-    pattern: /mt-\[(\d+(\.\d+)?(px|%|em|rem|svw|svh|lvh|lvw|ch))\]/,
+    pattern: /(?:^|\s)mt-\[(\d+(\.\d+)?(px|%|em|rem|svw|svh|lvh|lvw|ch))\]/,
     generateClass: (_, value) => `mt-[${value}]`,
   },
   marginBottom: {
@@ -213,19 +213,23 @@ export function parseTailwindClass({
   classKey,
   category,
   value,
+  breakpoint
 }: {
   currentClassName: string;
   classKey: string;
   value: string;
   category: ClassCategory;
+  breakpoint: string;
 }): string {
   const config = classConfig[category];
+  const classBreakpoint = breakpoint === 'common' ? '' : `${breakpoint}:`;
+  const regExpSource = breakpoint === 'common' ? config?.pattern.source : config?.pattern.source.replace('(?:^|\\s)', '');
 
   const cleanedClassName = currentClassName
-    ?.replace(config?.pattern, "")
+    ?.replace(new RegExp(`${classBreakpoint}${regExpSource}`), "")
     .trim();
-
-  const newClass = config?.generateClass(classKey, value);
+  
+  const newClass = `${classBreakpoint}${config?.generateClass(classKey, value)}`;
 
   return [cleanedClassName, newClass]
     ?.filter((i) => i != undefined)
